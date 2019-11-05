@@ -1,0 +1,86 @@
+.card{
+    width: 200px;
+    margin: 5px 5px 5px 5px;
+}
+
+.dateText{
+    font-size: 8pt;
+    
+}
+
+.date{
+    background-color: white;
+    border: 1px solid black;
+    text-align: center;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+.Violet{
+    background-color:purple;
+}
+
+
+.Orange{
+    background-color:orange;
+}
+
+.Green{
+    background-color:green;
+}
+
+.White{
+    background-color:white;
+}
+
+.design_row{
+    border: 1px solid black;
+    background-color: crimson;
+    color: white;
+}
+
+.dev_row{
+    border: 1px solid black;
+    background-color: blue;
+    color: white;
+}
+
+.test_row{
+    border: 1px solid black;
+    background-color: orange;
+    color: white;
+}
+
+.design_points{
+    background-color:rgba(220, 20, 60, 0.6) ;
+    border: 1px solid black;
+    word-wrap: break-word;
+    font-size: 100%;
+}
+
+
+.dev_points{
+    background-color:rgba(20, 50, 220, 0.6) ;
+    border: 1px solid black;
+    
+}
+
+
+.test_points{
+    background-color:rgba(220, 50, 20, 0.6) ;
+    border: 1px solid black;
+    
+}
+
+
+.typeInfo{
+    text-align: right;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.name{
+    border: 1px solid black;
+}

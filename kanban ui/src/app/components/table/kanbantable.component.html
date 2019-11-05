@@ -1,0 +1,44 @@
+<table>
+    <tr>
+    <td colspan ='1' class="cell">
+        <p class="tittle">Selected</p>
+        <p class="wip">No WIP limit</p>
+    </td>
+    <td colspan="2" class="cell">
+            <p class="tittle">Analysis</p>
+            <p class="wip">WIP limit: {{limit[0]}}</p>
+    </td>
+    <td colspan="2" class="cell">
+            <p class="tittle">Development</p>
+            <p class="wip">WIP limit: {{limit[1]}}</p>
+    </td>
+    <td class="cell">
+            <p class="tittle">Testing</p>
+            <p class="wip">WIP limit: {{limit[2]}}</p>
+    </td>
+    <td class="cell">
+            <p class="tittle">Ready to Deploy</p>
+            <p class="wip">No WIP limit</p>
+    </td>
+    <td class="cell">
+            <p class="tittle">Deployed</p>
+            <p class="wip">No WIP limit</p>
+    </td>
+    </tr>
+    <tr>
+        <td class="expedise"></td>
+        <td class="expedise"></td>
+        <td class="expedise"></td>
+        <td class="expedise"></td>
+        <td class="expedise"></td>
+        <td class="expedise"></td>
+        <td class="expedise"></td>
+        <td class="expedise"></td>
+    </tr>
+    <tr class="cardColumns">
+    <td *ngFor='let card of CardList; let i = index' class="column{{i}}">
+        <cardComponent *ngFor ='let c of card' [CardObject]='c'></cardComponent>
+    </td>
+    </tr>
+</table>
+    

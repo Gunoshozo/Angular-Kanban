@@ -1,0 +1,86 @@
+.cardColumn{
+    border: 2px solid black;
+    height: 660px;  
+    vertical-align: top;
+    scroll-behavior: auto   ;
+}
+table{
+    border-collapse: collapse;
+    position: absolute;
+    top:0;
+    width: 99%;
+    height: 930px;
+    border: 1px solid black;
+}
+
+.expedise{
+    border: 1px solid grey;
+    height: 125px;
+    width: 210px;
+    text-align: center;
+
+}
+
+.columnInfo{
+    position: relative;
+    text-align: center;
+    border: 2px solid red;
+    height: 100px;
+}
+
+.tittle{
+    font-size:20pt;
+    color: crimson;
+}
+
+.wip{
+    font-size: 16pt;
+}
+
+.cell{
+    border: 2px solid black;
+}
+
+p{
+    text-align: center;
+}
+
+.column0{
+    border: 2px solid black;
+    vertical-align: top;
+}
+
+.column1{
+    border: 2px solid black;
+    vertical-align: top;
+}
+
+.column2{
+    border: 2px solid black;
+    vertical-align: top;
+}
+
+.column3{
+    border: 2px solid black;
+    vertical-align: top;
+}
+
+.column4{
+    border: 2px solid black;
+    vertical-align: top;
+}
+
+.column5{
+    border: 2px solid black;
+    vertical-align: top;
+}
+
+.column6{
+    border: 2px solid black;
+    vertical-align: top;
+}
+
+.column7{
+    border: 2px solid black;
+    vertical-align: top;
+}

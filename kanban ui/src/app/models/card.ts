@@ -49,21 +49,6 @@ export class card{
         this.status = status
         this.priority = priority
     }
-    // ngOnInit(): void {
-    //     this.CardName = 'S1'
-    //     this.DateBegSession = 2
-    //     this.CurrentAnalysis = 4
-    //     this.TotalAnalysis = 20
-    //     this.CurrentDevelopment = 0
-    //     this.TotalDevelopment = 15
-    //     this.CurrentTesting = 0
-    //     this.TotalTesting = 10
-    //     this.money = 1000
-    //     this.subs = 10
-    //     this.color = 2
-    //     this.status = 'selected'
-    //     this.priority = 0
-    // }
 
     //Функция возвращает информацию для
     //правого верхнего угла карты в зависимости от ее цвета
@@ -76,7 +61,10 @@ export class card{
                 return ''
             }
             case 'Violet':{
-                return 'Fine: ' + this.money
+                if(this.money != 0)
+                    return 'Fine: ' + this.money
+                else
+                    return 'Fine: $2500  Subs: ' + this.subs
             }
             case 'Orange':{
                 return 'Subs: ' + this.subs

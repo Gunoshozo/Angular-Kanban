@@ -11,6 +11,7 @@ import { register } from './components/register/register.component';
 import { AppRoutingModule } from './app-routing.module';
 import { gameComponent } from './components/game';
 import { ReactiveFormsModule } from '@angular/forms';
+import { testpage } from './components/testpage/testpage';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     cardComponent,
     login,
     register,
-    gameComponent
+    gameComponent,
+    testpage
   ],
   imports: [
     BrowserModule,

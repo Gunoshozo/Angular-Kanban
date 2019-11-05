@@ -1,5 +1,5 @@
 <div class='card'>
-    <table>
+    <table class= {{Card.getColor()}}>
         <tr class={{Card.getColor()}}>
             <td class="name">{{Card.CardName}}</td>
             <td class="typeInfo" colspan="2">{{Card.getTypeInfo()}}</td>
@@ -22,12 +22,12 @@
         </tr>
         
         
-        <tr class={{Card.getColor()}}>
+        <tr class="innerRow">
             <td class="dateText">Day Deployed</td>
             <td class ="dateText">Day Ready</td>
             <td class ="dateText">Cycle Time</td>
         </tr>
-        <tr class={{Card.getColor()}}>
+        <tr class='bottomRow'>
             <td class="date">{{Card.DayDeployed == '0'? 'x':Card.DayDeployed}}</td>
             <td class="date">{{Card.DayReady == '0'?'x':Card.DayReady}}</td>
             <td class="date">{{(Card.DayDeployed == '0' || Card.DayReady == '0') ? 'x': Card.DayDeployed - Card.DayReady}}</td>

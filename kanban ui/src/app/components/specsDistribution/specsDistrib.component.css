@@ -13,6 +13,9 @@
     top: 100% !important;
 } */
 
+th{
+    text-align: center;
+}
 
 #dropdownMenu2{
     width: 320px;

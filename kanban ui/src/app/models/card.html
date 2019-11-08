@@ -1,5 +1,3 @@
-{{isModified()}}
-
 <div class='card'>
     <table>
         <tr><td>
@@ -38,7 +36,7 @@
         </tr>
     </table>
 </td><td>
-    <table *ngIf="canUpgrade && (Card.status == 1 || Card.status == 3 || Card.status ==5)">
+    <table *ngIf="canUpgrade && (Card.status == 1 || Card.status == 3 || Card.status ==5) && !isMaxed">
         <tr>
             <td><button class="btn btn-primary btn-sm" (click)="addToStatus(1)">+</button> </td> 
             <td><button class="btn btn-primary btn-sm" (click)="addToStatus(-1)">-</button> </td> 

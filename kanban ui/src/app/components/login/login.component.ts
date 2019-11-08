@@ -19,7 +19,7 @@ export class login implements OnInit{
         private router: Router,
         private loginService: LoginService
         ){
-            //если уже залогинен
+           // если уже залогинен
            if(this.loginService.currentUserValue) 
                 this.router.navigate(['/game'])
         }

@@ -1,6 +1,7 @@
+<button (click)="logout()">Logout</button>
 <div class="btn-group btn-centered">
                 <button type="button" class="btn btn-info" disabled id="day">Day: {{day}}</button>              
-                <button class="btn btn-success" id="confirm">Confirm changes</button>  
+                <button class="btn btn-success" id="confirm" (click)="confirmChanges()" [disabled]='!allowPointsDistribution' >Confirm changes</button>  
                         
         <div class="btn-group" role="group">
                         <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -12,28 +13,8 @@
                         </div>
 </div>
 <div class="btn-group btn-centered">
-                <specsDistribution [specs]="staff" [totalSpecs]="totalStaff" [(points)]="points" [apiService]="apiService" [day]="day"></specsDistribution>
+                <specsDistribution [(specs)]="staff" [totalSpecs]="totalStaff" [(points)]="points" [apiService]="apiService" [day]="day" [(specsDistributed)] = "allowPointsDistribution"></specsDistribution>
 </div>
-        <!-- <div class="col-sm-4">
-                <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                          Graphs
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                Тут будет график
-                        </div>
-                </div>        
-                </div>
-                
-        <div class="col-sm text-right">
-                <div class="alert alert-info" role="alert">
-                        Day:{{day}}
-                </div>
-        </div>
-</div>
-<div class="col-md-12 text-center">
-                <button class="btn btn-success">Confirm</button>
-</div> -->
 <table>
     <tr>
     <td colspan ='1' class="cell">
@@ -85,7 +66,7 @@
     </tr>
     <tr class="cardColumns">
     <td *ngFor='let card of CardList; let i = index' class="column{{i}}">
-        <cardComponent *ngFor ='let c of card' [CardObject]='c' [(points)]='points' [(canUpgrade)]='pointsDistribution'></cardComponent>
+        <cardComponent *ngFor ='let c of card' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' ></cardComponent>
     </td>
     </tr>
 </table>

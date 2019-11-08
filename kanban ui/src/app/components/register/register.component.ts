@@ -20,7 +20,7 @@ export class register implements OnInit{
         private registerService: RegisterService
     ){
         if(this.loginService.currentUserValue)
-        this.router.navigate(['/'])
+            this.router.navigate(['/game'])
     }
 
     ngOnInit() {

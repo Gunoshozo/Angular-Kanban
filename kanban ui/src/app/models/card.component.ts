@@ -17,7 +17,7 @@ export class cardComponent implements OnInit{
     @Input('canUpgrade')
     canUpgrade:boolean = true;
     @Input('points')
-    points = {'anal':3,'dev':5,'test':8}
+    points = {'anal':0,'dev':0,'test':0}
 
     addToStatus(num){
         switch(this.Card.status){
@@ -59,9 +59,14 @@ export class cardComponent implements OnInit{
             }
         }
     } 
-    isModified(){
+    public get isModified(){
         return this.OldValues['anal'] != this.Card.CurrentAnalysis || this.OldValues['dev'] != this.Card.CurrentDevelopment || this.OldValues['test'] != this.Card.CurrentTesting
     }  
+
+    public get isMaxed(){
+        return (this.Card.status == 1 && this.OldValues['anal']==this.Card.TotalAnalysis) || (this.Card.status == 3 && this.OldValues['dev']==this.Card.TotalDevelopment) 
+        || (this.Card.status == 5 && this.OldValues['test']==this.Card.TotalTesting)
+    }
 
     updateOlds(){
         this.OldValues['anal'] = this.Card.CurrentAnalysis

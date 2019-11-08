@@ -1,8 +1,11 @@
-import { Component, OnInit, Input, AfterContentInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, AfterContentInit, ViewChild, ViewChildren, QueryList, AfterViewInit, HostListener } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
 import { card } from '../../models/card';
 import {ApiService} from '../../service/ApiService'
 import { specsDistribution } from '../specsDistribution/specsDistrib.component';
+import { cardComponent } from 'src/app/models/card.component';
+import { LoginService } from 'src/app/service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,16 +14,19 @@ import { specsDistribution } from '../specsDistribution/specsDistrib.component';
     styleUrls:['./kanbantable.component.css']
 })
 
-export class kanbantable implements OnInit{
+export class kanbantable implements OnInit,AfterViewInit{
+    ngAfterViewInit(): void {
+        console.log(this.cc.toArray())
+    }
     CardList: card[][]
-    ExpediseCards: card[] 
+    @ViewChildren(cardComponent) cc:QueryList<cardComponent>
     @Input()
     limit: number[]
     staff: any = {'anal':{'anal':2,'dev':0,'test':0},'dev':{'anal':0,'dev':3,'test':0},'test':{'anal':0,'dev':0,'test':2}}
     totalStaff:any = {'anal':0,'dev':0,'test':0};
     points: any = {'anal':0,'dev':0,'test':0};
     day:number = 1;
-    pointsDistribution:boolean;
+    allowPointsDistribution:boolean = false;
     
     client: HttpClient
     
@@ -30,7 +36,9 @@ export class kanbantable implements OnInit{
     private status = ['Selected','AnalProg','AnalDone','DevProg','DevDone','Test','ReadyDeploy','Deploy']
 
     
-    constructor(private apiService:ApiService){
+    constructor(private apiService:ApiService,private loginService:LoginService,private router:Router){
+        if(this.loginService.currentUserValue == null) 
+                this.router.navigate(['/login'])
     }
 
     parseCard(cardJson){
@@ -44,9 +52,13 @@ export class kanbantable implements OnInit{
     }
     
     ngOnInit(): void {
-        let email = 'stasKruto@gmail.com'
         this.countTotalStaff()
-        //email = localStorage.getItem('currentUser')
+        this.getAllCards()
+    }
+
+    getAllCards(){
+        //let email = 'stasKruto@gmail.com'
+        let email = localStorage.getItem('currentUser')
         this.apiService.getCards(email)
         .subscribe(
             data => {
@@ -70,6 +82,59 @@ export class kanbantable implements OnInit{
                 console.log('error')
             }
         )
+    }
+
+    logout(){
+        this.loginService.logout()
+        console.log(localStorage.getItem('currentUser'))
+    }
+
+    // ngOnInit(){
+    //     this.countTotalStaff()
+    //     this.CardList = []
+    //             for(var i =0;i<8;i++){
+    //                 this.CardList[i] = []
+    //                 for(var j =0; j< 2;j++){
+    //                     var Card = new card('name',1,0,5,5,5,8,9,14,25,2,'Orange',i,1)
+    //                     this.CardList[i].push(Card)
+    //                }
+    //             }
+    // }
+
+    confirmChanges(){
+        let resp = {'anal':[],'dev':[],'test':[]}
+        this.cc.toArray().forEach(c =>{
+            if(c.isModified){
+                switch(c.Card.status){
+                    case 1: {
+                        resp['anal'].push(c.Card)
+                        break;
+                    }
+                    case 3:{
+                        resp['dev'].push(c.Card)
+                        break;
+                    }
+                    case 5:{
+                        resp['test'].push(c.Card)
+                    }
+                }
+            }
+        })
+        this.apiService.postUpdatedCards(resp)
+        .subscribe( data =>{
+            if(data['status'] = 'ok'){
+                this.getAllCards()
+                this.updateDay()
+            }
+            else{
+                console.log('fail')
+            }
+        })
+    }
+
+    updateDay(){
+        this.day++;
+        //Какой-нибудь апдейт в график
     }
     
 }

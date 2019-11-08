@@ -22,6 +22,9 @@ export class specsDistribution{
     @Input()
     day: number
 
+    @Input()
+    specsDistributed:boolean
+
     add(num:number,a,b){
         if(num<0)
             this.specs[a][b] = Math.max(0,this.specs[a][b]+num) 
@@ -36,8 +39,23 @@ export class specsDistribution{
         return this.totalSpecs[who] - this.specs['anal'][who]-this.specs['dev'][who]-this.specs['test'][who]
     }
 
-    distribute(){
-        let data = this.apiService.getPoints(this.day,this.specs)
+    distributeSpecs(){
+        this.apiService.getPoints(this.day,this.specs).subscribe(
+            data =>{
+                if(data['status']=='ok'){
+                    this.points['anal'] = data['anal']
+                    this.points['dev'] = data['dev']
+                    this.points['test'] = data['test']
+                    this.specsDistributed = true;
+                }
+                else{
+                    console.log('fail')
+                }
+            },
+            error =>{
+                console.log('error')
+            }
+        )
     }
 }
 

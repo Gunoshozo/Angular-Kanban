@@ -10,6 +10,10 @@ export class ApiService {
 
   public getCards(email: string) {
     return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_cards?email='+email)
-}
+  }
+
+  public getPoints(day:number,specs){
+
+  }
 
 }

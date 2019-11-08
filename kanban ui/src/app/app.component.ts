@@ -13,13 +13,13 @@ import { LoginService } from './service/loginService';
 
 export class AppComponent {
   title = 'kanban-ui';
-  currentUser: User;
+  currentUserEmail: string;
 
   constructor(
     private router:Router,
     private loginService:LoginService
     ){
-      this.loginService.currentUser.subscribe(x => this.currentUser = x)
+      this.loginService.currentUser.subscribe(x => this.currentUserEmail = x)
   }
 
   logout(){

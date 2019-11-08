@@ -1,4 +1,8 @@
+{{isModified()}}
+
 <div class='card'>
+    <table>
+        <tr><td>
     <table class= {{Card.getColor()}}>
         <tr class={{Card.getColor()}}>
             <td class="name">{{Card.CardName}}</td>
@@ -33,4 +37,14 @@
             <td class="date">{{(Card.DayDeployed == '0' || Card.DayReady == '0') ? 'x': Card.DayDeployed - Card.DayReady}}</td>
         </tr>
     </table>
+</td><td>
+    <table *ngIf="canUpgrade && (Card.status == 1 || Card.status == 3 || Card.status ==5)">
+        <tr>
+            <td><button class="btn btn-primary btn-sm" (click)="addToStatus(1)">+</button> </td> 
+            <td><button class="btn btn-primary btn-sm" (click)="addToStatus(-1)">-</button> </td> 
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
 </div>  

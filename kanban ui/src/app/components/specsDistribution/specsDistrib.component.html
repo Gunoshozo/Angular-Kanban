@@ -1,0 +1,82 @@
+<div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+          Distribute specialists
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <table>
+            <tr>
+              <th></th>
+              <th>Analysis</th>
+              <th>Dev</th>
+              <th>Testing</th>
+              <th>Free</th>
+            </tr>
+            <tr>
+              <th>Disigners</th>
+              <td>
+                <button class="btn btn-primary btn-sm" (click)="add(-1,'anal','anal')">-</button>
+                {{specs['anal']['anal']}}
+                <button class="btn btn-primary btn-sm" (click)="add(1,'anal','anal')">+</button>
+              </td>
+              <td>
+                  <button class="btn btn-primary btn-sm" (click)="add(-1,'dev','anal')">-</button>
+                  {{specs['dev']['anal']}}
+                  <button class="btn btn-primary btn-sm" (click)="add(1,'dev','anal')">+</button>
+              </td>
+              <td>
+                  <button class="btn btn-primary btn-sm" (click)="add(-1,'test','anal')">-</button>
+                  {{specs['test']['anal']}}
+                  <button class="btn btn-primary btn-sm" (click)="add(1,'test','anal')">+</button>
+              </td>
+              <td class="text-centered">
+                {{countFree('anal')}}
+              </td>
+            </tr>
+            <tr>
+              <th>Devs</th>
+              <td>
+                <button class="btn btn-primary btn-sm" (click)="add(-1,'anal','dev')">-</button>
+                {{specs['anal']['dev']}}
+                <button class="btn btn-primary btn-sm" (click)="add(1,'anal','dev')">+</button>
+              </td>
+              <td>
+                  <button class="btn btn-primary btn-sm" (click)="add(-1,'dev','dev')">-</button>
+                  {{specs['dev']['dev']}}
+                  <button class="btn btn-primary btn-sm" (click)="add(1,'dev','dev')">+</button>
+              </td>
+              <td>
+                  <button class="btn btn-primary btn-sm"(click)="add(-1,'test','dev')">-</button>
+                  {{specs['test']['dev']}}
+                  <button class="btn btn-primary btn-sm" (click)="add(1,'test','dev')">+</button>
+              </td>
+              <td class="text-centered">
+                  {{countFree('dev')}}
+                </td>
+              </tr>
+              <tr>
+                <th>Testers </th>
+                <td>
+                  <button class="btn btn-primary btn-sm" (click)="add(-1,'anal','test')">-</button>
+                  {{specs['anal']['test']}}
+                  <button class="btn btn-primary btn-sm" (click)="add(1,'anal','test')">+</button>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="add(-1,'dev','test')">-</button>
+                    {{specs['dev']['test']}}
+                    <button class="btn btn-primary btn-sm" (click)="add(1,'dev','test')">+</button>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="add(-1,'test','test')">-</button>
+                    {{specs['test']['test']}}
+                    <button class="btn btn-primary btn-sm" (click)="add(1,'test','test')">+</button>
+                </td>
+                <td class="text-centered">
+                    {{countFree('test')}}
+                  </td>
+                </tr>
+          </table>
+          <div class = "btn-centered">
+          <button class="btn btn-success" (click)="distribute()">Distribute and roll dices</button>
+        </div>
+        </div>
+    </div>

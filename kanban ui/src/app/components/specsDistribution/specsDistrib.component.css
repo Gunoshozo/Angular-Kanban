@@ -1,0 +1,19 @@
+.btn-centered{
+    display: flex;
+    justify-content: center;
+}
+
+.text-centered{
+    text-align: center;
+}
+
+/* .dropdown-menu{
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    top: 100% !important;
+} */
+
+
+#dropdownMenu2{
+    width: 320px;
+}

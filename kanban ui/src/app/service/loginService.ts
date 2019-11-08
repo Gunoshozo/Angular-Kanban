@@ -8,26 +8,26 @@ import {map} from 'rxjs/operators'
   providedIn: 'root'
 })
 export class LoginService {
-  public currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  public currentUserSubject: BehaviorSubject<string>;
+  public currentUser: Observable<string>;
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<string>(localStorage.getItem('currentUser'));
     this.currentUser = this.currentUserSubject.asObservable();
   }
   
-  public get currentUserValue():User{
+  public get currentUserValue():string{
     return this.currentUserSubject.value;
   }
 
   public login(email:string,password:string){
-      return this.http.post<any>('http://25.65.79.64/api/login',{email,password})
-             .pipe(map(User =>{
-              if(User){
+      return this.http.post<any>('http://25.65.79.64/api/sign_in',{email,password})
+             .pipe(map(data =>{
+               console.log(data)
+              if(data['status'] == 'ok'){
                 console.log("login")
-                console.log(User)
-                localStorage.setItem('currentUser',JSON.stringify(User))
-                this.currentUserSubject.next(User)
+                localStorage.setItem('currentUser',email)
+                this.currentUserSubject.next(email)
               }
             }))
       }

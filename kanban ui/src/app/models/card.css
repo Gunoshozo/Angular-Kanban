@@ -1,5 +1,5 @@
 .card{
-    width: 200px;
+    width: 300px;
     margin: 5px 5px 5px 5px;
 }
 
@@ -39,7 +39,7 @@ table{
 
 
 .Orange{
-    background-color:orange;
+    background-color:rgb(255, 123, 0);
 }
 
 .Green{
@@ -98,4 +98,8 @@ table{
 
 .name{
     border: 1px solid black;
+}
+
+.tbl{
+    border-collapse: collapse;
 }

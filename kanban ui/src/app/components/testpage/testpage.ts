@@ -1,5 +1,4 @@
-import { Component, Input } from "@angular/core";
-import { cardComponent } from 'src/app/models/card.component';
+import { Component, Input, OnInit, Output } from "@angular/core";
 import { card } from 'src/app/models/card';
 
 @Component({
@@ -8,13 +7,13 @@ import { card } from 'src/app/models/card';
     styleUrls:['./testpage.css']
 })
 
-export class testpage{
-    @Input()
-    TestCard: cardComponent;
+export class testpage implements OnInit{
+    Card:card;
 
-
-    generateCard(){
-        return new card('5T4S Huilo','1','12',4,20,5,15,3,7,0,23,'Violet','Selected','228')
+    ngOnInit(): void {
+        this.Card  = new card('name',1,0,2,10,6,15,8,17,12,4,'Orange',5,'4')
     }
 
+  
 }
+

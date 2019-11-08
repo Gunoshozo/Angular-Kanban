@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { kanbantable } from '../table';
 
 @Component({
     selector:'game',
@@ -8,4 +9,5 @@ import { Component } from '@angular/core';
 
 export class gameComponent{
 
+    @ViewChild(kanbantable,{static:false}) table; 
 }

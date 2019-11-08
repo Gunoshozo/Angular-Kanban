@@ -1,3 +1,39 @@
+<div class="btn-group btn-centered">
+                <button type="button" class="btn btn-info" disabled id="day">Day: {{day}}</button>              
+                <button class="btn btn-success" id="confirm">Confirm changes</button>  
+                        
+        <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          Graph
+                        </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        Тут будет график
+                                </div>
+                        </div>
+</div>
+<div class="btn-group btn-centered">
+                <specsDistribution [specs]="staff" [totalSpecs]="totalStaff" [(points)]="points" [apiService]="apiService" [day]="day"></specsDistribution>
+</div>
+        <!-- <div class="col-sm-4">
+                <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                          Graphs
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                Тут будет график
+                        </div>
+                </div>        
+                </div>
+                
+        <div class="col-sm text-right">
+                <div class="alert alert-info" role="alert">
+                        Day:{{day}}
+                </div>
+        </div>
+</div>
+<div class="col-md-12 text-center">
+                <button class="btn btn-success">Confirm</button>
+</div> -->
 <table>
     <tr>
     <td colspan ='1' class="cell">
@@ -7,14 +43,26 @@
     <td colspan="2" class="cell">
             <p class="tittle">Analysis</p>
             <p class="wip">WIP limit: {{limit[0]}}</p>
+            <p>Аналитиков: {{staff['anal']['anal']}}</p>
+            <p>Разработчиков: {{staff['anal']['dev']}}</p>
+            <p>Тестеров: {{staff['anal']['test']}}</p>
+            <p class="points" *ngIf="points['anal'] != 0">Очков:{{points['anal']}}</p>
     </td>
     <td colspan="2" class="cell">
             <p class="tittle">Development</p>
             <p class="wip">WIP limit: {{limit[1]}}</p>
+            <p>Аналитиков: {{staff['dev']['anal']}}</p>
+            <p>Разработчиков: {{staff['dev']['dev']}}</p>
+            <p>Тестеров: {{staff['dev']['test']}}</p>
+            <p class="points" *ngIf="points['dev'] != 0">Очков:{{points['dev']}}</p>
     </td>
     <td class="cell">
             <p class="tittle">Testing</p>
             <p class="wip">WIP limit: {{limit[2]}}</p>
+            <p>Аналитиков: {{staff['test']['anal']}}</p>
+            <p>Разработчиков: {{staff['test']['dev']}}</p>
+            <p>Тестеров: {{staff['test']['test']}}</p>
+            <p class="points" *ngIf="points['test'] != 0">Очков:{{points['test']}}</p>
     </td>
     <td class="cell">
             <p class="tittle">Ready to Deploy</p>
@@ -37,8 +85,7 @@
     </tr>
     <tr class="cardColumns">
     <td *ngFor='let card of CardList; let i = index' class="column{{i}}">
-        <cardComponent *ngFor ='let c of card' [CardObject]='c'></cardComponent>
+        <cardComponent *ngFor ='let c of card' [CardObject]='c' [(points)]='points' [(canUpgrade)]='pointsDistribution'></cardComponent>
     </td>
     </tr>
 </table>
-    

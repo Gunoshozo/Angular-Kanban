@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { gameComponent } from './components/game';
 import { ReactiveFormsModule } from '@angular/forms';
 import { testpage } from './components/testpage/testpage';
+import { specsDistribution } from './components/specsDistribution/specsDistrib.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { testpage } from './components/testpage/testpage';
     login,
     register,
     gameComponent,
-    testpage
+    testpage,
+    specsDistribution
   ],
   imports: [
     BrowserModule,

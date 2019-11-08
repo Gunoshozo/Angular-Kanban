@@ -11,6 +11,6 @@ export class RegisterService {
     //прописать запрос
     register(user: User) {
         console.log(user)
-        return this.http.post(`http://25.65.79.64:8000/controller/api/register_user`, user);
+        return this.http.post(`http://25.65.79.64:8000/controller/api/sign_up`, user);
     }
 }

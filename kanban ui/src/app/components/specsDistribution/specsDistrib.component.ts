@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, Output,EventEmitter } from "@angular/core";
 import { ApiService } from 'src/app/service/ApiService';
 
 @Component({
@@ -22,8 +22,10 @@ export class specsDistribution{
     @Input()
     day: number
 
-    @Input()
-    specsDistributed:boolean
+    @Input() specsDistributed;
+
+    @Output() specsDistributedEmitter = new EventEmitter<boolean>()
+    
 
     add(num:number,a,b){
         if(num<0)
@@ -47,6 +49,7 @@ export class specsDistribution{
                     this.points['dev'] = data['dev']
                     this.points['test'] = data['test']
                     this.specsDistributed = true;
+                    this.specsDistributedEmitter.emit(this.specsDistributed)
                 }
                 else{
                     console.log('fail')
@@ -57,5 +60,14 @@ export class specsDistribution{
             }
         )
     }
+
+    // distributeSpecs(){
+    //     this.points['anal'] = 5
+    //     this.points['dev'] = 6
+    //     this.points['test'] = 7
+    //     this.specsDistributed = true
+    //     this.specsDistributedEmitter.emit(this.specsDistributed)
+
+    // }
 }
 

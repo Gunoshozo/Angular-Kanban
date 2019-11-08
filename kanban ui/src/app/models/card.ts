@@ -1,6 +1,6 @@
 
 export class card{
-    
+    idCard: number
     CardName: string
     DayReady: number
     DayDeployed: number
@@ -33,7 +33,8 @@ export class card{
     //         this.priority = 0
     // }
 
-    constructor(name,begdate,enddate,currentdev,totaldev,curentanal,totalanal,currenttest,totaltest,money,subs,color,status,priority){
+    constructor(id,name,begdate,enddate,currentdev,totaldev,curentanal,totalanal,currenttest,totaltest,money,subs,color,status,priority){
+        this.idCard = id
         this.CardName = name
         this.DayReady = begdate
         this.DayDeployed = enddate

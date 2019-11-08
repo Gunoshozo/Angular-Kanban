@@ -11,7 +11,7 @@ export class testpage implements OnInit{
     Card:card;
 
     ngOnInit(): void {
-        this.Card  = new card('name',1,0,2,10,6,15,8,17,12,4,'Orange',5,'4')
+        this.Card  = new card(228,'name',1,0,2,10,6,15,8,17,12,4,'Orange',5,'4')
     }
 
   

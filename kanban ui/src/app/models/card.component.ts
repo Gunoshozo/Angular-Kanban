@@ -15,7 +15,7 @@ export class cardComponent implements OnInit{
     @Input('CardObject')
     Card:card
     @Input('canUpgrade')
-    canUpgrade:boolean = true;
+    canUpgrade:boolean = false;
     @Input('points')
     points = {'anal':0,'dev':0,'test':0}
 

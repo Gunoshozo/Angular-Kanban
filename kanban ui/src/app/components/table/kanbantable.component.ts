@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, AfterContentInit, ViewChild, ViewChildren, QueryList, AfterViewInit, HostListener } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
+import { HttpClient } from '@angular/common/http'
 import { card } from '../../models/card';
 import {ApiService} from '../../service/ApiService'
-import { specsDistribution } from '../specsDistribution/specsDistrib.component';
 import { cardComponent } from 'src/app/models/card.component';
 import { LoginService } from 'src/app/service';
 import { Router } from '@angular/router';
@@ -14,10 +13,7 @@ import { Router } from '@angular/router';
     styleUrls:['./kanbantable.component.css']
 })
 
-export class kanbantable implements OnInit,AfterViewInit{
-    ngAfterViewInit(): void {
-        console.log(this.cc.toArray())
-    }
+export class kanbantable implements OnInit{
     CardList: card[][]
     @ViewChildren(cardComponent) cc:QueryList<cardComponent>
     @Input()
@@ -25,15 +21,13 @@ export class kanbantable implements OnInit,AfterViewInit{
     staff: any = {'anal':{'anal':2,'dev':0,'test':0},'dev':{'anal':0,'dev':3,'test':0},'test':{'anal':0,'dev':0,'test':2}}
     totalStaff:any = {'anal':0,'dev':0,'test':0};
     points: any = {'anal':0,'dev':0,'test':0};
-    day:number = 1;
+    day:number = 8;
     allowPointsDistribution:boolean = false;
     
     client: HttpClient
     
 
-    @ViewChild(specsDistribution,{static:false})
-    
-    private status = ['Selected','AnalProg','AnalDone','DevProg','DevDone','Test','ReadyDeploy','Deploy']
+    ColNames:string[] = ['Selected','AnalProg','AnalDone','DevProg','DevDone','Test','ReadyDeploy','Deploy']
 
     
     constructor(private apiService:ApiService,private loginService:LoginService,private router:Router){
@@ -42,7 +36,7 @@ export class kanbantable implements OnInit,AfterViewInit{
     }
 
     parseCard(cardJson){
-        return new card(cardJson['nameCard'],cardJson['dataBegSession'],cardJson['dataEndSession'],cardJson['development'],cardJson['allDevelopment'],cardJson['analysis'],cardJson['allAnalysis'],cardJson['testing'],cardJson['allTesting'],cardJson['money'],cardJson['subs'],cardJson['colorCard'],cardJson['status'],cardJson['priority'])
+        return new card(cardJson['idCard'],cardJson['nameCard'],cardJson['dataBegSession'],cardJson['dataEndSession'],cardJson['development'],cardJson['allDevelopment'],cardJson['analysis'],cardJson['allAnalysis'],cardJson['testing'],cardJson['allTesting'],cardJson['money'],cardJson['subs'],cardJson['colorCard'],cardJson['status'],cardJson['priority'])
     }
 
     countTotalStaff(){
@@ -57,23 +51,23 @@ export class kanbantable implements OnInit,AfterViewInit{
     }
 
     getAllCards(){
-        //let email = 'stasKruto@gmail.com'
+        console.log(localStorage.getItem('currentUser'))
         let email = localStorage.getItem('currentUser')
         this.apiService.getCards(email)
         .subscribe(
             data => {
-                console.log(data['cards'][this.status[2]])
                 this.CardList = []
                 for(var i =0;i<8;i++){
                     this.CardList[i] = []
                     let len = data['cards']
-                    if(len.hasOwnProperty(this.status[i]))
-                    for(var j =0; j< len[this.status[i]]['length'];j++){
-                        var tmpCard = data['cards'][this.status[i]][j.toString()]
-                        var Card = this.parseCard(tmpCard)
-                        this.CardList[i].push(Card)
-                        console.log(this.CardList)
-                    }
+                    if(len.hasOwnProperty(this.ColNames[i])){
+                        for(var j =0; j< len[this.ColNames[i]]['length'];j++){
+                            var tmpCard = data['cards'][this.ColNames[i]][j.toString()]
+
+                            var Card = this.parseCard(tmpCard)
+                            this.CardList[i].push(Card)
+                        }
+                }
                 
                 }
                 
@@ -86,16 +80,17 @@ export class kanbantable implements OnInit,AfterViewInit{
 
     logout(){
         this.loginService.logout()
-        console.log(localStorage.getItem('currentUser'))
+        this.router.navigate(['/login'])
     }
 
+    //Самопальный инит
     // ngOnInit(){
     //     this.countTotalStaff()
     //     this.CardList = []
     //             for(var i =0;i<8;i++){
     //                 this.CardList[i] = []
     //                 for(var j =0; j< 2;j++){
-    //                     var Card = new card('name',1,0,5,5,5,8,9,14,25,2,'Orange',i,1)
+    //                     var Card = new card(i*j,'name',1,0,5,5,5,8,9,14,25,2,'Orange',i,1)
     //                     this.CardList[i].push(Card)
     //                }
     //             }
@@ -120,9 +115,14 @@ export class kanbantable implements OnInit,AfterViewInit{
                 }
             }
         })
-        this.apiService.postUpdatedCards(resp)
+        let email = 'stas'
+        this.apiService.postUpdatedCards(email,resp)
         .subscribe( data =>{
+            console.log(data)
             if(data['status'] = 'ok'){
+                this.cc.toArray().forEach(c=>{
+                    c.updateOlds()
+                })
                 this.getAllCards()
                 this.updateDay()
             }
@@ -134,7 +134,13 @@ export class kanbantable implements OnInit,AfterViewInit{
 
     updateDay(){
         this.day++;
+        this.allowPointsDistribution = false;
+        this.points = {'anal':0,'dev':0,'test':0};
         //Какой-нибудь апдейт в график
+    }
+
+    recieveBoolean($event){
+        this.allowPointsDistribution = $event;
     }
     
 }

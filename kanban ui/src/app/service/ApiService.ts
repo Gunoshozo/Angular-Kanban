@@ -18,11 +18,12 @@ export class ApiService {
     let test = specs['test']['anal']+specs['test']['test']+specs['test']['dev']
 
     let req = {'day':day,'anal':anal,'dev':dev,'test':test}
+    console.log(req)
     return this.httpClient.get("http://25.65.79.64:8000/controller/api/get_points?day="+day.toString()+"&anal="+anal.toString()+"&dev="+dev.toString()+"&test="+test.toString())
   }
 
-  public postUpdatedCards(cards){
-    return this.httpClient.post("http://25.65.79.64:8000/controller/api/change_progress",cards)
+  public postUpdatedCards(email,cards){
+    return this.httpClient.post("http://25.65.79.64:8000/controller/api/change_progress/"+email,cards)
   }
 
 }

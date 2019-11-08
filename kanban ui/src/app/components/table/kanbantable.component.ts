@@ -70,6 +70,7 @@ export class kanbantable implements OnInit{
                 }
                 
                 }
+                console.log(this.CardList)
                 
             },
             error =>{
@@ -83,7 +84,7 @@ export class kanbantable implements OnInit{
         this.router.navigate(['/login'])
     }
 
-    //Самопальный инит
+    // Кустарный инит
     // ngOnInit(){
     //     this.countTotalStaff()
     //     this.CardList = []
@@ -115,14 +116,11 @@ export class kanbantable implements OnInit{
                 }
             }
         })
-        let email = 'stas'
+        let email = localStorage.getItem('currentUser')
         this.apiService.postUpdatedCards(email,resp)
         .subscribe( data =>{
             console.log(data)
             if(data['status'] = 'ok'){
-                this.cc.toArray().forEach(c=>{
-                    c.updateOlds()
-                })
                 this.getAllCards()
                 this.updateDay()
             }
@@ -136,6 +134,9 @@ export class kanbantable implements OnInit{
         this.day++;
         this.allowPointsDistribution = false;
         this.points = {'anal':0,'dev':0,'test':0};
+        this.cc.toArray().forEach(c=>{
+            c.updateOlds()
+        })
         //Какой-нибудь апдейт в график
     }
 

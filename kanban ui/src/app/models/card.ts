@@ -13,7 +13,7 @@ export class card{
     money: number
     subs: number
     color: any
-    status: number
+    status: any
     priority: number
     email: string
 

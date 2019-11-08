@@ -21,7 +21,7 @@ export class cardComponent implements OnInit{
 
     addToStatus(num){
         switch(this.Card.status){
-            case 1:{
+            case 'AnalProg':{
                     if(num > 0 &&  this.Card.CurrentAnalysis < this.Card.TotalAnalysis  && this.points['anal']>0){
                         this.Card.CurrentAnalysis+=num
                         this.points['anal']--
@@ -33,7 +33,7 @@ export class cardComponent implements OnInit{
                     }
                     return
             }
-            case 3:{
+            case 'DevProg':{
                 if(num > 0 &&  this.Card.CurrentDevelopment < this.Card.TotalDevelopment  && this.points['dev']>0){
                     this.Card.CurrentDevelopment+=num
                     this.points['dev']--
@@ -45,7 +45,7 @@ export class cardComponent implements OnInit{
                 }
                 return
             }
-            case 5:{
+            case 'Test':{
                 if(num > 0 &&  this.Card.CurrentTesting < this.Card.TotalTesting  && this.points['test']>0){
                     this.Card.CurrentTesting+=num
                     this.points['test']--

@@ -34,10 +34,12 @@ export class kanbantable implements OnInit{
 
     
     constructor(private apiService:ApiService,private loginService:LoginService,private router:Router){
+        //Редирект в случае, если пользователь не залогинен
         // if(this.loginService.currentUserValue == null) 
         //         this.router.navigate(['/login'])
     }
 
+    
     parseCard(cardJson){
         return new card(cardJson['idCard'],cardJson['nameCard'],cardJson['dataBegSession'],cardJson['dataEndSession'],cardJson['development'],cardJson['allDevelopment'],cardJson['analysis'],cardJson['allAnalysis'],cardJson['testing'],cardJson['allTesting'],cardJson['money'],cardJson['subs'],cardJson['colorCard'],cardJson['status'],cardJson['priority'])
     }
@@ -146,11 +148,7 @@ export class kanbantable implements OnInit{
         let Firstid = this.CardList[5][0].idCard
         this.apiService.getEvent(this.day,Firstid)
         .subscribe(data =>{
-            if(data['status'] == 'Ok')
-                this.processEvent(data['command'])
-            else{
-                console.error('event error')
-            }
+                this.processEvent(data)
         },
         error =>{
             console.error('event error')
@@ -158,15 +156,16 @@ export class kanbantable implements OnInit{
         //Какой-нибудь апдейт в график
     }
 
-    processEvent(e:string){
+    processEvent(e){
         this.EventText = e
-        let words =e.split(' ')
-        let first = words.shift()
-        
-        switch(first){
-            case 'block':{ this.block(words); break;}
-            case 'add':{ this.add(words); break;}
-            case 'set':{ this.set(words); break;}
+        if(e['command'] != ''){
+            let words =e['command'].split(' ')
+            let first = words.shift()   
+            switch(first){
+                case 'block':{ this.block(words); break;}
+                case 'add':{ this.add(words); break;}
+                case 'set':{ this.set(words); break;}
+            }
         }
     }
 
@@ -184,6 +183,7 @@ export class kanbantable implements OnInit{
             case 'developer':{this.staff['dev']['dev']++;break}
             case 'analyst':{this.staff['anal']['anal']++;break}
         }
+        this.countTotalStaff()
     }
 
     set(words:string[]){

@@ -55,14 +55,11 @@
     </td>
     </tr>
     <tr>
-        <td class="expedise"></td>
-        <td class="expedise"></td>
-        <td class="expedise"></td>
-        <td class="expedise"></td>
-        <td class="expedise"></td>
-        <td class="expedise"></td>
-        <td class="expedise"></td>
-        <td class="expedise"></td>
+        <td class="expedise" *ngFor='let ec of expedice'>
+                <div *ngIf='ec != null'>
+                        <cardComponent [CardObject]='ec' [(points)]='points' [(canUpgrade)]='allowPointsDistribution'></cardComponent>
+                </div>
+        </td>
     </tr>
     <tr class="cardColumns">
     <td *ngFor='let card of CardList; let i = index' class="column{{i}}">

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output } from "@angular/core";
 import { card } from 'src/app/models/card';
 
+
 @Component({
     selector:'testpage',
     templateUrl:'./testpage.html',

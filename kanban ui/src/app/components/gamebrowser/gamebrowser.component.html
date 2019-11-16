@@ -1,0 +1,14 @@
+<p>Active tables!</p>
+
+<button type="button" class="btn btn-info" (click)='toMain()'>Back</button>
+<button type="button" class="btn btn-info" (click)='update()'>Refresh</button>
+<table>
+<tr *ngFor='let t of tables; let i = index'>
+    <td>
+        Name: {{t.nameGameTable}}  Players: {{t.usersCount}}/maxCount
+    </td>
+    <td>
+        <button type="button" class="btn btn-success" (click)='join(i)'>Join</button>
+    </td>
+</tr>
+</table>

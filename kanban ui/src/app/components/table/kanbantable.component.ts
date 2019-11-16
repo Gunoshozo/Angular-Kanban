@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 
 export class kanbantable implements OnInit{
     CardList: card[][]
+    expedice: any[] = [null,null,null,null,null,null,null,null]
     @ViewChildren(cardComponent) cc:QueryList<cardComponent>
     @Input()
     limit: number[]
@@ -22,17 +23,18 @@ export class kanbantable implements OnInit{
     totalStaff:any = {'anal':0,'dev':0,'test':0};
     points: any = {'anal':0,'dev':0,'test':0};
     day:number = 8;
+    EventText: string = ''
+
     allowPointsDistribution:boolean = false;
-    
+
     client: HttpClient
     
-
     ColNames:string[] = ['Selected','AnalProg','AnalDone','DevProg','DevDone','Test','ReadyDeploy','Deploy']
 
     
     constructor(private apiService:ApiService,private loginService:LoginService,private router:Router){
-        if(this.loginService.currentUserValue == null) 
-                this.router.navigate(['/login'])
+        // if(this.loginService.currentUserValue == null) 
+        //         this.router.navigate(['/login'])
     }
 
     parseCard(cardJson){
@@ -47,11 +49,11 @@ export class kanbantable implements OnInit{
     
     ngOnInit(): void {
         this.countTotalStaff()
+        console.log(this.expedice.length)
         this.getAllCards()
     }
 
     getAllCards(){
-        console.log(localStorage.getItem('currentUser'))
         let email = localStorage.getItem('currentUser')
         this.apiService.getCards(email)
         .subscribe(
@@ -119,7 +121,6 @@ export class kanbantable implements OnInit{
         let email = localStorage.getItem('currentUser')
         this.apiService.postUpdatedCards(email,resp)
         .subscribe( data =>{
-            console.log(data)
             if(data['status'] = 'ok'){
                 this.getAllCards()
                 this.updateDay()
@@ -137,7 +138,19 @@ export class kanbantable implements OnInit{
         this.cc.toArray().forEach(c=>{
             c.updateOlds()
         })
+        let Firstid = this.CardList[5][0].idCard
+        this.apiService.getEvent(this.day,Firstid)
+        .subscribe(data =>{
+            this.processEvent(data)
+        },
+        error =>{
+            console.log('error')
+        })
         //Какой-нибудь апдейт в график
+    }
+
+    processEvent(e){
+        
     }
 
     recieveBoolean($event){

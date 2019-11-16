@@ -1,5 +1,5 @@
 <div class='card'>
-    <table>
+    <table *ngIf='notBlocked'>
         <tr><td>
     <table class= {{Card.getColor()}}>
         <tr class={{Card.getColor()}}>
@@ -44,5 +44,14 @@
     </table>
 </td>
 </tr>
+</table>
+<table *ngIf='!notBlocked'>
+    <tr>
+        <td colspan="3">
+            <div class='ceneredText'>
+                Card is blocked
+            </div>
+        </td>
+    </tr>
 </table>
 </div>  

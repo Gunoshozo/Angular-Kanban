@@ -21,7 +21,7 @@ export class login implements OnInit{
         ){
            // если уже залогинен
            if(this.loginService.currentUserValue) 
-                this.router.navigate(['/game'])
+                this.router.navigate(['/mainmenu'])
         }
 
     ngOnInit(): void {

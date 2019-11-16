@@ -8,16 +8,20 @@ import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 })
 
 export class cardComponent implements OnInit{
-    OldValues: { 'anal': number; 'dev': number; 'test': number; };
-    ngOnInit(): void {
-        this.OldValues = {'anal':this.Card.CurrentAnalysis,'dev': this.Card.CurrentDevelopment,'test':this.Card.CurrentTesting}
-    }
+    
+    
     @Input('CardObject')
     Card:card
     @Input('canUpgrade')
     canUpgrade:boolean = false;
     @Input('points')
     points = {'anal':0,'dev':0,'test':0}
+    notBlocked:boolean = false;
+    OldValues: { 'anal': number; 'dev': number; 'test': number; };
+
+    ngOnInit(): void {
+        this.OldValues = {'anal':this.Card.CurrentAnalysis,'dev': this.Card.CurrentDevelopment,'test':this.Card.CurrentTesting}
+    }
 
     addToStatus(num){
         switch(this.Card.status){
@@ -72,5 +76,13 @@ export class cardComponent implements OnInit{
         this.OldValues['anal'] = this.Card.CurrentAnalysis
         this.OldValues['dev'] = this.Card.CurrentDevelopment
         this.OldValues['test'] = this.Card.CurrentTesting
+    }
+
+    block(){
+        this.notBlocked= false;
+    }
+
+    unblock(){
+        this.notBlocked = true;
     }
 }

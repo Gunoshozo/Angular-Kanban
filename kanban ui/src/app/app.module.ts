@@ -10,9 +10,12 @@ import { login } from './components/login/login.component';
 import { register } from './components/register/register.component';
 import { AppRoutingModule } from './app-routing.module';
 import { gameComponent } from './components/game';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { testpage } from './components/testpage/testpage';
 import { specsDistribution } from './components/specsDistribution/specsDistrib.component';
+import { LobbyComponent } from './components/lobby/lobby.component';
+import { GamebrowserComponent } from './components/gamebrowser/gamebrowser.component';
+import { MainmenuComponent } from './components/mainmenu/mainmenu.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +26,17 @@ import { specsDistribution } from './components/specsDistribution/specsDistrib.c
     register,
     gameComponent,
     testpage,
-    specsDistribution
+    specsDistribution,
+    LobbyComponent,
+    GamebrowserComponent,
+    MainmenuComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

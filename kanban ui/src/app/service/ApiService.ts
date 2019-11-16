@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { GameTable } from '../models/gametable';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,17 @@ export class ApiService {
 
   public postUpdatedCards(email,cards){
     return this.httpClient.post("http://25.65.79.64:8000/controller/api/change_progress/"+email,cards)
+  }
+
+  public getTables(){
+    return  [new GameTable(0,'new',5), new GameTable(1,'111',4)];
+  }
+
+  public join(table_id:number){
+
+  }
+  public getEvent(day,firtsTest){
+    return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_cards?day='+day.toString()+'&firstTest='+firtsTest.toString())
   }
 
 }

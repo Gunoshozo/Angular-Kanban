@@ -24,7 +24,10 @@ export class specsDistribution{
 
     @Input() specsDistributed;
 
+    @Input() blockedDepartment:boolean[] = []
+
     @Output() specsDistributedEmitter = new EventEmitter<boolean>()
+    
     
 
     add(num:number,a,b){

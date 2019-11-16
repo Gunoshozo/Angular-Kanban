@@ -26,6 +26,7 @@ export class kanbantable implements OnInit{
     EventText: string = ''
 
     allowPointsDistribution:boolean = false;
+    blockedDepartment:boolean[] = [false,false,false]
 
     client: HttpClient
     
@@ -67,10 +68,14 @@ export class kanbantable implements OnInit{
                             var tmpCard = data['cards'][this.ColNames[i]][j.toString()]
 
                             var Card = this.parseCard(tmpCard)
-                            this.CardList[i].push(Card)
+                            if(Card.color='White' && i != 0 && i != 7){
+                                this.expedice[i].push(Card)
+                            } 
+                            else{
+                                this.CardList[i].push(Card)
+                            }
                         }
                 }
-                
                 }
                 console.log(this.CardList)
                 
@@ -141,17 +146,53 @@ export class kanbantable implements OnInit{
         let Firstid = this.CardList[5][0].idCard
         this.apiService.getEvent(this.day,Firstid)
         .subscribe(data =>{
-            this.processEvent(data)
+            if(data['status'] == 'Ok')
+                this.processEvent(data['command'])
+            else{
+                console.error('event error')
+            }
         },
         error =>{
-            console.log('error')
+            console.error('event error')
         })
         //Какой-нибудь апдейт в график
     }
 
-    processEvent(e){
+    processEvent(e:string){
+        this.EventText = e
+        let words =e.split(' ')
+        let first = words.shift()
         
+        switch(first){
+            case 'block':{ this.block(words); break;}
+            case 'add':{ this.add(words); break;}
+            case 'set':{ this.set(words); break;}
+        }
     }
+
+    block(words){
+        switch(words[0]){
+            case 'anal':{ this.blockedDepartment[0] = true;break;}
+            case 'dev':  {this.blockedDepartment[1] = true;break;}
+            case 'test':{ this.blockedDepartment[2]=true;break;}
+        }
+    }
+
+    add(words){
+        switch(words[0]){
+            case 'tester':{this.staff['test']['test']++;break}
+            case 'developer':{this.staff['dev']['dev']++;break}
+            case 'analyst':{this.staff['anal']['anal']++;break}
+        }
+    }
+
+    set(words:string[]){
+        switch(words[0]){
+            case 'WIP_Ready':{this.limit[6] = parseInt(words[1])}
+        }
+
+    }
+
 
     recieveBoolean($event){
         this.allowPointsDistribution = $event;

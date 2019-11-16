@@ -13,7 +13,7 @@
                         </div>
 </div>
 <div class="btn-group btn-centered">
-                <specsDistribution [(specs)]="staff" [totalSpecs]="totalStaff" [(points)]="points" [apiService]="apiService" [day]="day" [(specsDistributed)] = "allowPointsDistribution" (specsDistributedEmitter) = "recieveBoolean($event)"></specsDistribution>
+                <specsDistribution [(specs)]="staff" [totalSpecs]="totalStaff" [(points)]="points" [apiService]="apiService" [day]="day" [(specsDistributed)] = "allowPointsDistribution" (specsDistributedEmitter) = "recieveBoolean($event)" [blockedDepartment]='blockedDepartment'></specsDistribution>
 </div>
 <table>
     <tr>
@@ -24,25 +24,25 @@
     <td colspan="2" class="cell">
             <p class="tittle">Analysis</p>
             <p class="wip">WIP limit: {{limit[0]}}</p>
-            <p>Аналитиков: {{staff['anal']['anal']}}</p>
-            <p>Разработчиков: {{staff['anal']['dev']}}</p>
-            <p>Тестеров: {{staff['anal']['test']}}</p>
+            <p>Analysts: {{staff['anal']['anal']}}</p>
+            <p>Devs: {{staff['anal']['dev']}}</p>
+            <p>Testers: {{staff['anal']['test']}}</p>
             <p class="points" *ngIf="points['anal'] != 0">Очков:{{points['anal']}}</p>
     </td>
     <td colspan="2" class="cell">
             <p class="tittle">Development</p>
             <p class="wip">WIP limit: {{limit[1]}}</p>
-            <p>Аналитиков: {{staff['dev']['anal']}}</p>
-            <p>Разработчиков: {{staff['dev']['dev']}}</p>
-            <p>Тестеров: {{staff['dev']['test']}}</p>
+            <p>Analysts: {{staff['dev']['anal']}}</p>
+            <p>Devs: {{staff['dev']['dev']}}</p>
+            <p>Testers: {{staff['dev']['test']}}</p>
             <p class="points" *ngIf="points['dev'] != 0">Очков:{{points['dev']}}</p>
     </td>
     <td class="cell">
             <p class="tittle">Testing</p>
             <p class="wip">WIP limit: {{limit[2]}}</p>
-            <p>Аналитиков: {{staff['test']['anal']}}</p>
-            <p>Разработчиков: {{staff['test']['dev']}}</p>
-            <p>Тестеров: {{staff['test']['test']}}</p>
+            <p>Analysts: {{staff['test']['anal']}}</p>
+            <p>Devs: {{staff['test']['dev']}}</p>
+            <p>Testers: {{staff['test']['test']}}</p>
             <p class="points" *ngIf="points['test'] != 0">Очков:{{points['test']}}</p>
     </td>
     <td class="cell">

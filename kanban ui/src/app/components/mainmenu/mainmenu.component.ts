@@ -38,11 +38,12 @@ export class MainmenuComponent implements OnInit {
     if(this.lobbyForm.invalid) return
     this.apiService.createTable(this.lobbyForm.controls.lobbyName.value,this.lobbyForm.controls.maxPlayers.value)
     .subscribe( data=>{
-      //localStorage.setItem('tableId',data['tableId'])
+      console.log(data)
+      localStorage.setItem('tableId',data['id_table'])
       this.router.navigate(['/game'])
     },
     error =>{
-        console.error('error')
+        console.error(error)
     })
   }
 }

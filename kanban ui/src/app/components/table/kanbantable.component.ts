@@ -24,7 +24,6 @@ export class kanbantable implements OnInit{
     points: any = {'anal':0,'dev':0,'test':0};
     day:number = 8;
     EventText: string = ''
-    tableID:any;
 
     allowPointsDistribution:boolean = false;
     blockedDepartment:boolean[] = [false,false,false]
@@ -145,7 +144,7 @@ export class kanbantable implements OnInit{
 
     updateDay(){
         this.day++;
-        // if(this.day == 31)
+        // if(this.day == 22)
         // {
         //     this.router.navigate(['/report'])
         //     //передача данных из графиков в отчет ( скорее всего через сервис)

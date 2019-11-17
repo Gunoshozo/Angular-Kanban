@@ -12,8 +12,8 @@ import { LoginService } from 'src/app/service/loginService';
 export class GamebrowserComponent implements OnInit {
 
   constructor(private loginService:LoginService,private apiService:ApiService,private router:Router) {
-      // if(this.loginService.currentUserValue == null) 
-    //             this.router.navigate(['/login'])
+      if(this.loginService.currentUserValue == null) 
+                this.router.navigate(['/login'])
    }
 
   tables: GameTable[] = [];
@@ -32,7 +32,12 @@ export class GamebrowserComponent implements OnInit {
 
   join(table_index:number){
     this.apiService.join(this.tables[table_index].tableId)
-    this.router.navigate(['/game'])
+    .subscribe(data =>{
+      this.router.navigate(['/game'])
+    },error =>{
+      console.error(error)
+    })
+    
   }
 
 }

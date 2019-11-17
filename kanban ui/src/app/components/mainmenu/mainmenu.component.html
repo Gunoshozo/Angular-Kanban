@@ -1,10 +1,24 @@
-<p>Username:{{username}}</p>
+<p>Email: {{username}}</p>
 <div class="btn-group">
-<button class="btn btn-success" (click)=toBrowser()>Table browser</button>
+<button class="btn btn-primary" (click)=toBrowser()>Table browser</button>
 <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">Create table</button>
-        <div class="dropdown-menu"><div class='dropdown-item'><lobby>
-        </lobby ></div>
-        </div>
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">Create table</button>
+            <div class="dropdown-menu"><div class='dropdown-item'>
+                <form [formGroup]="lobbyForm" (ngSubmit)=onSubmit()>
+                    <div class="form-group">
+                        <label for="lobbyName">Lobby name</label>
+                        <input type="text" formControlName="lobbyName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="MaxPlayers">MaxPlayers</label>
+                        <input type="number" min="2" formControlName="maxPlayers" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary">
+                            Create
+                        </button>
+                    </div>
+                </form>
+            </div>
     </div>
 </div>

@@ -24,6 +24,7 @@ export class kanbantable implements OnInit{
     points: any = {'anal':0,'dev':0,'test':0};
     day:number = 8;
     EventText: string = ''
+    tableID:any;
 
     allowPointsDistribution:boolean = false;
     blockedDepartment:boolean[] = [false,false,false]
@@ -35,8 +36,8 @@ export class kanbantable implements OnInit{
     
     constructor(private apiService:ApiService,private loginService:LoginService,private router:Router){
         //Редирект в случае, если пользователь не залогинен
-        // if(this.loginService.currentUserValue == null) 
-        //         this.router.navigate(['/login'])
+        if(this.loginService.currentUserValue == null) 
+                this.router.navigate(['/login'])
     }
 
     
@@ -60,6 +61,7 @@ export class kanbantable implements OnInit{
         this.apiService.getCards(email)
         .subscribe(
             data => {
+                console.log(data)
                 this.CardList = []
                 for(var i =0;i<8;i++){
                     this.CardList[i] = []
@@ -69,7 +71,7 @@ export class kanbantable implements OnInit{
                             var tmpCard = data['cards'][this.ColNames[i]][j.toString()]
 
                             var Card = this.parseCard(tmpCard)
-                            if(Card.color='White' && i != 0 && i != 7){
+                            if(Card.color=='White' && i != 0 && i != 7){
                                 this.expedice[i] = Card
                             } 
                             else{
@@ -143,6 +145,11 @@ export class kanbantable implements OnInit{
 
     updateDay(){
         this.day++;
+        // if(this.day == 31)
+        // {
+        //     this.router.navigate(['/report'])
+        //     //передача данных из графиков в отчет ( скорее всего через сервис)
+        // }
         this.allowPointsDistribution = false;
         this.points = {'anal':0,'dev':0,'test':0};
         this.cc.toArray().forEach(c=>{

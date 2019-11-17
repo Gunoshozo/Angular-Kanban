@@ -21,8 +21,6 @@ export class cardComponent implements OnInit{
 
     ngOnInit(): void {
         this.OldValues = {'anal':this.Card.CurrentAnalysis,'dev': this.Card.CurrentDevelopment,'test':this.Card.CurrentTesting}
-        console.log(this.Card.status)
-        console.log(this.isMaxed)
     }
 
     addToStatus(num){

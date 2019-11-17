@@ -29,7 +29,7 @@ export class login implements OnInit{
             email:['',Validators.required],
             password: ['',Validators.required]
         })
-        this.returnUrl = '/game'
+        this.returnUrl = '/mainmenu'
         // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
     

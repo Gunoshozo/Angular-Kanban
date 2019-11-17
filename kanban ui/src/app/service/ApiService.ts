@@ -38,4 +38,10 @@ export class ApiService {
     return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_cards?day='+day.toString()+'&firstTest='+firtsTest.toString())
   }
 
+  public createTable(name, num){
+    let email = localStorage.getItem('currentUser');
+    let request = {'nameGameTable':name,'numberOfPlayers':num,'email':email}
+    return this.httpClient.post('http://25.65.79.64:8000/controller/api/create_table',request)
+  }
+
 }

@@ -5,7 +5,6 @@ import { register } from './components/register';
 import { gameComponent } from './components/game';
 import { testpage } from './components/testpage/testpage';
 import { MainmenuComponent } from './components/mainmenu';
-import { LobbyComponent } from './components/lobby';
 import { GamebrowserComponent } from './components/gamebrowser';
 
 
@@ -15,7 +14,6 @@ const routes: Routes = [
   { path: 'register', component: register },
   { path: 'test', component: testpage},
   { path: 'mainmenu', component: MainmenuComponent},
-  { path: 'lobby', component: LobbyComponent},
   { path: 'browser', component: GamebrowserComponent},
   
   { path: '**', redirectTo: 'login' }

@@ -1,3 +1,4 @@
+
 <div class='card'>
     <table *ngIf='notBlocked'>
         <tr><td>
@@ -36,7 +37,7 @@
         </tr>
     </table>
 </td><td>
-    <table *ngIf="canUpgrade && (Card.status == 'AnalProg' || Card.status == 'DevProg' || Card.status =='Test') " >
+    <table *ngIf="canUpgrade && (Card.status == 'AnalProg' || Card.status == 'DevProg' || Card.status =='Test') && !isMaxed" >
         <tr>
             <td><button class="btn btn-primary btn-sm" (click)="addToStatus(1)">+</button> </td> 
             <td><button class="btn btn-primary btn-sm" (click)="addToStatus(-1)">-</button> </td> 

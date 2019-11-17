@@ -52,7 +52,6 @@ export class kanbantable implements OnInit{
     
     ngOnInit(): void {
         this.countTotalStaff()
-        console.log(this.expedice.length)
         this.getAllCards()
     }
 
@@ -71,7 +70,7 @@ export class kanbantable implements OnInit{
 
                             var Card = this.parseCard(tmpCard)
                             if(Card.color='White' && i != 0 && i != 7){
-                                this.expedice[i].push(Card)
+                                this.expedice[i] = Card
                             } 
                             else{
                                 this.CardList[i].push(Card)
@@ -79,11 +78,10 @@ export class kanbantable implements OnInit{
                         }
                 }
                 }
-                console.log(this.CardList)
                 
             },
             error =>{
-                console.log('error')
+                console.error('error')
             }
         )
     }
@@ -99,9 +97,14 @@ export class kanbantable implements OnInit{
     //     this.CardList = []
     //             for(var i =0;i<8;i++){
     //                 this.CardList[i] = []
-    //                 for(var j =0; j< 2;j++){
-    //                     var Card = new card(i*j,'name',1,0,5,5,5,8,9,14,25,2,'Orange',i,1)
+    //                 for(var j =0; j< 1;j++){
+    //                     var Card = new card(i*j,'name',1,0,5,7,5,8,9,14,25,2,'White',this.ColNames[i],1)
+    //                     if(Card.color='White' && i != 0 && i != 7){
+    //                         this.expedice[i]= Card
+    //                     } 
+    //                     else{
     //                     this.CardList[i].push(Card)
+    //                     }
     //                }
     //             }
     // }
@@ -133,7 +136,7 @@ export class kanbantable implements OnInit{
                 this.updateDay()
             }
             else{
-                console.log('fail')
+                console.error('fail')
             }
         })
     }

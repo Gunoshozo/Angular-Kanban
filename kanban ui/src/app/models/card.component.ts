@@ -16,11 +16,13 @@ export class cardComponent implements OnInit{
     canUpgrade:boolean = false;
     @Input('points')
     points = {'anal':0,'dev':0,'test':0}
-    notBlocked:boolean = false;
+    notBlocked:boolean = true;
     OldValues: { 'anal': number; 'dev': number; 'test': number; };
 
     ngOnInit(): void {
         this.OldValues = {'anal':this.Card.CurrentAnalysis,'dev': this.Card.CurrentDevelopment,'test':this.Card.CurrentTesting}
+        console.log(this.Card.status)
+        console.log(this.isMaxed)
     }
 
     addToStatus(num){
@@ -67,9 +69,9 @@ export class cardComponent implements OnInit{
         return this.OldValues['anal'] != this.Card.CurrentAnalysis || this.OldValues['dev'] != this.Card.CurrentDevelopment || this.OldValues['test'] != this.Card.CurrentTesting
     }  
 
-    public get isMaxed(){
-        return (this.Card.status == 1 && this.OldValues['anal']==this.Card.TotalAnalysis) || (this.Card.status == 3 && this.OldValues['dev']==this.Card.TotalDevelopment) 
-        || (this.Card.status == 5 && this.OldValues['test']==this.Card.TotalTesting)
+    public get isMaxed():boolean{
+        return (this.Card.status == 'AnalProg' && this.OldValues['anal']==this.Card.TotalAnalysis) || (this.Card.status == 'DevProg' && this.OldValues['dev']==this.Card.TotalDevelopment) 
+        || (this.Card.status == 'Test' && this.OldValues['test']==this.Card.TotalTesting)
     }
 
     updateOlds(){

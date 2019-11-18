@@ -1,6 +1,19 @@
 <button (click)="logout()">Logout</button>
+<button (click)="toMain()">To main <menu></menu></button>
+<button (click)="startGame()" *ngIf='day==7'>start game</button>
 <div class="btn-group btn-centered">
-                <button type="button" class="btn btn-info" disabled id="day">Day: {{day}}</button>              
+                <div class="btn-group">
+                        <div class="btn-group dropleft">
+                                        <button type="button" class='btn btn-info dropdown-toggle dropdown-toggle-split' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span class="sr-only">Toggle dropdown</span>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                        <a>{{EventText}}</a>
+                                                </div>
+                                        <button type="button" class="btn btn-info" disabled id="day">Day: {{day}}</button>
+                        </div>
+                                
+                </div>
                 <button class="btn btn-success" id="confirm" (click)="confirmChanges()" [disabled]='!allowPointsDistribution' >Confirm changes</button>  
                         
         <div class="btn-group" role="group">
@@ -63,7 +76,7 @@
     </tr>
     <tr class="cardColumns">
     <td *ngFor='let card of CardList; let i = index' class="column{{i}}">
-        <cardComponent *ngFor ='let c of card' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' ></cardComponent>
+        <cardComponent *ngFor ='let c of card' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' (moveEvent)="moveCard($event)"></cardComponent>
     </td>
     </tr>
 </table>

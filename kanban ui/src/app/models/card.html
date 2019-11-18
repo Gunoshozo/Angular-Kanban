@@ -1,8 +1,7 @@
-
-<div class='card'>
+<div class="card">
     <table *ngIf='notBlocked'>
         <tr><td>
-    <table class= {{Card.getColor()}}>
+    <table class ="{{Card.getColor()}} maxout">
         <tr class={{Card.getColor()}}>
             <td class="name">{{Card.CardName}}</td>
             <td class="typeInfo" colspan="2">{{Card.getTypeInfo()}}</td>

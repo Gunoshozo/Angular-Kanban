@@ -27,7 +27,12 @@ export class GamebrowserComponent implements OnInit {
     this.router.navigate(['/mainmenu'])
   }
   update(){
-    this.tables = this.apiService.getTables()
+    this.apiService.getTables()
+    .subscribe( data=>{
+      this.tables = data['tables']
+    },error=>{
+        console.error(error)
+    })  
   }
 
   join(table_index:number){

@@ -1,5 +1,5 @@
 import {card} from './card'
-import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 
 @Component({
     selector:'cardComponent',
@@ -18,6 +18,7 @@ export class cardComponent implements OnInit{
     points = {'anal':0,'dev':0,'test':0}
     notBlocked:boolean = true;
     OldValues: { 'anal': number; 'dev': number; 'test': number; };
+    @Output() moveEvent = new EventEmitter<number>();
 
     ngOnInit(): void {
         this.OldValues = {'anal':this.Card.CurrentAnalysis,'dev': this.Card.CurrentDevelopment,'test':this.Card.CurrentTesting}
@@ -29,11 +30,16 @@ export class cardComponent implements OnInit{
                     if(num > 0 &&  this.Card.CurrentAnalysis < this.Card.TotalAnalysis  && this.points['anal']>0){
                         this.Card.CurrentAnalysis+=num
                         this.points['anal']--
+                        if(this.Card.CurrentAnalysis == this.Card.TotalAnalysis){
+                            this.moveEvent.emit(this.Card.idCard)
+                            this.canUpgrade = false;
+                        }
                     }
                     if(num < 0 && this.Card.CurrentAnalysis > this.OldValues['anal'])
                     {
                         this.Card.CurrentAnalysis+=num
                         this.points['anal']++
+                        
                     }
                     return
             }
@@ -41,6 +47,10 @@ export class cardComponent implements OnInit{
                 if(num > 0 &&  this.Card.CurrentDevelopment < this.Card.TotalDevelopment  && this.points['dev']>0){
                     this.Card.CurrentDevelopment+=num
                     this.points['dev']--
+                    if(this.Card.CurrentDevelopment == this.Card.TotalDevelopment){
+                        this.moveEvent.emit(this.Card.idCard)
+                        this.canUpgrade = false;
+                    }
                 }
                 if(num < 0 && this.Card.CurrentDevelopment > this.OldValues['dev'])
                 {
@@ -53,6 +63,10 @@ export class cardComponent implements OnInit{
                 if(num > 0 &&  this.Card.CurrentTesting < this.Card.TotalTesting  && this.points['test']>0){
                     this.Card.CurrentTesting+=num
                     this.points['test']--
+                    if(this.Card.CurrentTesting == this.Card.TotalTesting){
+                        this.moveEvent.emit(this.Card.idCard)
+                        this.canUpgrade = false;
+                    }
                 }
                 if(num < 0 && this.Card.CurrentTesting > this.OldValues['test'])
                 {

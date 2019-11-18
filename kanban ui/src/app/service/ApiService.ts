@@ -10,7 +10,8 @@ export class ApiService {
   constructor(private httpClient: HttpClient) { }
 
   public getCards(email: string) {
-    return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_cards?email='+email)
+    let idGameTable = localStorage.getItem('tableId')
+    return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_cards?email='+email+'&idGameTable='+idGameTable)
   }
 
   public getPoints(day:number,specs){
@@ -19,18 +20,17 @@ export class ApiService {
     let dev = specs['dev']['anal']+specs['dev']['test']+specs['dev']['dev']
     let test = specs['test']['anal']+specs['test']['test']+specs['test']['dev']
     let tableId = localStorage.getItem('tableId')
-    let req = {'id_table':tableId,'day':day,'anal':anal,'dev':dev,'test':test}
-    console.log(req)
-    return this.httpClient.get("http://25.65.79.64:8000/controller/api/get_points?day="+day.toString()+"&anal="+anal.toString()+"&dev="+dev.toString()+"&test="+test.toString())
+    return this.httpClient.get("http://25.65.79.64:8000/controller/api/get_points?id_table="+tableId+"&day="+day.toString()+"&anal="+anal.toString()+"&dev="+dev.toString()+"&test="+test.toString())
   }
 
-  public postUpdatedCards(email,cards){
-    return this.httpClient.post("http://25.65.79.64:8000/controller/api/change_progress/"+email,cards)
+  public postUpdatedCards(cards){
+    let tableId = localStorage.getItem('tableId')
+    return this.httpClient.post("http://25.65.79.64:8000/controller/api/change_progress",{'cards':cards,'idGameTable':tableId})
   }
 
   public getTables(){
     let email =  localStorage.getItem('currentUser')
-    return  this.httpClient.get("http://25.65.79.64:8000/controller/api/ ?email="+email)
+    return this.httpClient.get("http://25.65.79.64:8000/controller/api/?email="+email)
   }
 
   public join(table_id:number){
@@ -38,13 +38,18 @@ export class ApiService {
     return this.httpClient.post('http://25.65.79.64:8000/controller/api/add_user_to_table',{'IdGameTable':table_id,'email':email})
   }
   public getEvent(day,firtsTest){
-    return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_cards?day='+day.toString()+'&firstTest='+firtsTest.toString())
+    return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_event?day='+day.toString()+'&firstTest='+firtsTest)
   }
 
   public createTable(name, num){
     let email = localStorage.getItem('currentUser');
     let request = {'nameGameTable':name,'numberOfPlayers':num,'email':email}
     return this.httpClient.post('http://25.65.79.64:8000/controller/api/create_table',request)
+  }
+
+  public newDay(){
+    let tableid = localStorage.getItem('tableId')
+    return this.httpClient.get('http://25.65.79.64:8000/controller/api/new_day?idGameTable='+tableid.toString())
   }
 
 }

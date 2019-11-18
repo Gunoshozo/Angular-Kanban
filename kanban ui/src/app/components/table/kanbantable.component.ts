@@ -22,7 +22,7 @@ export class kanbantable implements OnInit{
     staff: any = {'anal':{'anal':2,'dev':0,'test':0},'dev':{'anal':0,'dev':3,'test':0},'test':{'anal':0,'dev':0,'test':2}}
     totalStaff:any = {'anal':0,'dev':0,'test':0};
     points: any = {'anal':0,'dev':0,'test':0};
-    day:number = 8;
+    day:number;
     EventText: string = ''
 
     allowPointsDistribution:boolean = false;
@@ -55,12 +55,22 @@ export class kanbantable implements OnInit{
         this.getAllCards()
     }
 
+    startGame(){
+        this.apiService.newDay()
+        .subscribe( data=>{
+            this.day = 8;
+        },error=>{
+            console.error(error)
+        })
+    }
+
     getAllCards(){
         let email = localStorage.getItem('currentUser')
         this.apiService.getCards(email)
         .subscribe(
             data => {
                 console.log(data)
+                this.day = data['day']
                 this.CardList = []
                 for(var i =0;i<8;i++){
                     this.CardList[i] = []
@@ -85,6 +95,11 @@ export class kanbantable implements OnInit{
                 console.error('error')
             }
         )
+    }
+
+    toMain(){
+        this.router.navigate(['/mainmenu'])
+        localStorage.removeItem('tableId')
     }
 
     logout(){
@@ -114,23 +129,26 @@ export class kanbantable implements OnInit{
         let resp = {'anal':[],'dev':[],'test':[]}
         this.cc.toArray().forEach(c =>{
             if(c.isModified){
+                console.log(c)
                 switch(c.Card.status){
-                    case 1: {
+                    case 'AnalProg': {
                         resp['anal'].push(c.Card)
                         break;
                     }
-                    case 3:{
+                    case 'DevProg':{
                         resp['dev'].push(c.Card)
                         break;
                     }
-                    case 5:{
+                    case 'Test':{
                         resp['test'].push(c.Card)
+                        break;
                     }
                 }
             }
         })
+        console.log(resp)
         let email = localStorage.getItem('currentUser')
-        this.apiService.postUpdatedCards(email,resp)
+        this.apiService.postUpdatedCards(resp)
         .subscribe( data =>{
             if(data['status'] = 'ok'){
                 this.getAllCards()
@@ -143,7 +161,7 @@ export class kanbantable implements OnInit{
     }
 
     updateDay(){
-        this.day++;
+        //Завершение игры
         // if(this.day == 22)
         // {
         //     this.router.navigate(['/report'])
@@ -154,7 +172,10 @@ export class kanbantable implements OnInit{
         this.cc.toArray().forEach(c=>{
             c.updateOlds()
         })
-        let Firstid = this.CardList[5][0].idCard
+        let Firstid = null
+        if(this.CardList[5][0] != undefined){
+            Firstid = this.CardList[5][0].idCard
+        }
         this.apiService.getEvent(this.day,Firstid)
         .subscribe(data =>{
                 this.processEvent(data)
@@ -166,7 +187,8 @@ export class kanbantable implements OnInit{
     }
 
     processEvent(e){
-        this.EventText = e
+        console.log(e)
+        this.EventText = e['text']
         if(e['command'] != ''){
             let words =e['command'].split(' ')
             let first = words.shift()   
@@ -207,4 +229,18 @@ export class kanbantable implements OnInit{
         this.allowPointsDistribution = $event;
     }
     
+    moveCard($event){
+
+        for(var i =1;i <7;i++){
+            for(var j = 0; j < this.CardList[i].length;j++){
+                if(this.CardList[i][j].idCard == $event){
+                    //запрос к Насте
+                    var c:card = this.CardList[i][j];
+                    this.CardList[i+1].unshift(c)
+                    this.CardList[i].splice(j,1)
+                    return;
+                }
+            }
+        }
+    }
 }

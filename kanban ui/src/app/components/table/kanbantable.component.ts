@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 
 export class kanbantable implements OnInit{
     CardList: card[][]
+    Deployed: card[]
     expedice: any[] = [null,null,null,null,null,null,null]
     @ViewChildren(cardComponent) cc:QueryList<cardComponent>
     @Input()
@@ -87,8 +88,16 @@ export class kanbantable implements OnInit{
                                 this.CardList[i].push(Card)
                             }
                         }
+                    }
                 }
-                }
+                let len = data['cards']
+                    if(len.hasOwnProperty(this.ColNames[7])){
+                        for(var j =0; j< len[this.ColNames[7]]['length'];j++){
+                            var tmpCard = data['cards'][this.ColNames[7]][j.toString()]
+                            var Card = this.parseCard(tmpCard)
+                            this.Deployed.push(Card)
+                        }
+                    }
                 
             },
             error =>{

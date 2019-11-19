@@ -35,11 +35,21 @@
             <td class="date">{{(Card.DayDeployed == '0' || Card.DayReady == '0') ? 'x': Card.DayDeployed - Card.DayReady}}</td>
         </tr>
     </table>
-</td><td>
+</td>
+<td>
     <table *ngIf="canUpgrade && (Card.status == 'AnalProg' || Card.status == 'DevProg' || Card.status =='Test') && !isMaxed" >
         <tr>
             <td><button class="btn btn-primary btn-sm" (click)="addToStatus(1)">+</button> </td> 
             <td><button class="btn btn-primary btn-sm" (click)="addToStatus(-1)">-</button> </td> 
+        </tr>
+    </table>
+</td>
+<td>
+    <table *ngIf="isPullable" class="pull_button">
+        <tr>
+            <td>
+                <button class="btn btn-danger btn-sm" (click)="pull()">➤</button>
+            </td>
         </tr>
     </table>
 </td>

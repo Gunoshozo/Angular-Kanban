@@ -1,5 +1,5 @@
 .card{
-    width: auto;
+    width: max-content;
     margin: 5px 5px 5px 5px;
 }
 
@@ -10,6 +10,10 @@
 .dateText{
     font-size: 8pt;
     text-align: center;
+}
+
+.pull_button{
+    width: auto;
 }
 
 .date{

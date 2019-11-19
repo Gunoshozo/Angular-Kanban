@@ -13,6 +13,12 @@ table{
     border: 1px solid black;
 }
 
+.event-window{
+    width: 250px;
+    height: 100px;
+    scroll-behavior: auto;
+}
+
 .expedise{
     border: 1px solid grey;
     height: 125px;

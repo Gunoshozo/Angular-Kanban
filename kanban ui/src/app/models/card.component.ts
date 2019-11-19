@@ -16,9 +16,13 @@ export class cardComponent implements OnInit{
     canUpgrade:boolean = false;
     @Input('points')
     points = {'anal':0,'dev':0,'test':0}
+    @Input()
+    canPull:boolean;
     notBlocked:boolean = true;
     OldValues: { 'anal': number; 'dev': number; 'test': number; };
     @Output() moveEvent = new EventEmitter<number>();
+    @Output() pullEvent = new EventEmitter<number>();
+
 
     ngOnInit(): void {
         this.OldValues = {'anal':this.Card.CurrentAnalysis,'dev': this.Card.CurrentDevelopment,'test':this.Card.CurrentTesting}
@@ -81,9 +85,13 @@ export class cardComponent implements OnInit{
         return this.OldValues['anal'] != this.Card.CurrentAnalysis || this.OldValues['dev'] != this.Card.CurrentDevelopment || this.OldValues['test'] != this.Card.CurrentTesting
     }  
 
-    public get isMaxed():boolean{
+    public get isMaxed(){
         return (this.Card.status == 'AnalProg' && this.OldValues['anal']==this.Card.TotalAnalysis) || (this.Card.status == 'DevProg' && this.OldValues['dev']==this.Card.TotalDevelopment) 
         || (this.Card.status == 'Test' && this.OldValues['test']==this.Card.TotalTesting)
+    }
+
+    public get isPullable(){
+        return this.canPull && (this.Card.status=='Selected' || this.Card.status=="ReadyDeploy"|| this.isMaxed)
     }
 
     updateOlds(){
@@ -98,5 +106,8 @@ export class cardComponent implements OnInit{
 
     unblock(){
         this.notBlocked = true;
+    }
+    pull(){
+        this.pullEvent.emit(this.Card.idCard)
     }
 }

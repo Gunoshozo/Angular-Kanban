@@ -8,7 +8,11 @@
                                                         <span class="sr-only">Toggle dropdown</span>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                        <a>{{EventText}}</a>
+                                                        <div class='event-window'>
+                                                                <ul>
+                                                                        <li *ngFor='let e of EventText'>{{e}}</li>
+                                                                </ul>
+                                                        </div>
                                                 </div>
                                         <button type="button" class="btn btn-info" disabled id="day">Day: {{day}}</button>
                         </div>
@@ -62,10 +66,10 @@
             <p class="tittle">Ready to Deploy</p>
             <p class="wip">No WIP limit</p>
     </td>
-    <td class="cell">
+    <!-- <td class="cell">
             <p class="tittle">Deployed</p>
             <p class="wip">No WIP limit</p>
-    </td>
+    </td> -->
     </tr>
     <tr>
         <td class="expedise" *ngFor='let ec of expedice'>
@@ -76,7 +80,7 @@
     </tr>
     <tr class="cardColumns">
     <td *ngFor='let card of CardList; let i = index' class="column{{i}}">
-        <cardComponent *ngFor ='let c of card' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' (moveEvent)="moveCard($event)"></cardComponent>
+        <cardComponent *ngFor ='let c of card' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'canPull(i)'(moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)"></cardComponent>
     </td>
     </tr>
 </table>

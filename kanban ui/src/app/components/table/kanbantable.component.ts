@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 
 export class kanbantable implements OnInit{
     CardList: card[][]
-    expedice: any[] = [null,null,null,null,null,null,null,null]
+    expedice: any[] = [null,null,null,null,null,null,null]
     @ViewChildren(cardComponent) cc:QueryList<cardComponent>
     @Input()
     limit: number[]
@@ -23,7 +23,7 @@ export class kanbantable implements OnInit{
     totalStaff:any = {'anal':0,'dev':0,'test':0};
     points: any = {'anal':0,'dev':0,'test':0};
     day:number;
-    EventText: string = ''
+    EventText: string[] = []
 
     allowPointsDistribution:boolean = false;
     blockedDepartment:boolean[] = [false,false,false]
@@ -72,7 +72,7 @@ export class kanbantable implements OnInit{
                 console.log(data)
                 this.day = data['day']
                 this.CardList = []
-                for(var i =0;i<8;i++){
+                for(var i =0;i<7;i++){
                     this.CardList[i] = []
                     let len = data['cards']
                     if(len.hasOwnProperty(this.ColNames[i])){
@@ -126,6 +126,7 @@ export class kanbantable implements OnInit{
     // }
 
     confirmChanges(){
+        this.allowPointsDistribution = false;
         let resp = {'anal':[],'dev':[],'test':[]}
         this.cc.toArray().forEach(c =>{
             if(c.isModified){
@@ -156,7 +157,10 @@ export class kanbantable implements OnInit{
             }
             else{
                 console.error('fail')
+                this.allowPointsDistribution = true;
             }
+        },error=>{
+            this.allowPointsDistribution = true;
         })
     }
 
@@ -167,7 +171,7 @@ export class kanbantable implements OnInit{
         //     this.router.navigate(['/report'])
         //     //передача данных из графиков в отчет ( скорее всего через сервис)
         // }
-        this.allowPointsDistribution = false;
+        
         this.points = {'anal':0,'dev':0,'test':0};
         this.cc.toArray().forEach(c=>{
             c.updateOlds()
@@ -188,7 +192,7 @@ export class kanbantable implements OnInit{
 
     processEvent(e){
         console.log(e)
-        this.EventText = e['text']
+        this.EventText.unshift(e['text'])
         if(e['command'] != ''){
             let words =e['command'].split(' ')
             let first = words.shift()   
@@ -219,7 +223,7 @@ export class kanbantable implements OnInit{
 
     set(words:string[]){
         switch(words[0]){
-            case 'WIP_Ready':{this.limit[6] = parseInt(words[1])}
+            case 'WIP_Ready':{this.limit.push(parseInt(words[1]))}
         }
 
     }
@@ -234,13 +238,75 @@ export class kanbantable implements OnInit{
         for(var i =1;i <7;i++){
             for(var j = 0; j < this.CardList[i].length;j++){
                 if(this.CardList[i][j].idCard == $event){
-                    //запрос к Насте
-                    var c:card = this.CardList[i][j];
-                    this.CardList[i+1].unshift(c)
-                    this.CardList[i].splice(j,1)
-                    return;
+                    let department
+                    let progress
+                    switch(i){
+                    case 1:{ department = 'anal'; progress=this.CardList[i][j].CurrentAnalysis; break}
+                    case 3:{ department = 'dev'; progress=this.CardList[i][j].CurrentDevelopment; break}
+                    case 5:{ department = 'test';progress=this.CardList[i][j].CurrentTesting; break}
+                    }
+                    this.apiService.updateCard($event,department,progress)
+                    .subscribe(data=>{
+                        if(data['status'] == 'ok'){
+                            var c:card = this.CardList[i][j];
+                            this.CardList[i+1].unshift(c)
+                            this.CardList[i].splice(j,1)
+                            return;
+                        }
+                        else{
+                            console.error(data['message'])
+                        }
+                    })
+                    
                 }
             }
         }
     }
+
+    canPull(colNum){
+        switch(colNum){
+            case 0:{
+                //selected ->analysis
+                return (this.CardList[colNum+1].length+this.CardList[colNum+2].length < this.limit[0])
+            }
+            case 2:{
+                //analysis ->dev
+                return (this.CardList[colNum+1].length+this.CardList[colNum+2].length < this.limit[1])
+            }
+            case 4:{
+                //dev -> test
+                return (this.CardList[colNum+1].length < this.limit[2])
+            }
+            case 5:{
+                return (this.limit.length==3 || this.CardList[colNum+1].length <  this.limit[3])
+            }
+            case 6:{
+                return true
+            }
+            default:{
+                return false
+            }
+        }
+    }
+
+    pullInCard($event){
+        this.apiService.updateStatus($event)
+        .subscribe(data=>{
+            if(data['status'] == 'ok'){
+                for(var i =1;i <7;i++){
+                    for(var j = 0; j < this.CardList[i].length;j++){
+                        if(this.CardList[i][j].idCard == $event){
+                            var c:card = this.CardList[i][j];
+                            this.CardList[i+1].unshift(c)
+                            this.CardList[i].splice(j,1)
+                            return;
+                        }
+                    }
+            }
+        }
+    },error=>{
+        console.error(error)    
+    })
+    }
+    
 }

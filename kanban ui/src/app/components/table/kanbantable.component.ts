@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 
 export class kanbantable implements OnInit{
     CardList: card[][]
-    Deployed: card[]
+    Deployed: card[] = []
     expedice: any[] = [null,null,null,null,null,null,null]
     @ViewChildren(cardComponent) cc:QueryList<cardComponent>
     @Input()
@@ -173,6 +173,22 @@ export class kanbantable implements OnInit{
         })
     }
 
+    // confirmChanges(){
+    //     this.allowPointsDistribution = false;
+    //     this.apiService.newDay()
+    //     .subscribe(data=>{
+    //         if(data['status'] == 'ok'){
+    //             this.getAllCards()
+    //             this.updateDay()
+    //         }
+    //     },
+    //     error=>{
+    //         console.error(error)
+    //     }
+    //     )
+
+    // }
+
     updateDay(){
         //Завершение игры
         // if(this.day == 22)
@@ -244,8 +260,8 @@ export class kanbantable implements OnInit{
     
     moveCard($event){
 
-        for(var i =1;i <7;i++){
-            for(var j = 0; j < this.CardList[i].length;j++){
+        for(let i =1;i <7;i++){
+            for(let j = 0; j < this.CardList[i].length;j++){
                 if(this.CardList[i][j].idCard == $event){
                     let department
                     let progress
@@ -256,15 +272,17 @@ export class kanbantable implements OnInit{
                     }
                     this.apiService.updateCard($event,department,progress)
                     .subscribe(data=>{
-                        if(data['status'] == 'ok'){
-                            var c:card = this.CardList[i][j];
-                            this.CardList[i+1].unshift(c)
-                            this.CardList[i].splice(j,1)
-                            return;
-                        }
-                        else{
-                            console.error(data['message'])
-                        }
+                        let c:card = this.CardList[i][j]
+                        c.updateStatus()    
+                        this.CardList[i+1].unshift(c)
+                        this.CardList[i].splice(j,1)
+                        this.cc.forEach(element => {
+                            if(element.Card.idCard == c.idCard)
+                                element.updateOlds()
+                        });
+                        return;
+                    },error =>{
+                        console.error(error)
                     })
                     
                 }
@@ -301,17 +319,26 @@ export class kanbantable implements OnInit{
     pullInCard($event){
         this.apiService.updateStatus($event)
         .subscribe(data=>{
-            if(data['status'] == 'ok'){
-                for(var i =1;i <7;i++){
-                    for(var j = 0; j < this.CardList[i].length;j++){
+                for(let i =1;i <7;i++){
+                    for(let j = 0; j < this.CardList[i].length;j++){
                         if(this.CardList[i][j].idCard == $event){
-                            var c:card = this.CardList[i][j];
-                            this.CardList[i+1].unshift(c)
+                            console.log(i.toString() +' '+j.toString())
+                            let c:card = this.CardList[i][j];
+                            console.log(c.status)
+                            c.updateStatus()
+                            console.log(c.status)
+                            if(i == 6){
+                                console.log(6)
+                                this.Deployed.unshift(c)
+                            }
+                            else{
+                                console.log(-6)
+                                this.CardList[i+1].unshift(c)
+                            }
                             this.CardList[i].splice(j,1)
                             return;
                         }
                     }
-            }
         }
     },error=>{
         console.error(error)    

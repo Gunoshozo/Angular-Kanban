@@ -32,8 +32,6 @@ export class register implements OnInit{
     }
 
     onSubmit() {
-        console.log("bump")
-
         this.registerService.register(this.registerForm.value)
             .pipe(first())
             .subscribe(

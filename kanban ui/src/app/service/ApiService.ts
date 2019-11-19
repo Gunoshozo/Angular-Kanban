@@ -61,7 +61,7 @@ export class ApiService {
   //перенос карты из select в analysis progress
   //из done status_i в progress status_i+1  
   public updateStatus(idCard){
-    return this.httpClient.post('http://25.65.79.64:8000/controller/api/update_status',idCard)
+    return this.httpClient.post('http://25.65.79.64:8000/controller/api/update_status',{'idCard':idCard})
   }
 
 }

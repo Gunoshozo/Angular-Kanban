@@ -80,7 +80,7 @@
     </tr>
     <tr class="cardColumns">
     <td *ngFor='let card of CardList; let i = index' class="column{{i}}">
-        <cardComponent *ngFor ='let c of card' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'canPull(i)'(moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)"></cardComponent>
+        <cardComponent *ngFor ='let c of card' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'canPull(i)' (moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)"></cardComponent>
     </td>
     </tr>
 </table>

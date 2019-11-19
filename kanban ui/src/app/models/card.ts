@@ -15,7 +15,6 @@ export class card{
     color: any
     status: any
     priority: number
-    email: string
 
     // constructor(i:number){
     //     this.CardName = 'S'+i.toString()
@@ -88,5 +87,40 @@ export class card{
     }
     public getTestDots(){
         return '● '.repeat(this.CurrentTesting) + '○ '.repeat(this.TotalTesting-this.CurrentTesting)
+    }
+
+    updateStatus(){
+        switch(this.status){
+            case 'Selected':{
+                this.status ='AnalProg'
+                break
+            }
+            case 'AnalProg':{
+                this.status ='AnalDone'
+                break
+            }
+            case 'AnalDone':{
+                this.status ='DevProg'
+                break
+            }
+            case 'DevProg':{
+                this.status ='DevDone'
+                break
+            }
+            case 'DevDone':{
+                this.status ='Test'
+                break
+            }
+            case 'Test':{  
+                this.status ='ReadyDeploy'
+                break
+            }
+            case 'ReadyDeploy':{
+                this.status ='Deploy'
+                break
+            }
+            default:
+                return
+        }
     }
 }

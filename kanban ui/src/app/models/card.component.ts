@@ -86,10 +86,12 @@ export class cardComponent implements OnInit{
     }  
 
     public get isMaxed(){
-        return (this.Card.status == 'AnalProg' && this.OldValues['anal']==this.Card.TotalAnalysis) || (this.Card.status == 'DevProg' && this.OldValues['dev']==this.Card.TotalDevelopment) 
+        return ((this.Card.status == 'AnalProg' ||this.Card.status == 'AnalDone') && this.OldValues['anal']==this.Card.TotalAnalysis) || ((this.Card.status == 'DevProg' || this.Card.status=='DevDone') && this.OldValues['dev']==this.Card.TotalDevelopment) 
         || (this.Card.status == 'Test' && this.OldValues['test']==this.Card.TotalTesting)
     }
 
+
+    
     public get isPullable(){
         return this.canPull && (this.Card.status=='Selected' || this.Card.status=="ReadyDeploy"|| this.isMaxed)
     }
@@ -108,6 +110,7 @@ export class cardComponent implements OnInit{
         this.notBlocked = true;
     }
     pull(){
+        console.log('pull_event')
         this.pullEvent.emit(this.Card.idCard)
     }
 }

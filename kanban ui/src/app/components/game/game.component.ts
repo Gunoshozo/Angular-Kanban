@@ -9,5 +9,5 @@ import { kanbantable } from '../table';
 
 export class gameComponent{
 
-    @ViewChild(kanbantable,{static:false}) table; 
+    // @ViewChild(kanbantable,{static:false}) table; 
 }

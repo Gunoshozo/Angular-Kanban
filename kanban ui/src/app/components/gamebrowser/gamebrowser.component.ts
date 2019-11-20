@@ -41,6 +41,7 @@ export class GamebrowserComponent implements OnInit {
       this.router.navigate(['/game'])
     },error =>{
       console.error(error)
+      this.update()
     })
     
   }

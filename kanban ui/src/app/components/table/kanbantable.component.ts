@@ -85,7 +85,10 @@ export class kanbantable implements OnInit{
                                 this.expedice[i] = Card
                             } 
                             else{
-                                this.CardList[i].push(Card)
+                                if(Card.color == 'White' && i ==0)
+                                    continue
+                                else
+                                    this.CardList[i].push(Card)
                             }
                         }
                     }
@@ -253,13 +256,30 @@ export class kanbantable implements OnInit{
 
     }
 
+    getPriority(I,J){
+        if(I != 0)
+            return true
+        else{
+            if(this.CardList[I][J].color == 'Orange' ){
+                for(var j = 0; j<J; j++){
+                    if(this.CardList[0][j].color == 'Orange')
+                        return false
+                }
+                return true
+            }
+            else{
+                return true
+            }
+        }
+    }
 
     recieveBoolean($event){
         this.allowPointsDistribution = $event;
     }
-    
-    moveCard($event){
 
+
+    moveCard($event){
+        console.log('move event')
         for(let i =1;i <7;i++){
             for(let j = 0; j < this.CardList[i].length;j++){
                 if(this.CardList[i][j].idCard == $event){
@@ -285,6 +305,40 @@ export class kanbantable implements OnInit{
                         console.error(error)
                     })
                     
+                }
+            }
+        }
+        console.log('move event')
+        for(let i=0;i<7;i++){
+            if(this.expedice[i] != null){
+                if(this.expedice[i].idCard == $event){
+                    console.log('move event'+this.expedice[i].idCard.toString())
+                    let department
+                    let progress
+                    switch(i){
+                        case 1:{ department = 'anal'; progress=this.expedice[i].CurrentAnalysis; break}
+                        case 3:{ department = 'dev'; progress=this.expedice[i].CurrentDevelopment; break}
+                        case 5:{ department = 'test';progress=this.expedice[i].CurrentTesting; break}   
+                    }
+                    this.apiService.updateCard($event,department,progress)
+                    .subscribe(data =>{
+                    let Card:card = this.expedice[i]
+                    Card.updateStatus()
+                    if(i == 6){
+                        this.Deployed.unshift(Card)
+                    }
+                    else{
+                        this.expedice[i+1] = Card
+                    }
+                    this.expedice[i] = null
+                    this.cc.forEach(element => {
+                        if(element.Card.idCard == Card.idCard)
+                            element.updateOlds()
+                    });
+                    return;
+                }, error=>{
+                    console.error(error)
+                })
                 }
             }
         }
@@ -319,27 +373,38 @@ export class kanbantable implements OnInit{
     pullInCard($event){
         this.apiService.updateStatus($event)
         .subscribe(data=>{
-                for(let i =1;i <7;i++){
+                for(let i =0;i <7;i++){
                     for(let j = 0; j < this.CardList[i].length;j++){
                         if(this.CardList[i][j].idCard == $event){
-                            console.log(i.toString() +' '+j.toString())
                             let c:card = this.CardList[i][j];
-                            console.log(c.status)
                             c.updateStatus()
-                            console.log(c.status)
                             if(i == 6){
-                                console.log(6)
                                 this.Deployed.unshift(c)
                             }
                             else{
-                                console.log(-6)
                                 this.CardList[i+1].unshift(c)
                             }
                             this.CardList[i].splice(j,1)
-                            return;
+                            return
                         }
                     }
-        }
+                }
+                for(let i=0;i<7;i++){
+                    if(this.expedice[i] != null){
+                        if(this.expedice[i].idCard == $event){
+                            let Card:card = this.expedice[i]
+                            Card.updateStatus()
+                            if(i == 6){
+                                this.Deployed.unshift(Card)
+                            }
+                            else{
+                                this.expedice[i+1] = Card
+                            }
+                            this.expedice[i] = null
+                            return
+                        }
+                    }
+                }
     },error=>{
         console.error(error)    
     })

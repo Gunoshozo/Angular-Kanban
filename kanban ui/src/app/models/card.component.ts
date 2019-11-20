@@ -22,6 +22,7 @@ export class cardComponent implements OnInit{
     OldValues: { 'anal': number; 'dev': number; 'test': number; };
     @Output() moveEvent = new EventEmitter<number>();
     @Output() pullEvent = new EventEmitter<number>();
+    @Input() priority;
 
 
     ngOnInit(): void {
@@ -35,6 +36,7 @@ export class cardComponent implements OnInit{
                         this.Card.CurrentAnalysis+=num
                         this.points['anal']--
                         if(this.Card.CurrentAnalysis == this.Card.TotalAnalysis){
+                            console.log('+')
                             this.moveEvent.emit(this.Card.idCard)
                             this.canUpgrade = false;
                         }
@@ -93,7 +95,7 @@ export class cardComponent implements OnInit{
 
     
     public get isPullable(){
-        return this.canPull && (this.Card.status=='Selected' || this.Card.status=="ReadyDeploy"|| this.isMaxed)
+        return ((this.canPull && (this.Card.status=='Selected' || this.Card.status=="ReadyDeploy"|| this.isMaxed)) || (this.Card.color == "White" && this.isMaxed)) && this.priority
     }
 
     updateOlds(){

@@ -15,8 +15,7 @@
                                                         </div>
                                                 </div>
                                         <button type="button" class="btn btn-info" disabled id="day">Day: {{day}}</button>
-                        </div>
-                                
+                        </div>                  
                 </div>
                 <button class="btn btn-success" id="confirm" (click)="confirmChanges()" [disabled]='!allowPointsDistribution' >Confirm changes</button>  
                         
@@ -44,7 +43,7 @@
             <p>Analysts: {{staff['anal']['anal']}}</p>
             <p>Devs: {{staff['anal']['dev']}}</p>
             <p>Testers: {{staff['anal']['test']}}</p>
-            <p class="points" *ngIf="points['anal'] != 0">Очков:{{points['anal']}}</p>
+            <p class="points" *ngIf="allowPointsDistribution">Очков:{{points['anal']}}</p>
     </td>
     <td colspan="2" class="cell">
             <p class="tittle">Development</p>
@@ -52,7 +51,7 @@
             <p>Analysts: {{staff['dev']['anal']}}</p>
             <p>Devs: {{staff['dev']['dev']}}</p>
             <p>Testers: {{staff['dev']['test']}}</p>
-            <p class="points" *ngIf="points['dev'] != 0">Очков:{{points['dev']}}</p>
+            <p class="points" *ngIf="allowPointsDistribution">Очков:{{points['dev']}}</p>
     </td>
     <td class="cell">
             <p class="tittle">Testing</p>
@@ -60,7 +59,7 @@
             <p>Analysts: {{staff['test']['anal']}}</p>
             <p>Devs: {{staff['test']['dev']}}</p>
             <p>Testers: {{staff['test']['test']}}</p>
-            <p class="points" *ngIf="points['test'] != 0">Очков:{{points['test']}}</p>
+            <p class="points" *ngIf="allowPointsDistribution">Очков:{{points['test']}}</p>
     </td>
     <td class="cell">
             <p class="tittle">Ready to Deploy</p>
@@ -74,13 +73,13 @@
     <tr>
         <td class="expedise" *ngFor='let ec of expedice'>
                 <div *ngIf='ec != null'>
-                        <cardComponent [CardObject]='ec' [(points)]='points' [(canUpgrade)]='allowPointsDistribution'></cardComponent>
+                        <cardComponent [CardObject]='ec' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'true' (moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)"></cardComponent>
                 </div>
         </td>
     </tr>
     <tr class="cardColumns">
     <td *ngFor='let card of CardList; let i = index' class="column{{i}}">
-        <cardComponent *ngFor ='let c of card' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'canPull(i)' (moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)"></cardComponent>
+        <cardComponent *ngFor ='let c of card; let j = index' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'canPull(i)' (moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)" [priority]="getPriority(i,j)"></cardComponent>
     </td>
     </tr>
 </table>

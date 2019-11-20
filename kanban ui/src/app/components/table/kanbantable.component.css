@@ -2,7 +2,7 @@
     border: 2px solid black;
     height: 660px;  
     vertical-align: top;
-    scroll-behavior: auto   ;
+    
 }
 table{
     border-collapse: collapse;
@@ -45,6 +45,7 @@ table{
 
 .cell{
     border: 2px solid black;
+    vertical-align: top;
 }
 
 p{
@@ -93,7 +94,7 @@ p{
 }
 
 #btnGroupDrop1{
-    width: 300px;
+    width: 250px;
 }
 
 #confirm{

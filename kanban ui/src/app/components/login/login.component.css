@@ -1,1 +1,25 @@
-    
+.centered{
+    border-radius: 25px;
+    background-color: white;
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    border: 1px solid blue;
+}    
+
+.background{
+    background-color: red ;
+}
+
+
+h2{
+    text-align: center;
+}
+
+
+
+.row_name{
+    width: 50px;
+}

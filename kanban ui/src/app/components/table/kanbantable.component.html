@@ -1,23 +1,22 @@
-<button (click)="logout()">Logout</button>
-<button (click)="toMain()">To main <menu></menu></button>
-<button (click)="startGame()" *ngIf='day==7'>start game</button>
 <div class="btn-group btn-centered">
                 <div class="btn-group">
-                        <div class="btn-group dropleft">
-                                        <button type="button" class='btn btn-info dropdown-toggle dropdown-toggle-split' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <span class="sr-only">Toggle dropdown</span>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                        <div class='event-window'>
-                                                                <ul>
-                                                                        <li *ngFor='let e of EventText'>{{e}}</li>
-                                                                </ul>
+                                <button type="button" class="btn btn-danger" (click)="logout()">Logout</button>
+                                <button type="button" class="btn btn-info" (click)="toMain()">To main menu</button>
+                                <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-info" disabled id="day">Day: {{day}}</button>
+                                        
+                                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                                Тут будут события
                                                         </div>
-                                                </div>
-                                        <button type="button" class="btn btn-info" disabled id="day">Day: {{day}}</button>
-                        </div>                  
+                                </div>
+                        
+                                        <button class="btn btn-success" id="confirm" (click)="confirmChanges()" [disabled]='!allowPointsDistribution' >Confirm changes</button>  
+                                        <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        События
+                                      </button>
+                        
                 </div>
-                <button class="btn btn-success" id="confirm" (click)="confirmChanges()" [disabled]='!allowPointsDistribution' >Confirm changes</button>  
+                
                         
         <div class="btn-group" role="group">
                         <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -26,7 +25,7 @@
                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                         Тут будет график
                                 </div>
-                        </div>
+        </div>
 </div>
 <div class="btn-group btn-centered">
                 <specsDistribution [(specs)]="staff" [totalSpecs]="totalStaff" [(points)]="points" [apiService]="apiService" [day]="day" [(specsDistributed)] = "allowPointsDistribution" (specsDistributedEmitter) = "recieveBoolean($event)" [blockedDepartment]='blockedDepartment'></specsDistribution>

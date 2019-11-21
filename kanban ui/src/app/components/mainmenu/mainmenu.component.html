@@ -4,7 +4,8 @@
 <!-- <button class="btn btn-primary" (click)=toBrowser()>Table browser</button> -->
 <div class="middle">
         <button class="btn btn-danger" type="button" (click)=logout()>logout</button>
-        <button class="btn btn-primary" type="button" id="dropdownMenuButton" (click)=onSubmit()>Create table</button>
+        <button class="btn btn-primary" type="button" id="dropdownMenuButton" (click)=Create() *ngIf='!haveUnfinished()'>Create table</button>
+        <button class="btn btn-primary" type="button" id="dropdownMenuButton" (click)=Continue() *ngIf='haveUnfinished()'>Back to game</button>
             <!-- <div class="dropdown-menu"><div class='dropdown-item'>
                 <form [formGroup]="lobbyForm" (ngSubmit)=onSubmit()> -->
                     <!-- <div class="form-group">

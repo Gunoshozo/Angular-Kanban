@@ -1,26 +1,29 @@
 <div class="btn-group btn-centered">
                 <div class="btn-group">
-                                <button type="button" class="btn btn-danger" (click)="logout()">Logout</button>
-                                <button type="button" class="btn btn-info" (click)="toMain()">To main menu</button>
+                                <button type="button" class="btn btn-danger" (click)="logout()"[disabled] = allowPointsDistribution>Logout</button>
+                                <button type="button" class="btn btn-info" (click)="toMain()" [disabled] =allowPointsDistribution>To main menu</button>
                                 <div class="btn-group" role="group">
                                                 <button type="button" class="btn btn-info" disabled id="day">Day: {{day}}</button>
                                         
-                                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                                Тут будут события
-                                                        </div>
+                                                        
                                 </div>
                         
                                         <button class="btn btn-success" id="confirm" (click)="confirmChanges()" [disabled]='!allowPointsDistribution' >Confirm changes</button>  
+                                        <div class="btn-group">
                                         <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         События
                                       </button>
+                                      <div class="dropdown-menu scrollable" aria-labelledby="btnGroupDrop1">
+                                                <a class="dropdown-item disabled word-breakable" *ngFor ='let t of EventText'>{{t}}<div class="dropdown-divider"></div></a>
+                                        </div>
+                                        </div>
                         
                 </div>
                 
                         
         <div class="btn-group" role="group">
                         <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          Graph
+                                          График
                         </button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                         Тут будет график

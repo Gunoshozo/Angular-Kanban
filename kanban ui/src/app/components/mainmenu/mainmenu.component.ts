@@ -13,15 +13,15 @@ export class MainmenuComponent implements OnInit {
   username:string
 
   constructor(private apiService:ApiService, private loginService:LoginService,private router:Router) { 
-    if(this.loginService.currentUserValue == null) 
-                this.router.navigate(['/login'])
+    // if(this.loginService.currentUserValue == null) 
+    //             this.router.navigate(['/login'])
   }
 
   ngOnInit() {
     this.username = localStorage.getItem('currentUser')
   }
 
-  onSubmit(){
+  Create(){
     this.apiService.createTable()
     .subscribe( data=>{
       console.log(data)
@@ -33,8 +33,16 @@ export class MainmenuComponent implements OnInit {
     })
   }
 
+  Continue(){
+    this.router.navigate(['/game'])
+  }
+
   logout(){
     this.loginService.logout()
     this.router.navigate(['/login'])
+  }
+
+  haveUnfinished(){
+    return localStorage.getItem('tableId')!=null
   }
 }

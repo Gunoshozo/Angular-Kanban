@@ -4,6 +4,18 @@
     vertical-align: top;
     
 }
+
+.scrollable{
+    overflow-y: auto;
+    height: 250px;
+    width: 400px;
+}
+
+.word-breakable{
+    word-wrap: break-word;
+    white-space: normal;
+}
+
 table{
     border-collapse: collapse;
     position: absolute;

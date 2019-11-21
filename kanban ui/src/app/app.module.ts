@@ -11,7 +11,6 @@ import { register } from './components/register/register.component';
 import { AppRoutingModule } from './app-routing.module';
 import { gameComponent } from './components/game';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { testpage } from './components/testpage/testpage';
 import { specsDistribution } from './components/specsDistribution/specsDistrib.component';
 import { MainmenuComponent } from './components/mainmenu/mainmenu.component';
 
@@ -23,7 +22,6 @@ import { MainmenuComponent } from './components/mainmenu/mainmenu.component';
     login,
     register,
     gameComponent,
-    testpage,
     specsDistribution,
     MainmenuComponent
   ],

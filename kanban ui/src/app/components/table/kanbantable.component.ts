@@ -119,24 +119,6 @@ export class kanbantable implements OnInit{
         this.router.navigate(['/login'])
     }
 
-    // Кустарный инит
-    // ngOnInit(){
-    //     this.countTotalStaff()
-    //     this.CardList = []
-    //             for(var i =0;i<8;i++){
-    //                 this.CardList[i] = []
-    //                 for(var j =0; j< 1;j++){
-    //                     var Card = new card(i*j,'name',1,0,5,7,5,8,9,14,25,2,'White',this.ColNames[i],1)
-    //                     if(Card.color='White' && i != 0 && i != 7){
-    //                         this.expedice[i]= Card
-    //                     } 
-    //                     else{
-    //                     this.CardList[i].push(Card)
-    //                     }
-    //                }
-    //             }
-    // }
-
     confirmChanges(){
         this.allowPointsDistribution = false;
         let resp = {'anal':[],'dev':[],'test':[]}

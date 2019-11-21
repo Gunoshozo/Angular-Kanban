@@ -13,7 +13,6 @@ import { gameComponent } from './components/game';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { testpage } from './components/testpage/testpage';
 import { specsDistribution } from './components/specsDistribution/specsDistrib.component';
-import { GamebrowserComponent } from './components/gamebrowser/gamebrowser.component';
 import { MainmenuComponent } from './components/mainmenu/mainmenu.component';
 
 @NgModule({
@@ -26,7 +25,6 @@ import { MainmenuComponent } from './components/mainmenu/mainmenu.component';
     gameComponent,
     testpage,
     specsDistribution,
-    GamebrowserComponent,
     MainmenuComponent
   ],
   imports: [

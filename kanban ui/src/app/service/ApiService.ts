@@ -41,9 +41,9 @@ export class ApiService {
     return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_event?day='+day.toString()+'&firstTest='+firtsTest)
   }
 
-  public createTable(name, num){
+  public createTable(){
     let email = localStorage.getItem('currentUser');
-    let request = {'nameGameTable':name,'numberOfPlayers':num,'email':email}
+    let request = {'nameGameTable':'table '+email,'numberOfPlayers':1,'email':email}
     return this.httpClient.post('http://25.65.79.64:8000/controller/api/create_table',request)
   }
 

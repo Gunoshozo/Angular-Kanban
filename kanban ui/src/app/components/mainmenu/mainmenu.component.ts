@@ -13,8 +13,8 @@ export class MainmenuComponent implements OnInit {
   username:string
 
   constructor(private apiService:ApiService, private loginService:LoginService,private router:Router) { 
-    // if(this.loginService.currentUserValue == null) 
-    //             this.router.navigate(['/login'])
+    if(this.loginService.currentUserValue == null) 
+                this.router.navigate(['/login'])
   }
 
   ngOnInit() {
@@ -24,7 +24,6 @@ export class MainmenuComponent implements OnInit {
   Create(){
     this.apiService.createTable()
     .subscribe( data=>{
-      console.log(data)
       localStorage.setItem('tableId',data['id_table'])
       this.router.navigate(['/game'])
     },

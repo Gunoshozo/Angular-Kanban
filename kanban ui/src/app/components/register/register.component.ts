@@ -39,7 +39,7 @@ export class register implements OnInit{
                         this.router.navigate(['/login']);
                 },
                 error => {
-                    console.log(error)
+                    console.error(error)
                 });
     }
 }

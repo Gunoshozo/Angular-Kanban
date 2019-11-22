@@ -36,8 +36,8 @@ export class kanbantable implements OnInit{
     
     constructor(private apiService:ApiService,private loginService:LoginService,private router:Router){
         //Редирект в случае, если пользователь не залогинен
-        // if(this.loginService.currentUserValue == null) 
-        //         this.router.navigate(['/login'])                
+        if(this.loginService.currentUserValue == null) 
+                this.router.navigate(['/login'])                
     }
 
     
@@ -123,7 +123,6 @@ export class kanbantable implements OnInit{
         let resp = {'anal':[],'dev':[],'test':[]}
         this.cc.toArray().forEach(c =>{
             if(c.isModified){
-                console.log(c)
                 switch(c.Card.status){
                     case 'AnalProg': {
                         resp['anal'].push(c.Card)
@@ -140,7 +139,6 @@ export class kanbantable implements OnInit{
                 }
             }
         })
-        console.log(resp)
         let email = localStorage.getItem('currentUser')
         this.apiService.postUpdatedCards(resp)
         .subscribe( data =>{
@@ -157,29 +155,14 @@ export class kanbantable implements OnInit{
         })
     }
 
-    // confirmChanges(){
-    //     this.allowPointsDistribution = false;
-    //     this.apiService.newDay()
-    //     .subscribe(data=>{
-    //         if(data['status'] == 'ok'){
-    //             this.getAllCards()
-    //             this.updateDay()
-    //         }
-    //     },
-    //     error=>{
-    //         console.error(error)
-    //     }
-    //     )
-
-    // }
-
+    
     updateDay(){
-        //Завершение игры
-        // if(this.day == 22)
-        // {
-        //     this.router.navigate(['/report'])
-        //     //передача данных из графиков в отчет ( скорее всего через сервис)
-        // }
+        if(this.day == 22)
+        {
+            //popup
+            localStorage.removeItem('tableId')
+            this.router.navigate(['/mainmenu'])
+        }
         
         this.points = {'anal':0,'dev':0,'test':0};
         this.cc.toArray().forEach(c=>{
@@ -200,7 +183,6 @@ export class kanbantable implements OnInit{
     }
 
     processEvent(e){
-        console.log(e)
         this.EventText.unshift(e['text'])
         if(e['command'] != ''){
             let words =e['command'].split(' ')
@@ -260,7 +242,6 @@ export class kanbantable implements OnInit{
 
 
     moveCard($event){
-        console.log('move event')
         for(let i =1;i <7;i++){
             for(let j = 0; j < this.CardList[i].length;j++){
                 if(this.CardList[i][j].idCard == $event){
@@ -289,11 +270,9 @@ export class kanbantable implements OnInit{
                 }
             }
         }
-        console.log('move event')
         for(let i=0;i<7;i++){
             if(this.expedice[i] != null){
                 if(this.expedice[i].idCard == $event){
-                    console.log('move event'+this.expedice[i].idCard.toString())
                     let department
                     let progress
                     switch(i){

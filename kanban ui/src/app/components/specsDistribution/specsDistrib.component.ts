@@ -55,11 +55,11 @@ export class specsDistribution{
                     this.specsDistributedEmitter.emit(this.specsDistributed)
                 }
                 else{
-                    console.log('fail')
+                    console.error('fail')
                 }
             },
             error =>{
-                console.log('error')
+                console.error(error)
             }
         )
     }

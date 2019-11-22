@@ -32,16 +32,8 @@ export class MainmenuComponent implements OnInit {
     })
   }
 
-  Continue(){
-    this.router.navigate(['/game'])
-  }
-
   logout(){
     this.loginService.logout()
     this.router.navigate(['/login'])
-  }
-
-  haveUnfinished(){
-    return localStorage.getItem('tableId')!=null
   }
 }

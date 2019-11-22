@@ -159,7 +159,6 @@ export class kanbantable implements OnInit{
     updateDay(){
         if(this.day == 22)
         {
-            //popup
             localStorage.removeItem('tableId')
             this.router.navigate(['/mainmenu'])
         }
@@ -179,7 +178,6 @@ export class kanbantable implements OnInit{
         error =>{
             console.error('event error')
         })
-        //Какой-нибудь апдейт в график
     }
 
     processEvent(e){

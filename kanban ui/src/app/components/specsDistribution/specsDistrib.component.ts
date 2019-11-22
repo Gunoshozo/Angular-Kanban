@@ -64,13 +64,5 @@ export class specsDistribution{
         )
     }
 
-    // distributeSpecs(){
-    //     this.points['anal'] = 5
-    //     this.points['dev'] = 6
-    //     this.points['test'] = 7
-    //     this.specsDistributed = true
-    //     this.specsDistributedEmitter.emit(this.specsDistributed)
-
-    // }
 }
 

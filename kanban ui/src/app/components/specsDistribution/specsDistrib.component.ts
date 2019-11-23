@@ -17,6 +17,9 @@ export class specsDistribution{
     points:any;
 
     @Input()
+    defaultSpecs:any;
+
+    @Input()
     apiService:ApiService;
 
     @Input()
@@ -27,8 +30,7 @@ export class specsDistribution{
     @Input() blockedDepartment:boolean[] = []
 
     @Output() specsDistributedEmitter = new EventEmitter<boolean>()
-    
-    
+
 
     add(num:number,a,b){
         if(num<0)
@@ -62,6 +64,14 @@ export class specsDistribution{
                 console.error(error)
             }
         )
+    }
+
+    setDefaultValues(){
+        this.specs=this.defaultSpecs
+    }
+
+    get haveFree(){
+        return this.countFree('anal')+this.countFree('dev')+this.countFree('test')>0
     }
 
 }

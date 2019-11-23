@@ -53,14 +53,10 @@ export class ApiService {
     return this.httpClient.get('http://25.65.79.64:8000/controller/api/new_day?idGameTable='+tableid.toString())
   }
 
-
-  //обновление карты из progress в done
   public updateCard(idCard,department,progress){
     return this.httpClient.post('http://25.65.79.64:8000/controller/api/update_card',{'idCard':idCard,'department':department,'progress':progress})
   }
 
-  //перенос карты из select в analysis progress
-  //из done status_i в progress status_i+1  
   public updateStatus(idCard){
     return this.httpClient.post('http://25.65.79.64:8000/controller/api/update_status',{'idCard':idCard})
   }

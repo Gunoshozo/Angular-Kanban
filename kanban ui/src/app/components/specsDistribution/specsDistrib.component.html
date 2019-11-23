@@ -1,74 +1,74 @@
-<div class="dropdown">
+<div class="dropdown unselectable">
         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [disabled] ="specsDistributed">
           Distribute specialists
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <div class="dropdown-menu resize" aria-labelledby="dropdownMenu2">
           <table>
             <tr>
               <th></th>
-              <th>Analysis</th>
-              <th>Dev</th>
-              <th>Testing</th>
-              <th>Free</th>
+              <th>Аналитика</th>
+              <th>Разработка</th>
+              <th>Тестирование</th>
+              <th [class]="haveFree?'red':''">Незанятые</th>
             </tr>
             <tr>
-              <th>Disigners</th>
+              <th>Аналитики</th>
               <td>
-                <button class="btn btn-primary btn-sm" (click)="add(-1,'anal','anal')" [disabled]='blockedDepartment[0]'>-</button>
+                <button class="btn btn-primary " (click)="add(-1,'anal','anal')" [disabled]='blockedDepartment[0]'>-</button>
                 {{specs['anal']['anal']}}
-                <button class="btn btn-primary btn-sm" (click)="add(1,'anal','anal')" [disabled]='blockedDepartment[0]'>+</button>
+                <button class="btn btn-primary " (click)="add(1,'anal','anal')" [disabled]='blockedDepartment[0]'>+</button>
               </td>
               <td>
-                  <button class="btn btn-primary btn-sm" (click)="add(-1,'dev','anal')" [disabled]='blockedDepartment[1]' >-</button>
+                  <button class="btn btn-primary" (click)="add(-1,'dev','anal')" [disabled]='blockedDepartment[1]' >-</button>
                   {{specs['dev']['anal']}}
-                  <button class="btn btn-primary btn-sm" (click)="add(1,'dev','anal')" [disabled]='blockedDepartment[1]'>+</button>
+                  <button class="btn btn-primary " (click)="add(1,'dev','anal')" [disabled]='blockedDepartment[1]'>+</button>
               </td>
               <td>
-                  <button class="btn btn-primary btn-sm" (click)="add(-1,'test','anal')" [disabled]='blockedDepartment[2]'>-</button>
+                  <button class="btn btn-primary " (click)="add(-1,'test','anal')" [disabled]='blockedDepartment[2]'>-</button>
                   {{specs['test']['anal']}}
-                  <button class="btn btn-primary btn-sm" (click)="add(1,'test','anal')" [disabled]='blockedDepartment[2]'>+</button>
+                  <button class="btn btn-primary " (click)="add(1,'test','anal')" [disabled]='blockedDepartment[2]'>+</button>
               </td>
               <td class="text-centered">
                 {{countFree('anal')}}
               </td>
             </tr>
             <tr>
-              <th>Devs</th>
+              <th>Разработчики</th>
               <td>
-                <button class="btn btn-primary btn-sm" (click)="add(-1,'anal','dev')" [disabled]='blockedDepartment[0]'>-</button>
+                <button class="btn btn-primary " (click)="add(-1,'anal','dev')" [disabled]='blockedDepartment[0]'>-</button>
                 {{specs['anal']['dev']}}
-                <button class="btn btn-primary btn-sm" (click)="add(1,'anal','dev')" [disabled]='blockedDepartment[0]'>+</button>
+                <button class="btn btn-primary " (click)="add(1,'anal','dev')" [disabled]='blockedDepartment[0]'>+</button>
               </td>
               <td>
-                  <button class="btn btn-primary btn-sm" (click)="add(-1,'dev','dev')" [disabled]='blockedDepartment[1]'>-</button>
+                  <button class="btn btn-primary " (click)="add(-1,'dev','dev')" [disabled]='blockedDepartment[1]'>-</button>
                   {{specs['dev']['dev']}}
-                  <button class="btn btn-primary btn-sm" (click)="add(1,'dev','dev')" [disabled]='blockedDepartment[1]'>+</button>
+                  <button class="btn btn-primary " (click)="add(1,'dev','dev')" [disabled]='blockedDepartment[1]'>+</button>
               </td>
               <td>
-                  <button class="btn btn-primary btn-sm"(click)="add(-1,'test','dev')" [disabled]='blockedDepartment[2]'>-</button>
+                  <button class="btn btn-primary "(click)="add(-1,'test','dev')" [disabled]='blockedDepartment[2]'>-</button>
                   {{specs['test']['dev']}}
-                  <button class="btn btn-primary btn-sm" (click)="add(1,'test','dev')" [disabled]='blockedDepartment[2]'>+</button>
+                  <button class="btn btn-primary " (click)="add(1,'test','dev')" [disabled]='blockedDepartment[2]'>+</button>
               </td>
-              <td class="text-centered">
+              <td class="text-centered" >
                   {{countFree('dev')}}
                 </td>
               </tr>
               <tr>
-                <th>Testers </th>
+                <th>Тестеры </th>
                 <td>
-                  <button class="btn btn-primary btn-sm" (click)="add(-1,'anal','test')" [disabled]='blockedDepartment[0]'>-</button>
+                  <button class="btn btn-primary " (click)="add(-1,'anal','test')" [disabled]='blockedDepartment[0]'>-</button>
                   {{specs['anal']['test']}}
-                  <button class="btn btn-primary btn-sm" (click)="add(1,'anal','test')" [disabled]='blockedDepartment[0]'>+</button>
+                  <button class="btn btn-primary " (click)="add(1,'anal','test')" [disabled]='blockedDepartment[0]'>+</button>
                 </td>
                 <td>
-                    <button class="btn btn-primary btn-sm" (click)="add(-1,'dev','test')" [disabled]='blockedDepartment[1]'>-</button>
+                    <button class="btn btn-primary " (click)="add(-1,'dev','test')" [disabled]='blockedDepartment[1]'>-</button>
                     {{specs['dev']['test']}}
-                    <button class="btn btn-primary btn-sm" (click)="add(1,'dev','test')" [disabled]='blockedDepartment[1]'>+</button>
+                    <button class="btn btn-primary " (click)="add(1,'dev','test')" [disabled]='blockedDepartment[1]'>+</button>
                 </td>
                 <td>
-                    <button class="btn btn-primary btn-sm" (click)="add(-1,'test','test')" [disabled]='blockedDepartment[2]'>-</button>
+                    <button class="btn btn-primary " (click)="add(-1,'test','test')" [disabled]='blockedDepartment[2]'>-</button>
                     {{specs['test']['test']}}
-                    <button class="btn btn-primary btn-sm" (click)="add(1,'test','test')" [disabled]='blockedDepartment[2]'>+</button>
+                    <button class="btn btn-primary " (click)="add(1,'test','test')" [disabled]='blockedDepartment[2]'>+</button>
                 </td>
                 <td class="text-centered">
                     {{countFree('test')}}
@@ -76,7 +76,7 @@
                 </tr>
           </table>
           <div class = "btn-centered">
-          <button class="btn btn-success" (click)="distributeSpecs()">Distribute and roll dices</button>
+          <button class="btn btn-success" (click)="distributeSpecs()" [disabled]='haveFree'>Кинуть кубики</button>
         </div>
         </div>
     </div>

@@ -5,6 +5,7 @@ import {ApiService} from '../../service/ApiService'
 import { cardComponent } from 'src/app/models/card.component';
 import { LoginService } from 'src/app/service';
 import { Router } from '@angular/router';
+import { specsDistribution } from '../specsDistribution/specsDistrib.component';
 
 
 @Component({
@@ -18,9 +19,11 @@ export class kanbantable implements OnInit{
     Deployed: card[] = []
     expedice: any[] = [null,null,null,null,null,null,null]
     @ViewChildren(cardComponent) cc:QueryList<cardComponent>
+    @ViewChildren(specsDistribution) specs:specsDistribution;
     @Input()
     limit: number[]
-    staff: any = {'anal':{'anal':2,'dev':0,'test':0},'dev':{'anal':0,'dev':3,'test':0},'test':{'anal':0,'dev':0,'test':2}}
+    staff = {'anal':{'anal':2,'dev':0,'test':0},'dev':{'anal':0,'dev':3,'test':0},'test':{'anal':0,'dev':0,'test':2}}
+    private static defaultStaff: any = {'anal':{'anal':2,'dev':0,'test':0},'dev':{'anal':0,'dev':3,'test':0},'test':{'anal':0,'dev':0,'test':2}}
     totalStaff:any = {'anal':0,'dev':0,'test':0};
     points: any = {'anal':0,'dev':0,'test':0};
     day:number;
@@ -119,6 +122,11 @@ export class kanbantable implements OnInit{
     }
 
     confirmChanges(){
+        if(this.day == 21)
+        {
+            localStorage.removeItem('tableId')
+            this.router.navigate(['/mainmenu'])
+        }
         this.allowPointsDistribution = false;
         let resp = {'anal':[],'dev':[],'test':[]}
         this.cc.toArray().forEach(c =>{
@@ -156,13 +164,8 @@ export class kanbantable implements OnInit{
     }
 
     
-    updateDay(){
-        if(this.day == 22)
-        {
-            localStorage.removeItem('tableId')
-            this.router.navigate(['/mainmenu'])
-        }
-        
+    updateDay(){       
+        this.specs.setDefaultValues()
         this.points = {'anal':0,'dev':0,'test':0};
         this.cc.toArray().forEach(c=>{
             c.updateOlds()
@@ -181,7 +184,7 @@ export class kanbantable implements OnInit{
     }
 
     processEvent(e){
-        this.EventText.unshift(e['text'])
+        this.EventText.push(e['text'])
         if(e['command'] != ''){
             let words =e['command'].split(' ')
             let first = words.shift()   
@@ -199,6 +202,10 @@ export class kanbantable implements OnInit{
             case 'dev':  {this.blockedDepartment[1] = true;break;}
             case 'test':{ this.blockedDepartment[2]=true;break;}
         }
+    }
+
+    unblock(){
+
     }
 
     add(words){

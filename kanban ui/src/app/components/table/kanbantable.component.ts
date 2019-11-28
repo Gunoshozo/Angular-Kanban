@@ -70,6 +70,7 @@ export class kanbantable implements OnInit{
         this.apiService.getCards(email)
         .subscribe(
             data => {
+                console.log(data)
                 this.day = data['day']
                 this.CardList = []
                 for(var i =0;i<7;i++){
@@ -410,9 +411,13 @@ export class kanbantable implements OnInit{
         console.error(error)    
     })
     }
-    
+
     getMoney($event){
         this.money = $event;
-        this.modalOpen = true;
+        this.openModal(true)
+    }
+
+    openModal(flag){
+        this.modalOpen = flag
     }
 }

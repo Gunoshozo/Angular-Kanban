@@ -35,6 +35,7 @@ export class LoginService {
 
     logout(){
       localStorage.removeItem('currentUser');
+      localStorage.removeItem('tableId')
       this.currentUserSubject.next(null);
     }
 

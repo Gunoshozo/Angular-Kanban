@@ -78,15 +78,15 @@
     </tr>
 </table>
 
-        <div  class="modal fade" role="dialog" [ngStyle]="{'display': modalOpen ? 'block' : 'none', 'opacity': 1}">
-        <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-        <div class="modal-header">
-        <h4 class="modal-title">Отчет</h4>
-        </div>
-        <div class="modal-body">Ваш заработок:{{money}}</div>
-        <div class="modal-footer">
-                    <button type="button" id="btnOK" class="btn btn-success" (click)="openModal(false)"> Ok</button>
-        </div>
-        </div>
-        </div>
+<div  class="modal fade" role="dialog" [ngStyle]="{'display': modalOpen ? 'block' : 'none', 'opacity': 1}">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title">Отчет</h4>
+</div>
+<div class="modal-body">Ваш заработок:{{money}}</div>
+<div class="modal-footer">
+    <button type="button" id="btnOK" class="btn btn-success" (click)="openModal(false)"> Ok</button>
+</div>
+</div>
+</div>

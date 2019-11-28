@@ -14,6 +14,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { specsDistribution } from './components/specsDistribution/specsDistrib.component';
 import { MainmenuComponent } from './components/mainmenu/mainmenu.component';
 import { graph } from './components/graph/graph.component';
+import { report } from './components/report';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { graph } from './components/graph/graph.component';
     gameComponent,
     specsDistribution,
     MainmenuComponent,
-    graph
+    graph,
+    report
   ],
   imports: [
     BrowserModule,

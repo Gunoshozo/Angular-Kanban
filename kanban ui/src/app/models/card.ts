@@ -55,19 +55,19 @@ export class card{
     public getTypeInfo(){
         switch(this.color){
             case 'White':{
-                return 'Cash: $' + this.money 
+                return 'Деньги: $' + this.money 
             }
             case 'Green':{
                 return ''
             }
             case 'Violet':{
                 if(this.money != 0)
-                    return 'Fine: ' + this.money
+                    return 'Штраф: $' + this.money
                 else
-                    return 'Fine: $2500  Subs: ' + this.subs
+                    return 'Штраф: $2500  Подписчики: ' + this.subs
             }
             case 'Orange':{
-                return 'Subs: ' + this.subs
+                return 'Подписчики: ' + this.subs
             }
         }
 

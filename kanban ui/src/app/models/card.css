@@ -49,12 +49,12 @@ table{
 }
 
 .Violet{
-    background-color:purple;
+    background-color: rgb(182,32,199);
 }
 
 
 .Orange{
-    background-color:rgb(255, 123, 0);
+    background-color:rgb(241, 150, 64);
 }
 
 .Green{
@@ -67,7 +67,7 @@ table{
 
 .design_row{
     border: 1px solid black;
-    background-color: crimson;
+    background-color: red;
     color: white;
 }
 

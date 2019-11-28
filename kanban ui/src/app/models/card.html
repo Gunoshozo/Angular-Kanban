@@ -1,5 +1,6 @@
+{{upgradePriority}}
 <div class="card">
-    <table *ngIf='notBlocked'>
+    <table *ngIf="notBlocked">
         <tr><td>
     <table class ="{{Card.getColor()}} maxout">
         <tr class={{Card.getColor()}}>
@@ -7,27 +8,27 @@
             <td class="typeInfo" colspan="2">{{Card.getTypeInfo()}}</td>
         </tr>
         <tr>
-            <td class="design_row">Design:</td>
+            <td class="design_row">Анализ:</td>
             <td class="design_points" colspan="2">
             {{Card.getAnalysisDots()}}
             </td>
         </tr>
         <tr>
-            <td class="dev_row">Dev:</td>
+            <td class="dev_row">Разработка:</td>
             <td class ="dev_points" colspan="2">
                 {{Card.getDevDots()}}
             </td>
         </tr>
         <tr>
-            <td class="test_row">Test:</td>
+            <td class="test_row">Тестировка:</td>
             <td class="test_points" colspan="2">{{Card.getTestDots()}}</td>
         </tr>
         
         
         <tr class="innerRow">
-            <td class="dateText">Day Deployed</td>
-            <td class ="dateText">Day Ready</td>
-            <td class ="dateText">Cycle Time</td>
+            <td class="dateText">День выпуска</td>
+            <td class ="dateText">День начала</td>
+            <td class ="dateText">Все время</td>
         </tr>
         <tr class='bottomRow'>
             <td class="date">{{Card.DayDeployed == '0'? 'x':Card.DayDeployed}}</td>
@@ -37,7 +38,7 @@
     </table>
 </td>
 <td>
-    <table *ngIf="canUpgrade && (Card.status == 'AnalProg' || Card.status == 'DevProg' || Card.status =='Test') && !isMaxed && upgradePriority" >
+    <table *ngIf="canUpgrade && (Card.status == 'AnalProg' || Card.status == 'DevProg' || Card.status =='Test') && !isMaxed" >
         <tr>
             <td><button class="btn btn-primary btn-sm" (click)="addToStatus(1)">+</button> </td> 
             <td><button class="btn btn-primary btn-sm" (click)="addToStatus(-1)">-</button> </td> 
@@ -55,16 +56,30 @@
 </td>
 </tr>
 </table>
-<table *ngIf='!notBlocked'>
+<table *ngIf="!notBlocked">
     <tr>
-        <td colspan="3">
-            <div class='ceneredText'>
-                Card is blocked
-            </div>
+        <td>
+            <table>
+                <tr>
+                    <td colspan="4">
+                        <div class='ceneredText'>
+                            Карта заблокирована
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <dt colspan="4">{{getBlocked()}}</dt>
+                </tr>
+            </table>
         </td>
-    </tr>
-    <tr>
-        <dt></dt>
-    </tr>
-</table>
+    <td>
+            <table *ngIf="canUpgrade" >
+                    <tr>
+                        <td><button class="btn btn-primary btn-sm" (click)="addToUnblock()">+</button> </td> 
+                    </tr>
+            </table>
+    </td>
+</tr>
+    </table>
+    
 </div>  

@@ -22,7 +22,7 @@
                 
                         
         <div class="btn-group" role="group">
-                        <graph></graph>
+                        <graph (balance)="getMoney($event)" ></graph>
         </div>
 </div>
 <div class="btn-group btn-centered">
@@ -52,7 +52,7 @@
     </td>
     <td class="cell">
             <p class="tittle">Отдел тестирования</p>
-            <p class="wip">WIP limit: {{limit[2]}}</p>
+            <p class="wip">Ограничение: {{limit[2]}}</p>
             <p *ngIf="staff['test']['anal']!=0">Аналитиков: {{staff['test']['anal']}}</p>
             <p *ngIf="staff['test']['dev']!=0">Разработчиков: {{staff['test']['dev']}}</p>
             <p *ngIf="staff['test']['test']!=0">Тестеров: {{staff['test']['test']}}</p>
@@ -73,7 +73,20 @@
     </tr>
     <tr class="cardColumns">
     <td *ngFor='let card of CardList; let i = index' class="column{{i}}">
-        <cardComponent *ngFor ='let c of card; let j = index' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'canPull(i)' [upgradePriority]='upgradePriority(i)' (moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)" [priority]="pullPriority(i,j)"></cardComponent>
+        <cardComponent *ngFor ='let c of card; let j = index' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'canPull(i)'  (moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)" [priority]="pullPriority(i,j)"></cardComponent>
     </td>
     </tr>
 </table>
+
+        <div  class="modal fade" role="dialog" [ngStyle]="{'display': modalOpen ? 'block' : 'none', 'opacity': 1}">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h4 class="modal-title">Отчет</h4>
+        </div>
+        <div class="modal-body">Ваш заработок:{{money}}</div>
+        <div class="modal-footer">
+                    <button type="button" id="btnOK" class="btn btn-success" (click)="openModal(false)"> Ok</button>
+        </div>
+        </div>
+        </div>

@@ -15,7 +15,6 @@ export class ApiService {
   }
 
   public getPoints(day:number,specs){
-    console.log(localStorage.getItem('tableId'))
     let anal = specs['anal']['anal']+specs['anal']['test']+specs['anal']['dev']
     let dev = specs['dev']['anal']+specs['dev']['test']+specs['dev']['dev']
     let test = specs['test']['anal']+specs['test']['test']+specs['test']['dev']
@@ -65,5 +64,10 @@ export class ApiService {
   public getTableId(){
     let email = localStorage.getItem('currentUser');
     return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_table?email='+email)
+  }
+
+  public deleteTable(){
+    let email = localStorage.getItem('currentUser');
+    return this.httpClient.get('http://25.65.79.64:8000/controller/api/delete_table?email='+email)
   }
 }

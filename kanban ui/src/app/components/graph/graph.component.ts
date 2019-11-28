@@ -1,7 +1,6 @@
-import { Component, AfterViewInit, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, AfterViewInit, OnInit, AfterViewChecked, EventEmitter, Output } from '@angular/core';
 import * as CanvasJS from 'src/assets/canvasjs.min'
 import { ApiService } from 'src/app/service/ApiService';
-import { reduce } from 'rxjs/operators';
 
 @Component({
     selector:'graph',
@@ -12,16 +11,15 @@ export class graph implements AfterViewInit,OnInit {
     
 
     
-        //orange
         passedTest:any[] =[]
-        //blue
         passedDev:any[] = []
-        //red
         passedAnalysis:any[] = []
-        //brown
         passedSelected:any[] = []
 
         money:any[] = []
+
+        @Output() balance = new EventEmitter<number>()
+
 
         ButtonToggle:boolean
 
@@ -45,7 +43,6 @@ export class graph implements AfterViewInit,OnInit {
             this.apiService.getGraphData()
             .subscribe(data=>{
                 let graphData = data['graphData']
-                console.log(graphData)
                 for(var i =0;i<graphData.length;i++){
                     this.passedTest.push({x:graphData[i]['day'],y:graphData[i]['deploy']})
                     this.passedDev.push({x:graphData[i]['day'],y:graphData[i]['testing']})
@@ -54,6 +51,8 @@ export class graph implements AfterViewInit,OnInit {
                     this.money.push({x:graphData[i]['day'],y:graphData[i]['cost']})
                     
                 }
+                if((graphData.length-9) %3 == 0)
+                    this.balance.emit(this.money[graphData.length-1])
             },error =>{
                 console.error(error)
             }
@@ -151,10 +150,5 @@ export class graph implements AfterViewInit,OnInit {
             });
             CFD.render()
             Revenue.render();
-        }
-
-        onDayUpdate(){
-            this.getData()
-            this.DrawGraphs()
         }
 }

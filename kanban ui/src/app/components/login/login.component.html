@@ -1,18 +1,18 @@
 <div class="centered">
 
 <form [formGroup]='loginForm' (ngSubmit)="onSubmit()">
-        <h2>Login</h2>
+        <h2>Логин</h2>
     <div class="form-group">
         <input type="text" formControlName="email"  class="form-control" placeholder="email" />
     </div>
     <div class="form-group">
-        <input type="password" formControlName="password"  class="form-control" placeholder="password"/>
+        <input type="password" formControlName="password"  class="form-control" placeholder="пароль"/>
     </div>
     <div class="centered-buttons">
         <button class="btn btn-primary" [disabled]="loading">
-            Login
+            Войти
         </button>
-        <a routerLink="/register" > Register</a>
+        <a routerLink="/register" > Зарегистрироваться</a>
     </div>
     </form>
 </div>

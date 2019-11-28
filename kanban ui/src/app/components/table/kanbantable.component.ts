@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChildren, QueryList, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList, ViewChild, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { card } from '../../models/card';
 import {ApiService} from '../../service/ApiService'
@@ -29,6 +29,8 @@ export class kanbantable implements OnInit{
     points: any = {'anal':0,'dev':0,'test':0};
     day:number;
     EventText: string = ''
+    modalOpen = false
+    money:number
 
 
     allowPointsDistribution:boolean = false;
@@ -42,7 +44,9 @@ export class kanbantable implements OnInit{
     constructor(private apiService:ApiService,private loginService:LoginService,private router:Router){
         //Редирект в случае, если пользователь не залогинен
         // if(this.loginService.currentUserValue == null) 
-        //         this.router.navigate(['/login'])                
+        //         this.router.navigate(['/login']) 
+        if(localStorage.getItem('tableId')== null)               
+            this.router.navigate(['/mainmenu'])
     }
 
     
@@ -66,7 +70,6 @@ export class kanbantable implements OnInit{
         this.apiService.getCards(email)
         .subscribe(
             data => {
-                console.log(data)
                 this.day = data['day']
                 this.CardList = []
                 for(var i =0;i<7;i++){
@@ -163,9 +166,8 @@ export class kanbantable implements OnInit{
         if(this.CardList[5][0] != undefined){
             Firstid = this.CardList[5][0].idCard
         }
-        this.apiService.getEvent(this.day,Firstid)
+        this.apiService.getEvent(10,Firstid)
         .subscribe(data =>{
-                console.log(data)
                 this.processEvent(data)
                 alert('У вас новое событие')
         },
@@ -178,6 +180,7 @@ export class kanbantable implements OnInit{
     }
 
     processEvent(e){
+        console.log(e)
         this.EventText =e['text']
         if(e['command'] != ''){
             let words =e['command'].split(' ')
@@ -187,8 +190,29 @@ export class kanbantable implements OnInit{
                 case 'add':{ this.add(words); break;}
                 case 'set':{ this.set(words); break;}
                 case 'unblock':{this.unblock(words);break;}
+                case 'card':{ localStorage.setItem('blockedCard',this.CardList[5][0].idCard.toString())
+                    this.block_card(); this.block_component();break;}
             }
         }
+    }
+
+    block_card(){
+        let c:card = this.CardList[5][0];
+        this.CardList[5].splice(0,1);
+        c.status = this.ColNames[4]
+        this.CardList[4].unshift(c)
+    }
+
+    block_component(){
+        let id = this.CardList[4][0].idCard
+        this.cc.forEach(elem=>{
+            if(elem.Card.idCard == id)
+            {elem.TotalBlockPoints = 10;
+            elem.CurrentBlockPoints = 0;
+            elem.notBlocked = false
+            console.log(elem)
+        }
+        })
     }
 
     block(words){
@@ -247,21 +271,6 @@ export class kanbantable implements OnInit{
         }
     }
 
-    //содержит ли столбец для прокачки карточек заблокированную карточку
-    upgradePriority(I){
-        if(I%2 == 0){
-            return false
-        }
-        else{
-            let st = this.ColNames[I]
-            this.cc.toArray().forEach(element =>{
-                if(element.Card.status == st && element.notBlocked == false){
-                    return false
-                }
-            })
-        }
-        return true
-    }
 
     recieveBoolean($event){
         this.allowPointsDistribution = $event;
@@ -402,4 +411,8 @@ export class kanbantable implements OnInit{
     })
     }
     
+    getMoney($event){
+        this.money = $event;
+        this.modalOpen = true;
+    }
 }

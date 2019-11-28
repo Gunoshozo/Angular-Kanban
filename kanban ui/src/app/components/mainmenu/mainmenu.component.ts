@@ -11,14 +11,33 @@ import { ApiService } from 'src/app/service/ApiService';
 export class MainmenuComponent implements OnInit {
 
   username:string
+  haveTable:boolean;
+  disabled = true
 
   constructor(private apiService:ApiService, private loginService:LoginService,private router:Router) { 
-    if(this.loginService.currentUserValue == null) 
-                this.router.navigate(['/login'])
+    // if(this.loginService.currentUserValue == null) 
+    //             this.router.navigate(['/login'])
   }
 
   ngOnInit() {
     this.username = localStorage.getItem('currentUser')
+    console.log(this.username)
+    this.apiService.getTableId()
+    .subscribe(data=>{
+      console.log(data)
+      if(data['id_table']!="0"){
+        localStorage.setItem('tableId',data['id_table'])
+        this.haveTable = true;
+        this.disabled = false;
+      }else{
+        this.haveTable = false;
+        this.disabled = false;
+      }
+    },error=>{
+      console.error(error)
+    }
+    )
+    
   }
 
   Create(){
@@ -35,5 +54,9 @@ export class MainmenuComponent implements OnInit {
   logout(){
     this.loginService.logout()
     this.router.navigate(['/login'])
+  }
+
+  toGame(){
+    this.router.navigate(['/game'])
   }
 }

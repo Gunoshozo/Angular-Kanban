@@ -4,6 +4,7 @@ import { login } from './components/login';
 import { register } from './components/register';
 import { gameComponent } from './components/game';
 import { MainmenuComponent } from './components/mainmenu';
+import { graph } from './components/graph/graph.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'login', component: login },
   { path: 'register', component: register },
   { path: 'mainmenu', component: MainmenuComponent},
+  {path: 'graph', component:graph},
   { path: '**', redirectTo: 'login' }
 ];
 

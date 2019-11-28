@@ -1,0 +1,13 @@
+<div class="dropdown">
+        <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)=DrawGraphs()>
+                Графики
+</button>
+      <div class="dropdown-menu dropdown-left" aria-labelledby="btnGroupDrop1" id="dropdownMenu">
+        <div class="container">
+            <button class='btn btn-primary' [disabled]='ButtonToggle' (click)=toggle()>Накопительная схема</button>
+            <button class='btn btn-primary' [disabled]='!ButtonToggle'(click)=toggle()>Прибыль</button>
+            <div id="CFD" class="{{ButtonToggle}}"></div>
+            <div id="Revenue" class="{{!ButtonToggle}}"></div>
+        </div>
+      </div>
+</div>

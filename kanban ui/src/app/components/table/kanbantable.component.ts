@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { card } from '../../models/card';
 import {ApiService} from '../../service/ApiService'
 import { cardComponent } from 'src/app/models/card.component';
 import { LoginService } from 'src/app/service';
 import { Router } from '@angular/router';
-import { specsDistribution } from '../specsDistribution/specsDistrib.component';
+import { graph } from '../graph/graph.component';
 
 
 @Component({
@@ -18,16 +18,18 @@ export class kanbantable implements OnInit{
     CardList: card[][]
     Deployed: card[] = []
     expedice: any[] = [null,null,null,null,null,null,null]
+    whitePlaceholder:card
     @ViewChildren(cardComponent) cc:QueryList<cardComponent>
-    @ViewChildren(specsDistribution) specs:specsDistribution;
+    @ViewChild(graph,{static:false}) Graph:graph;
     @Input()
     limit: number[]
     staff = {'anal':{'anal':2,'dev':0,'test':0},'dev':{'anal':0,'dev':3,'test':0},'test':{'anal':0,'dev':0,'test':2}}
-    private static defaultStaff: any = {'anal':{'anal':2,'dev':0,'test':0},'dev':{'anal':0,'dev':3,'test':0},'test':{'anal':0,'dev':0,'test':2}}
+    defaultStaff: any = {'anal':{'anal':2,'dev':0,'test':0},'dev':{'anal':0,'dev':3,'test':0},'test':{'anal':0,'dev':0,'test':2}}
     totalStaff:any = {'anal':0,'dev':0,'test':0};
     points: any = {'anal':0,'dev':0,'test':0};
     day:number;
-    EventText: string[] = []
+    EventText: string = ''
+
 
     allowPointsDistribution:boolean = false;
     blockedDepartment:boolean[] = [false,false,false]
@@ -39,8 +41,8 @@ export class kanbantable implements OnInit{
     
     constructor(private apiService:ApiService,private loginService:LoginService,private router:Router){
         //Редирект в случае, если пользователь не залогинен
-        if(this.loginService.currentUserValue == null) 
-                this.router.navigate(['/login'])                
+        // if(this.loginService.currentUserValue == null) 
+        //         this.router.navigate(['/login'])                
     }
 
     
@@ -59,15 +61,6 @@ export class kanbantable implements OnInit{
         this.getAllCards()
     }
 
-    startGame(){
-        this.apiService.newDay()
-        .subscribe( data=>{
-            this.day = 8;
-        },error=>{
-            console.error(error)
-        })
-    }
-
     getAllCards(){
         let email = localStorage.getItem('currentUser')
         this.apiService.getCards(email)
@@ -82,10 +75,12 @@ export class kanbantable implements OnInit{
                     if(len.hasOwnProperty(this.ColNames[i])){
                         for(var j =0; j< len[this.ColNames[i]]['length'];j++){
                             var tmpCard = data['cards'][this.ColNames[i]][j.toString()]
-
                             var Card = this.parseCard(tmpCard)
-                            if(Card.color=='White' && i != 0 && i != 7){
-                                this.expedice[i] = Card
+                            if(Card.color=='White' ){
+                                if(i != 0 && i != 7)
+                                    this.expedice[i] = Card
+                                else
+                                    this.whitePlaceholder = Card
                             } 
                             else{
                                 if(Card.color == 'White' && i ==0)
@@ -122,11 +117,6 @@ export class kanbantable implements OnInit{
     }
 
     confirmChanges(){
-        if(this.day == 21)
-        {
-            localStorage.removeItem('tableId')
-            this.router.navigate(['/mainmenu'])
-        }
         this.allowPointsDistribution = false;
         let resp = {'anal':[],'dev':[],'test':[]}
         this.cc.toArray().forEach(c =>{
@@ -165,7 +155,6 @@ export class kanbantable implements OnInit{
 
     
     updateDay(){       
-        this.specs.setDefaultValues()
         this.points = {'anal':0,'dev':0,'test':0};
         this.cc.toArray().forEach(c=>{
             c.updateOlds()
@@ -176,15 +165,20 @@ export class kanbantable implements OnInit{
         }
         this.apiService.getEvent(this.day,Firstid)
         .subscribe(data =>{
+                console.log(data)
                 this.processEvent(data)
+                alert('У вас новое событие')
         },
         error =>{
             console.error('event error')
         })
+        this.staff = this.defaultStaff
+        this.Graph.addData()
+        this.Graph.DrawGraphs()
     }
 
     processEvent(e){
-        this.EventText.push(e['text'])
+        this.EventText =e['text']
         if(e['command'] != ''){
             let words =e['command'].split(' ')
             let first = words.shift()   
@@ -192,6 +186,7 @@ export class kanbantable implements OnInit{
                 case 'block':{ this.block(words); break;}
                 case 'add':{ this.add(words); break;}
                 case 'set':{ this.set(words); break;}
+                case 'unblock':{this.unblock(words);break;}
             }
         }
     }
@@ -204,17 +199,28 @@ export class kanbantable implements OnInit{
         }
     }
 
-    unblock(){
-
+    unblock(words){
+        switch(words[0]){
+            case 'anal':{ this.blockedDepartment[0] = false;break;}
+            case 'dev':  {this.blockedDepartment[1] = false;break;}
+            case 'test':{ this.blockedDepartment[2] = false;break;}
+        }
     }
 
     add(words){
         switch(words[0]){
-            case 'tester':{this.staff['test']['test']++;break}
-            case 'developer':{this.staff['dev']['dev']++;break}
-            case 'analyst':{this.staff['anal']['anal']++;break}
+            case 'tester':{this.staff['test']['test']++; this.defaultStaff['test']['test']++;break}
+            case 'developer':{this.staff['dev']['dev']++;this.defaultStaff['dev']['dev']++;break}
+            case 'analyst':{this.staff['anal']['anal']++;this.defaultStaff['anal']['anal']++;break}
+            case 'card':{this.pullEventCard();break;}
         }
         this.countTotalStaff()
+    }
+
+    //вытягивание белой карты
+    pullEventCard(){
+        this.expedice[1] = this.whitePlaceholder
+        this.expedice[1].DayReady = this.day
     }
 
     set(words:string[]){
@@ -224,7 +230,7 @@ export class kanbantable implements OnInit{
 
     }
 
-    getPriority(I,J){
+    pullPriority(I,J){
         if(I != 0)
             return true
         else{
@@ -239,6 +245,22 @@ export class kanbantable implements OnInit{
                 return true
             }
         }
+    }
+
+    //содержит ли столбец для прокачки карточек заблокированную карточку
+    upgradePriority(I){
+        if(I%2 == 0){
+            return false
+        }
+        else{
+            let st = this.ColNames[I]
+            this.cc.toArray().forEach(element =>{
+                if(element.Card.status == st && element.notBlocked == false){
+                    return false
+                }
+            })
+        }
+        return true
     }
 
     recieveBoolean($event){
@@ -267,6 +289,9 @@ export class kanbantable implements OnInit{
                             if(element.Card.idCard == c.idCard)
                                 element.updateOlds()
                         });
+                        if(i+1 == 6){
+                            this.pullInCard($event)
+                        }
                         return;
                     },error =>{
                         console.error(error)
@@ -343,6 +368,8 @@ export class kanbantable implements OnInit{
                         if(this.CardList[i][j].idCard == $event){
                             let c:card = this.CardList[i][j];
                             c.updateStatus()
+                            if(c.status == 'AnalProg')
+                                c.DayReady = this.day;
                             if(i == 6){
                                 this.Deployed.unshift(c)
                             }

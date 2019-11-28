@@ -13,6 +13,8 @@ import { gameComponent } from './components/game';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { specsDistribution } from './components/specsDistribution/specsDistrib.component';
 import { MainmenuComponent } from './components/mainmenu/mainmenu.component';
+import { graph } from './components/graph/graph.component';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { MainmenuComponent } from './components/mainmenu/mainmenu.component';
     register,
     gameComponent,
     specsDistribution,
-    MainmenuComponent
+    MainmenuComponent,
+    graph
   ],
   imports: [
     BrowserModule,

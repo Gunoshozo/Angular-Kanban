@@ -36,7 +36,8 @@ export class register implements OnInit{
             .pipe(first())
             .subscribe(
                 data => {
-                        this.router.navigate(['/login']);
+                        localStorage.setItem('currentUser',this.registerForm.controls.email.value)
+                        this.router.navigate(['/mainmenu']);
                 },
                 error => {
                     console.error(error)

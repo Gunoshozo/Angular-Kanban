@@ -1,0 +1,23 @@
+.container{
+    float: left;
+}
+
+#dropdownMenu{
+    width: 700px;
+    height: 600px;
+}
+
+
+#btnGroupDrop1{
+    width: 250px;
+}
+
+.false{
+    display: none; 
+}
+
+.dropdown-left{
+    right: 0;
+    left: auto;
+    
+}

@@ -25,12 +25,8 @@ export class ApiService {
 
   public postUpdatedCards(cards){
     let tableId = localStorage.getItem('tableId')
-    return this.httpClient.post("http://25.65.79.64:8000/controller/api/change_progress",{'cards':cards,'idGameTable':tableId})
-  }
-
-  public getTables(){
-    let email =  localStorage.getItem('currentUser')
-    return this.httpClient.get("http://25.65.79.64:8000/controller/api/?email="+email)
+    let email = localStorage.getItem('currentUser');
+    return this.httpClient.post("http://25.65.79.64:8000/controller/api/change_progress",{'email':email,'cards':cards,'idGameTable':tableId})
   }
 
   public join(table_id:number){
@@ -61,4 +57,13 @@ export class ApiService {
     return this.httpClient.post('http://25.65.79.64:8000/controller/api/update_status',{'idCard':idCard})
   }
 
+  public getGraphData(){
+    let email = localStorage.getItem('currentUser')
+    return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_graph?email='+ email)
+  }
+
+  public getTableId(){
+    let email = localStorage.getItem('currentUser');
+    return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_table?email='+email)
+  }
 }

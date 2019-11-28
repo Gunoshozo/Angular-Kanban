@@ -1,5 +1,6 @@
 import {card} from './card'
 import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
+import { min } from 'rxjs/operators';
 
 @Component({
     selector:'cardComponent',
@@ -18,7 +19,11 @@ export class cardComponent implements OnInit{
     points = {'anal':0,'dev':0,'test':0}
     @Input()
     canPull:boolean;
+    @Input()
+    upgradePriority:boolean
     notBlocked:boolean = true;
+    TotalBlockPoints:number;
+    CurrentBlockPoints:number;
     OldValues: { 'anal': number; 'dev': number; 'test': number; };
     @Output() moveEvent = new EventEmitter<number>();
     @Output() pullEvent = new EventEmitter<number>();
@@ -36,7 +41,6 @@ export class cardComponent implements OnInit{
                         this.Card.CurrentAnalysis+=num
                         this.points['anal']--
                         if(this.Card.CurrentAnalysis == this.Card.TotalAnalysis){
-                            console.log('+')
                             this.moveEvent.emit(this.Card.idCard)
                             this.canUpgrade = false;
                         }
@@ -111,8 +115,19 @@ export class cardComponent implements OnInit{
     unblock(){
         this.notBlocked = true;
     }
+
+    addToUnblock(){
+        if(this.CurrentBlockPoints < this.TotalBlockPoints){
+            this.CurrentBlockPoints++;
+            if(this.CurrentBlockPoints == this.TotalBlockPoints){
+                this.unblock()
+                this.canUpgrade = false;
+            }
+                
+        }
+    }
+
     pull(){
-        console.log('pull_event')
         this.pullEvent.emit(this.Card.idCard)
     }
 }

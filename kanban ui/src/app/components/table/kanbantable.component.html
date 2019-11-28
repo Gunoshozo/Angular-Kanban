@@ -14,7 +14,7 @@
                                                         События
                                       </button>
                                       <div class="dropdown-menu scrollable" aria-labelledby="btnGroupDrop1">
-                                                <a class="dropdown-item disabled word-breakable" *ngFor ='let t of EventText'>{{t}}<div class="dropdown-divider"></div></a>
+                                                <a class="dropdown-item disabled word-breakable" >{{EventText}}<div class="dropdown-divider"></div></a>
                                         </div>
                                         </div>
                         
@@ -22,12 +22,7 @@
                 
                         
         <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          График
-                        </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                        Тут будет график
-                                </div>
+                        <graph></graph>
         </div>
 </div>
 <div class="btn-group btn-centered">
@@ -37,11 +32,11 @@
     <tr>
     <td colspan ='1' class="cell">
         <p class="tittle">Все истории</p>
-        <p class="wip">No WIP limit</p>
+        <p class="wip">Нет ограничений</p>
     </td>
     <td colspan="2" class="cell">
             <p class="tittle">Отдел аналитики</p>
-            <p class="wip">WIP limit: {{limit[0]}}</p>
+            <p class="wip">Ограничение: {{limit[0]}}</p>
             <p *ngIf="staff['anal']['anal']!=0">Аналитиков: {{staff['anal']['anal']}}</p>
             <p *ngIf="staff['anal']['dev']!=0">Разработчиков: {{staff['anal']['dev']}}</p>
             <p *ngIf="staff['anal']['test']!=0">Тестеров: {{staff['anal']['test']}}</p>
@@ -49,7 +44,7 @@
     </td>
     <td colspan="2" class="cell">
             <p class="tittle">Отдел разработки</p>
-            <p class="wip">WIP limit: {{limit[1]}}</p>
+            <p class="wip">Ограничение: {{limit[1]}}</p>
             <p *ngIf="staff['dev']['anal']!=0">Аналитиков: {{staff['dev']['anal']}}</p>
             <p *ngIf="staff['dev']['dev']!=0">Разработчиков: {{staff['dev']['dev']}}</p>
             <p *ngIf="staff['dev']['test']!=0">Тестеров: {{staff['dev']['test']}}</p>
@@ -64,13 +59,13 @@
             <p class="points" *ngIf="allowPointsDistribution">Очков:{{points['test']}}</p>
     </td>
     <td class="cell">
-            <p class="tittle">Ready to Deploy</p>
-            <p class="wip" *ngIf="limit.length==3">No WIP limit</p>
-            <p class="wip" *ngIf="limit.length==4">WIP limit: {{limit[3]}}</p>
+            <p class="tittle">Готовы к выходу</p>
+            <p class="wip" *ngIf="limit.length==3">Нет ограничений</p>
+            <p class="wip" *ngIf="limit.length==4">Ограничение: {{limit[3]}}</p>
     </td>
     </tr>
     <tr>
-        <td class="expedise" *ngFor='let ec of expedice'>
+        <td  *ngFor='let ec of expedice;let i = index' class="expedise column{{i}}">
                 <div *ngIf='ec != null'>
                         <cardComponent [CardObject]='ec' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'true' (moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)"></cardComponent>
                 </div>
@@ -78,7 +73,7 @@
     </tr>
     <tr class="cardColumns">
     <td *ngFor='let card of CardList; let i = index' class="column{{i}}">
-        <cardComponent *ngFor ='let c of card; let j = index' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'canPull(i)' (moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)" [priority]="getPriority(i,j)"></cardComponent>
+        <cardComponent *ngFor ='let c of card; let j = index' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'canPull(i)' [upgradePriority]='upgradePriority(i)' (moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)" [priority]="pullPriority(i,j)"></cardComponent>
     </td>
     </tr>
 </table>

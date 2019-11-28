@@ -1,9 +1,9 @@
 <div class="centered">
-<p>Your email: {{username}}</p>
 <div class="btn-group">
 <div class="middle">
-        <button class="btn btn-danger" type="button" (click)=logout()>logout</button>
-        <button class="btn btn-primary" type="button" id="dropdownMenuButton" (click)=Create()>Create table</button>
+        <button class="btn btn-danger" type="button" (click)=logout()>выйти</button>
+        <button *ngIf='!haveTable' class="btn btn-primary" type="button" (click)=Create() [disabled]=disabled>Создать игру</button>
+        <button *ngIf='haveTable' class="btn btn-primary" type="button"  (click)=toGame() [disabled]=disabled>Вернутся в игру</button>
     </div>
 </div>
 </div>

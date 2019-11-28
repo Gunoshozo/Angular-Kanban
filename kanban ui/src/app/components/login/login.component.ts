@@ -15,11 +15,9 @@ export class login implements OnInit{
 
     constructor(
         private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
         private router: Router,
         private loginService: LoginService
         ){
-           // если уже залогинен
            if(this.loginService.currentUserValue) 
                 this.router.navigate(['/mainmenu'])
         }
@@ -29,8 +27,6 @@ export class login implements OnInit{
             email:['',Validators.required],
             password: ['',Validators.required]
         })
-        this.returnUrl = '/mainmenu'
-        // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
     
     onSubmit(){
@@ -44,7 +40,7 @@ export class login implements OnInit{
             .pipe(first())
             .subscribe(
                 data =>{
-                    this.router.navigate([this.returnUrl])
+                    this.router.navigate(['/mainmenu'])
                 },
                 error =>{
                     console.log(error);

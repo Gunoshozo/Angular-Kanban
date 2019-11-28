@@ -2,6 +2,7 @@ import { OnInit, Component} from '@angular/core'
 import * as CanvasJS from 'src/assets/canvasjs.min'
 import { ApiService } from 'src/app/service/ApiService'
 import { Router } from '@angular/router'
+import { LoginService } from 'src/app/service'
 
 
 @Component({
@@ -23,7 +24,12 @@ export class report implements OnInit{
 
     
 
-    constructor(private apiService:ApiService,private router:Router){}
+    constructor(private apiService:ApiService,private router:Router,private loginService:LoginService){
+        if(this.loginService.currentUserValue == null) 
+                this.router.navigate(['/login']) 
+        if(localStorage.getItem('tableId')== null)               
+            this.router.navigate(['/mainmenu'])
+    }
 
     ngOnInit(): void {
         this.getData()

@@ -15,8 +15,8 @@ export class MainmenuComponent implements OnInit {
   disabled = true
 
   constructor(private apiService:ApiService, private loginService:LoginService,private router:Router) { 
-    // if(this.loginService.currentUserValue == null) 
-    //             this.router.navigate(['/login'])
+    if(this.loginService.currentUserValue == null) 
+                this.router.navigate(['/login'])
   }
 
   ngOnInit() {

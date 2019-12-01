@@ -1,5 +1,5 @@
 <div class="card">
-    <table *ngIf="notBlocked">
+    <table *ngIf="!Card.hidden">
         <tr><td>
     <table class ="{{Card.getColor()}} maxout">
         <tr class={{Card.getColor()}}>
@@ -55,30 +55,5 @@
 </td>
 </tr>
 </table>
-<table *ngIf="!notBlocked">
-    <tr>
-        <td>
-            <table>
-                <tr>
-                    <td colspan="4">
-                        <div class='ceneredText'>
-                            Карта заблокирована
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <dt colspan="4">{{getBlocked()}}</dt>
-                </tr>
-            </table>
-        </td>
-    <td>
-            <table *ngIf="canUpgrade" >
-                    <tr>
-                        <td><button class="btn btn-primary btn-sm" (click)="addToUnblock()">+</button> </td> 
-                    </tr>
-            </table>
-    </td>
-</tr>
-    </table>
     
 </div>  

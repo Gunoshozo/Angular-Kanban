@@ -18,9 +18,6 @@ export class cardComponent implements OnInit{
     points = {'anal':0,'dev':0,'test':0}
     @Input()
     canPull:boolean;
-    notBlocked:boolean = true;
-    TotalBlockPoints:number;
-    CurrentBlockPoints:number;
     OldValues: { 'anal': number; 'dev': number; 'test': number; };
     @Output() moveEvent = new EventEmitter<number>();
     @Output() pullEvent = new EventEmitter<number>();
@@ -105,32 +102,9 @@ export class cardComponent implements OnInit{
         this.OldValues['test'] = this.Card.CurrentTesting
     }
 
-    block(){
-        this.notBlocked= false;
-    }
-
-    unblock(){
-        this.notBlocked = true;
-        localStorage.removeItem('blockedCard')
-    }
-
-    addToUnblock(){
-        if(this.CurrentBlockPoints < this.TotalBlockPoints){
-            this.points['dev']--;
-            this.CurrentBlockPoints++;
-            if(this.CurrentBlockPoints == this.TotalBlockPoints){
-                this.unblock()
-                this.canUpgrade = false;
-            }
-                
-        }
-    }
-
+    
     pull(){
         this.pullEvent.emit(this.Card.idCard)
     }
 
-    public getBlocked(){
-        return '● '.repeat(this.CurrentBlockPoints) + '○ '.repeat(this.TotalBlockPoints-this.CurrentBlockPoints)
-    }
 }

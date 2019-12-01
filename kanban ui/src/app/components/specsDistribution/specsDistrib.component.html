@@ -9,26 +9,26 @@
               <th>Аналитика</th>
               <th>Разработка</th>
               <th>Тестирование</th>
-              <th [class]="haveFree?'red':''">Незанятые</th>
+              <th [ngClass]="haveFree?'red':''">Незанятые</th>
             </tr>
             <tr>
               <th>Аналитики</th>
               <td>
                 <button class="btn btn-primary " (click)="add(-1,'anal','anal')" [disabled]='blockedDepartment[0]'>-</button>
                 {{specs['anal']['anal']}}
-                <button class="btn btn-primary " (click)="add(1,'anal','anal')" [disabled]='blockedDepartment[0]'>+</button>
+                <button [ngClass]="(countFree('anal')>0)?'btn btn-success':'btn btn-primary'" (click)="add(1,'anal','anal')" [disabled]='blockedDepartment[0]'>+</button>
               </td>
               <td>
                   <button class="btn btn-primary" (click)="add(-1,'dev','anal')" [disabled]='blockedDepartment[1]' >-</button>
                   {{specs['dev']['anal']}}
-                  <button class="btn btn-primary " (click)="add(1,'dev','anal')" [disabled]='blockedDepartment[1]'>+</button>
+                  <button [ngClass]="(countFree('anal')>0)?'btn btn-success':'btn btn-primary'" (click)="add(1,'dev','anal')" [disabled]='blockedDepartment[1]'>+</button>
               </td>
               <td>
                   <button class="btn btn-primary " (click)="add(-1,'test','anal')" [disabled]='blockedDepartment[2]'>-</button>
                   {{specs['test']['anal']}}
-                  <button class="btn btn-primary " (click)="add(1,'test','anal')" [disabled]='blockedDepartment[2]'>+</button>
+                  <button [ngClass]="(countFree('anal')>0)?'btn btn-success':'btn btn-primary'" (click)="add(1,'test','anal')" [disabled]='blockedDepartment[2]'>+</button>
               </td>
-              <td class="text-centered">
+              <td [ngClass]="(countFree('anal')>0)?'red text-centered':' text-centered'" >
                 {{countFree('anal')}}
               </td>
             </tr>
@@ -37,19 +37,19 @@
               <td>
                 <button class="btn btn-primary " (click)="add(-1,'anal','dev')" [disabled]='blockedDepartment[0]'>-</button>
                 {{specs['anal']['dev']}}
-                <button class="btn btn-primary " (click)="add(1,'anal','dev')" [disabled]='blockedDepartment[0]'>+</button>
+                <button [ngClass]="(countFree('dev')>0)?'btn btn-success':'btn btn-primary'" (click)="add(1,'anal','dev')" [disabled]='blockedDepartment[0]'>+</button>
               </td>
               <td>
                   <button class="btn btn-primary " (click)="add(-1,'dev','dev')" [disabled]='blockedDepartment[1]'>-</button>
                   {{specs['dev']['dev']}}
-                  <button class="btn btn-primary " (click)="add(1,'dev','dev')" [disabled]='blockedDepartment[1]'>+</button>
+                  <button [ngClass]="(countFree('dev')>0)?'btn btn-success':'btn btn-primary'" (click)="add(1,'dev','dev')" [disabled]='blockedDepartment[1]'>+</button>
               </td>
               <td>
                   <button class="btn btn-primary "(click)="add(-1,'test','dev')" [disabled]='blockedDepartment[2]'>-</button>
                   {{specs['test']['dev']}}
-                  <button class="btn btn-primary " (click)="add(1,'test','dev')" [disabled]='blockedDepartment[2]'>+</button>
+                  <button [ngClass]="(countFree('dev')>0)?'btn btn-success':'btn btn-primary'" (click)="add(1,'test','dev')" [disabled]='blockedDepartment[2]'>+</button>
               </td>
-              <td class="text-centered" >
+              <td [ngClass]="(countFree('dev')>0)?'red text-centered':' text-centered'" >
                   {{countFree('dev')}}
                 </td>
               </tr>
@@ -58,19 +58,19 @@
                 <td>
                   <button class="btn btn-primary " (click)="add(-1,'anal','test')" [disabled]='blockedDepartment[0]'>-</button>
                   {{specs['anal']['test']}}
-                  <button class="btn btn-primary " (click)="add(1,'anal','test')" [disabled]='blockedDepartment[0]'>+</button>
+                  <button [ngClass]="(countFree('test')>0)?'btn btn-success':'btn btn-primary'" (click)="add(1,'anal','test')" [disabled]='blockedDepartment[0]'>+</button>
                 </td>
                 <td>
                     <button class="btn btn-primary " (click)="add(-1,'dev','test')" [disabled]='blockedDepartment[1]'>-</button>
                     {{specs['dev']['test']}}
-                    <button class="btn btn-primary " (click)="add(1,'dev','test')" [disabled]='blockedDepartment[1]'>+</button>
+                    <button [ngClass]="(countFree('test')>0)?'btn btn-success':'btn btn-primary'" (click)="add(1,'dev','test')" [disabled]='blockedDepartment[1]'>+</button>
                 </td>
                 <td>
                     <button class="btn btn-primary " (click)="add(-1,'test','test')" [disabled]='blockedDepartment[2]'>-</button>
                     {{specs['test']['test']}}
-                    <button class="btn btn-primary " (click)="add(1,'test','test')" [disabled]='blockedDepartment[2]'>+</button>
+                    <button [ngClass]="(countFree('test')>0)?'btn btn-success':'btn btn-primary'" (click)="add(1,'test','test')" [disabled]='blockedDepartment[2]'>+</button>
                 </td>
-                <td class="text-centered">
+                <td [ngClass]="(countFree('test')>0)?'red text-centered':' text-centered'" >
                     {{countFree('test')}}
                   </td>
                 </tr>

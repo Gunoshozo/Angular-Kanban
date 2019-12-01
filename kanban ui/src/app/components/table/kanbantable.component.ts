@@ -18,7 +18,6 @@ export class kanbantable implements OnInit{
     CardList: card[][]
     Deployed: card[] = []
     expedice: any[] = [null,null,null,null,null,null,null]
-    whitePlaceholder:card
     @ViewChildren(cardComponent) cc:QueryList<cardComponent>
     @ViewChild(graph,{static:false}) Graph:graph;
     @Input()
@@ -43,10 +42,10 @@ export class kanbantable implements OnInit{
     
     constructor(private apiService:ApiService,private loginService:LoginService,private router:Router){
         //Редирект в случае, если пользователь не залогинен
-        if(this.loginService.currentUserValue == null) 
-                this.router.navigate(['/login']) 
-        if(localStorage.getItem('tableId')== null)               
-            this.router.navigate(['/mainmenu'])
+        // if(this.loginService.currentUserValue == null) 
+        //         this.router.navigate(['/login']) 
+        // if(localStorage.getItem('tableId')== null)               
+        //     this.router.navigate(['/mainmenu'])
     }
 
     
@@ -74,28 +73,16 @@ export class kanbantable implements OnInit{
                 this.CardList = []
                 for(var i =0;i<7;i++){
                     this.CardList[i] = []
+                    this.expedice[i] = null
                     let len = data['cards']
                     if(len.hasOwnProperty(this.ColNames[i])){
                         for(var j =0; j< len[this.ColNames[i]]['length'];j++){
                             var tmpCard = data['cards'][this.ColNames[i]][j.toString()]
                             var Card = this.parseCard(tmpCard)
                             if(Card.color=='White' ){
-                                if(i != 0 && i != 7)
-                                    this.expedice[i] = Card
-                                else
-                                    this.whitePlaceholder = Card
-                            } 
-                            else{
-                                if(Card.color == 'White' && i ==0)
-                                    continue
-                                else
-                                    this.CardList[i].push(Card)
-                            }
-                            if(localStorage.getItem('blockedCard')!= 'null' && Card.idCard.toString() == localStorage.getItem('blockedCard')){
-                                this.cc.forEach(elem =>{
-                                    (elem.Card.idCard==Card.idCard)
-                                        elem.block()
-                                })
+                                if(i == 0)
+                                    Card.hidden = true
+                                this.expedice[i] = Card
                             }
                         }
                     }
@@ -126,7 +113,7 @@ export class kanbantable implements OnInit{
     }
 
     confirmChanges(){
-        this.allowPointsDistribution = false;
+        this.allowPointsDistribution = false
         let resp = {'anal':[],'dev':[],'test':[]}
         this.cc.toArray().forEach(c =>{
             if(c.isModified){
@@ -155,16 +142,16 @@ export class kanbantable implements OnInit{
             }
             else{
                 console.error('fail')
-                this.allowPointsDistribution = true;
+                this.allowPointsDistribution = true
             }
         },error=>{
-            this.allowPointsDistribution = true;
+            this.allowPointsDistribution = true
         })
     }
 
     
     updateDay(){       
-        this.points = {'anal':0,'dev':0,'test':0};
+        this.points = {'anal':0,'dev':0,'test':0}
         this.cc.toArray().forEach(c=>{
             c.updateOlds()
         })
@@ -175,7 +162,7 @@ export class kanbantable implements OnInit{
         this.apiService.getEvent(10,Firstid)
         .subscribe(data =>{
                 this.processEvent(data)
-                alert('У вас новое событие')
+                alert('У вас новое событие, откройте раздел "События"')
         },
         error =>{
             console.error('event error')
@@ -195,28 +182,8 @@ export class kanbantable implements OnInit{
                 case 'add':{ this.add(words); break;}
                 case 'set':{ this.set(words); break;}
                 case 'unblock':{this.unblock(words);break;}
-                case 'card':{ localStorage.setItem('blockedCard',this.CardList[5][0].idCard.toString())
-                    this.block_card(); this.block_component();break;}
             }
         }
-    }
-
-    block_card(){
-        let c:card = this.CardList[5][0];
-        this.CardList[5].splice(0,1);
-        c.status = this.ColNames[4]
-        this.CardList[4].unshift(c)
-    }
-
-    block_component(){
-        let id = this.CardList[4][0].idCard
-        this.cc.forEach(elem=>{
-            if(elem.Card.idCard == id)
-            {elem.TotalBlockPoints = 10;
-            elem.CurrentBlockPoints = 0;
-            elem.notBlocked = false
-        }
-        })
     }
 
     block(words){
@@ -245,10 +212,8 @@ export class kanbantable implements OnInit{
         this.countTotalStaff()
     }
 
-    //вытягивание белой карты
     pullEventCard(){
-        this.apiService.updateStatus(this.whitePlaceholder.idCard)
-        this.expedice[0] = this.whitePlaceholder
+        this.expedice[0].hidden = false
         this.pullInCard(this.expedice[0].idCard)
 
     }
@@ -278,11 +243,6 @@ export class kanbantable implements OnInit{
     }
 
 
-    recieveBoolean($event){
-        this.allowPointsDistribution = $event;
-    }
-
-
     moveCard($event){
         for(let i =1;i <7;i++){
             for(let j = 0; j < this.CardList[i].length;j++){
@@ -303,11 +263,11 @@ export class kanbantable implements OnInit{
                         this.cc.forEach(element => {
                             if(element.Card.idCard == c.idCard)
                                 element.updateOlds()
-                        });
+                        })
                         if(i+1 == 6){
                             this.pullInCard($event)
                         }
-                        return;
+                        return
                     },error =>{
                         console.error(error)
                     })
@@ -339,8 +299,8 @@ export class kanbantable implements OnInit{
                     this.cc.forEach(element => {
                         if(element.Card.idCard == Card.idCard)
                             element.updateOlds()
-                    });
-                    return;
+                    })
+                    return
                 }, error=>{
                     console.error(error)
                 })
@@ -420,6 +380,10 @@ export class kanbantable implements OnInit{
     getMoney($event){
         this.money = $event;
         this.openModal(true)
+    }
+
+    recieveBoolean($event){
+        this.allowPointsDistribution = $event
     }
 
     openModal(flag){

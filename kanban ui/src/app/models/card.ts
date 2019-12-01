@@ -1,3 +1,4 @@
+import { VirtualTimeScheduler } from 'rxjs'
 
 export class card{
     idCard: number
@@ -15,6 +16,7 @@ export class card{
     color: any
     status: any
     priority: number
+    hidden:boolean
 
     // constructor(i:number){
     //     this.CardName = 'S'+i.toString()
@@ -48,6 +50,7 @@ export class card{
         this.color = color
         this.status = status
         this.priority = priority
+        this.hidden = false
     }
 
     //Функция возвращает информацию для
@@ -64,7 +67,7 @@ export class card{
                 if(this.money != 0)
                     return 'Штраф: $' + this.money
                 else
-                    return 'Штраф: $2500  Подписчики: ' + this.subs
+                    return 'Подписчики: ' + this.subs
             }
             case 'Orange':{
                 return 'Подписчики: ' + this.subs

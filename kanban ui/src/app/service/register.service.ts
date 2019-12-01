@@ -8,9 +8,7 @@ import { User } from '../models/user';
 export class RegisterService {
     constructor(private http: HttpClient) { }
 
-    //прописать запрос
     register(user: User) {
-        console.log(user)
         return this.http.post(`http://25.65.79.64:8000/controller/api/sign_up`, user);
     }
 }

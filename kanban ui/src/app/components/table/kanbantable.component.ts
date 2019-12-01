@@ -70,7 +70,6 @@ export class kanbantable implements OnInit{
         this.apiService.getCards(email)
         .subscribe(
             data => {
-                console.log(data)
                 this.day = data['day']
                 this.CardList = []
                 for(var i =0;i<7;i++){
@@ -92,12 +91,18 @@ export class kanbantable implements OnInit{
                                 else
                                     this.CardList[i].push(Card)
                             }
+                            if(localStorage.getItem('blockedCard')!= 'null' && Card.idCard.toString() == localStorage.getItem('blockedCard')){
+                                this.cc.forEach(elem =>{
+                                    (elem.Card.idCard==Card.idCard)
+                                        elem.block()
+                                })
+                            }
                         }
                     }
                 }
                 let len = data['cards']
                     if(len.hasOwnProperty(this.ColNames[7])){
-                        for(var j =0; j< len[this.ColNames[7]]['length'];j++){
+                        for(var j =0; j < len[this.ColNames[7]]['length'];j++){
                             var tmpCard = data['cards'][this.ColNames[7]][j.toString()]
                             var Card = this.parseCard(tmpCard)
                             this.Deployed.push(Card)
@@ -181,7 +186,6 @@ export class kanbantable implements OnInit{
     }
 
     processEvent(e){
-        console.log(e)
         this.EventText =e['text']
         if(e['command'] != ''){
             let words =e['command'].split(' ')
@@ -211,7 +215,6 @@ export class kanbantable implements OnInit{
             {elem.TotalBlockPoints = 10;
             elem.CurrentBlockPoints = 0;
             elem.notBlocked = false
-            console.log(elem)
         }
         })
     }
@@ -244,8 +247,10 @@ export class kanbantable implements OnInit{
 
     //вытягивание белой карты
     pullEventCard(){
-        this.expedice[1] = this.whitePlaceholder
-        this.expedice[1].DayReady = this.day
+        this.apiService.updateStatus(this.whitePlaceholder.idCard)
+        this.expedice[0] = this.whitePlaceholder
+        this.pullInCard(this.expedice[0].idCard)
+
     }
 
     set(words:string[]){

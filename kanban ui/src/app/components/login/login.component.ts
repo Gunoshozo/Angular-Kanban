@@ -43,7 +43,7 @@ export class login implements OnInit{
                     this.router.navigate(['/mainmenu'])
                 },
                 error =>{
-                    console.log(error);
+                    console.error(error);
                 }
             )
     }

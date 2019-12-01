@@ -51,7 +51,7 @@ export class graph implements AfterViewInit,OnInit {
                     this.money.push({x:graphData[i]['day'],y:graphData[i]['cost']})
                     
                 }
-                if((graphData.length+1 %3) == 0)
+                if((graphData.length)%3 == 0 && graphData.length !=0)
                     this.balance.emit(this.money[graphData.length-1])
             },error =>{
                 console.error(error)

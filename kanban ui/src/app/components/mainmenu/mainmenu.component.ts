@@ -21,10 +21,8 @@ export class MainmenuComponent implements OnInit {
 
   ngOnInit() {
     this.username = localStorage.getItem('currentUser')
-    console.log(this.username)
     this.apiService.getTableId()
     .subscribe(data=>{
-      console.log(data)
       if(data['id_table']!="0"){
         localStorage.setItem('tableId',data['id_table'])
         this.haveTable = true;

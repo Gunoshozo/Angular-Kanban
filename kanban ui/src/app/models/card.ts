@@ -78,8 +78,6 @@ export class card{
     }
 
     public getAnalysisDots(){
-        // console.log(this.TotalAnalysis-this.CurrentAnalysis)
-        // console.log(this.CardName)
         return '● '.repeat(this.CurrentAnalysis) + '○ '.repeat(this.TotalAnalysis-this.CurrentAnalysis)
     }
     public getDevDots(){

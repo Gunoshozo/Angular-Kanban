@@ -42,10 +42,10 @@ export class kanbantable implements OnInit{
     
     constructor(private apiService:ApiService,private loginService:LoginService,private router:Router){
         //Редирект в случае, если пользователь не залогинен
-        // if(this.loginService.currentUserValue == null) 
-        //         this.router.navigate(['/login']) 
-        // if(localStorage.getItem('tableId')== null)               
-        //     this.router.navigate(['/mainmenu'])
+        if(this.loginService.currentUserValue == null) 
+                this.router.navigate(['/login']) 
+        if(localStorage.getItem('tableId')== null)               
+            this.router.navigate(['/mainmenu'])
     }
 
     

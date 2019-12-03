@@ -52,7 +52,7 @@ export class graph implements AfterViewInit,OnInit {
                     
                 }
                 if((graphData.length)%3 == 0 && graphData.length !=0)
-                    this.balance.emit(this.money[graphData.length-1])
+                       this.balance.emit(this.money[graphData.length-1]['y'])  
             },error =>{
                 console.error(error)
             }
@@ -69,6 +69,8 @@ export class graph implements AfterViewInit,OnInit {
                 this.passedAnalysis.push({x:graphData[i]['day'],y:graphData[i]['development']})
                 this.passedSelected.push({x:graphData[i]['day'],y:graphData[i]['analysis']})
                 this.money.push({x:graphData[i]['day'],y:graphData[i]['cost']})    
+                if((graphData.length)%3 == 0 && graphData.length !=0)
+                       this.balance.emit(this.money[graphData.length-1]['y'])  
                 }
             ,error =>{
                 console.error(error)

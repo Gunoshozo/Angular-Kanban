@@ -93,7 +93,7 @@ export class cardComponent implements OnInit{
 
     
     public get isPullable(){
-        return ((this.canPull && (this.Card.status=='Selected' || this.Card.status=="ReadyDeploy"|| this.isMaxed)) || (this.Card.color == "White" && this.isMaxed)) && this.priority
+        return (((this.canPull && (this.Card.status=='Selected' || this.Card.status=="ReadyDeploy"|| this.isMaxed)) && this.priority)|| (this.Card.color == "White" && this.isMaxed))
     }
 
     updateOlds(){

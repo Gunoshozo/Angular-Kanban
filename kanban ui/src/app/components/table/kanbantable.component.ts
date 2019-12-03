@@ -17,7 +17,7 @@ import { graph } from '../graph/graph.component';
 export class kanbantable implements OnInit{
     CardList: card[][]
     Deployed: card[] = []
-    expedice: any[] = [null,null,null,null,null,null,null]
+    expedice: any[][] = [[null],[null],[null],[null],[null],[null],[null]]
     @ViewChildren(cardComponent) cc:QueryList<cardComponent>
     @ViewChild(graph,{static:false}) Graph:graph;
     @Input()
@@ -41,7 +41,6 @@ export class kanbantable implements OnInit{
 
     
     constructor(private apiService:ApiService,private loginService:LoginService,private router:Router){
-        //Редирект в случае, если пользователь не залогинен
         if(this.loginService.currentUserValue == null) 
                 this.router.navigate(['/login']) 
         if(localStorage.getItem('tableId')== null)               
@@ -70,10 +69,13 @@ export class kanbantable implements OnInit{
         .subscribe(
             data => {
                 this.day = data['day']
+                if(this.day == 22){
+                    this.router.navigate(['/report'])
+                }
                 this.CardList = []
                 for(var i =0;i<7;i++){
                     this.CardList[i] = []
-                    this.expedice[i] = null
+                    this.expedice[i][0] = null;
                     let len = data['cards']
                     if(len.hasOwnProperty(this.ColNames[i])){
                         for(var j =0; j< len[this.ColNames[i]]['length'];j++){
@@ -82,7 +84,11 @@ export class kanbantable implements OnInit{
                             if(Card.color=='White' ){
                                 if(i == 0)
                                     Card.hidden = true
-                                this.expedice[i] = Card
+                                this.expedice[i].shift()
+                                this.expedice[i].push(Card)
+                            }
+                            else{
+                                this.CardList[i].push(Card)
                             }
                         }
                     }
@@ -95,7 +101,7 @@ export class kanbantable implements OnInit{
                             this.Deployed.push(Card)
                         }
                     }
-                
+                    this.allowPointsDistribution= false;
             },
             error =>{
                 console.error('error')
@@ -159,10 +165,12 @@ export class kanbantable implements OnInit{
         if(this.CardList[5][0] != undefined){
             Firstid = this.CardList[5][0].idCard
         }
-        this.apiService.getEvent(10,Firstid)
+        this.apiService.getEvent(this.day,Firstid)
         .subscribe(data =>{
+                console.log(data)
+                alert(data['text'])
                 this.processEvent(data)
-                alert('У вас новое событие, откройте раздел "События"')
+                
         },
         error =>{
             console.error('event error')
@@ -213,9 +221,14 @@ export class kanbantable implements OnInit{
     }
 
     pullEventCard(){
-        this.expedice[0].hidden = false
-        this.pullInCard(this.expedice[0].idCard)
-
+        let Card:card = this.expedice[0][0]
+        this.apiService.updateStatus(Card.idCard)
+        .subscribe(data=>{
+        this.getAllCards()
+        },error=>{
+            console.error(error)
+        })
+        return;
     }
 
     set(words:string[]){
@@ -276,30 +289,35 @@ export class kanbantable implements OnInit{
             }
         }
         for(let i=0;i<7;i++){
-            if(this.expedice[i] != null){
-                if(this.expedice[i].idCard == $event){
+            if(this.expedice[i][0]!= null){
+                if(this.expedice[i][0].idCard == $event){
                     let department
                     let progress
                     switch(i){
-                        case 1:{ department = 'anal'; progress=this.expedice[i].CurrentAnalysis; break}
-                        case 3:{ department = 'dev'; progress=this.expedice[i].CurrentDevelopment; break}
-                        case 5:{ department = 'test';progress=this.expedice[i].CurrentTesting; break}   
+                        case 1:{ department = 'anal'; progress=this.expedice[i][0].CurrentAnalysis; break}
+                        case 3:{ department = 'dev'; progress=this.expedice[i][0].CurrentDevelopment; break}
+                        case 5:{ department = 'test';progress=this.expedice[i][0].CurrentTesting; break}   
                     }
                     this.apiService.updateCard($event,department,progress)
                     .subscribe(data =>{
-                    let Card:card = this.expedice[i]
+                    let Card:card = this.expedice[i][0]
                     Card.updateStatus()
                     if(i == 6){
                         this.Deployed.unshift(Card)
                     }
                     else{
-                        this.expedice[i+1] = Card
+                        this.expedice[i+1].shift()
+                        this.expedice[i+1].unshift(Card)
                     }
-                    this.expedice[i] = null
+                    this.expedice[i].shift()
+                    this.expedice[i].push(null)
                     this.cc.forEach(element => {
                         if(element.Card.idCard == Card.idCard)
                             element.updateOlds()
                     })
+                    if(i+1 == 6){
+                        this.pullInCard($event)
+                    }
                     return
                 }, error=>{
                     console.error(error)
@@ -357,17 +375,19 @@ export class kanbantable implements OnInit{
                     }
                 }
                 for(let i=0;i<7;i++){
-                    if(this.expedice[i] != null){
-                        if(this.expedice[i].idCard == $event){
-                            let Card:card = this.expedice[i]
+                    if(this.expedice[i][0] != null){
+                        if(this.expedice[i][0].idCard == $event){
+                            let Card:card = this.expedice[i][0]
                             Card.updateStatus()
                             if(i == 6){
                                 this.Deployed.unshift(Card)
                             }
                             else{
-                                this.expedice[i+1] = Card
+                                this.expedice[i+1].shift()
+                                this.expedice[i+1].unshift(Card)
                             }
-                            this.expedice[i] = null
+                            this.expedice[i].shift()
+                            this.expedice[i].push(null)
                             return
                         }
                     }

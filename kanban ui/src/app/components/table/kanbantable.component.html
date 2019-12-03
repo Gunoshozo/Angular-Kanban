@@ -26,7 +26,7 @@
         </div>
 </div>
 <div class="btn-group btn-centered">
-                <specsDistribution [(specs)]="staff" [totalSpecs]="totalStaff" [(points)]="points" [apiService]="apiService" [day]="day" [(specsDistributed)] = "allowPointsDistribution" (specsDistributedEmitter) = "recieveBoolean($event)" [blockedDepartment]='blockedDepartment' [defaultSpecs]='defaultStaff' ></specsDistribution>
+                <specsDistribution [(specs)]="staff" [totalSpecs]="totalStaff" [(points)]="points" [apiService]="apiService" [day]="day" [(specsDistributed)] = "allowPointsDistribution" (specsDistributedEmitter) = "recieveBoolean($event)" [blockedDepartment]='blockedDepartment' ></specsDistribution>
 </div>
 <table>
     <tr>
@@ -66,8 +66,8 @@
     </tr>
     <tr>
         <td  *ngFor='let ec of expedice;let i = index' class="expedise column{{i}}">
-                <div *ngIf='ec != null'>
-                        <cardComponent [CardObject]='ec' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'true' (moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)"></cardComponent>
+                <div *ngIf='ec[0] != null'>
+                        <cardComponent [CardObject]='ec[0]' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'true' (moveEvent)="moveCard($event)" (pullEvent)="pullInCard($event)"></cardComponent>
                 </div>
         </td>
     </tr>
@@ -84,7 +84,7 @@
 <div class="modal-header">
 <h4 class="modal-title">Отчет</h4>
 </div>
-<div class="modal-body">Ваш заработок:{{money}}</div>
+<div class="modal-body">Ваш заработок:${{money}}</div>
 <div class="modal-footer">
     <button type="button" id="btnOK" class="btn btn-success" (click)="openModal(false)"> Ok</button>
 </div>

@@ -17,9 +17,6 @@ export class specsDistribution{
     points:any;
 
     @Input()
-    defaultSpecs:any;
-
-    @Input()
     apiService:ApiService;
 
     @Input()
@@ -64,10 +61,6 @@ export class specsDistribution{
                 console.error(error)
             }
         )
-    }
-
-    setDefaultValues(){
-        this.specs=this.defaultSpecs
     }
 
     get haveFree(){

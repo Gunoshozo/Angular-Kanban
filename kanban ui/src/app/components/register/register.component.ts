@@ -20,7 +20,7 @@ export class register implements OnInit{
         private registerService: RegisterService
     ){
         if(this.loginService.currentUserValue)
-            this.router.navigate(['/game'])
+            this.router.navigate(['/mainmenu'])
     }
 
     ngOnInit() {
@@ -32,16 +32,21 @@ export class register implements OnInit{
     }
 
     onSubmit() {
+        if(this.registerForm.invalid)
+        {
+            return;
+        }
         this.registerService.register(this.registerForm.value)
             .pipe(first())
             .subscribe(
                 data => {
+                    localStorage.setItem('currentUser',this.registerForm.controls.email.value)
                     this.loginService.login(
                         this.registerForm.controls.email.value,
                         this.registerForm.controls.password.value)
                         .pipe(first())
                         .subscribe(
-                            data1 =>{
+                            data =>{
                                 this.router.navigate(['/mainmenu'])
                             },
                             error =>{

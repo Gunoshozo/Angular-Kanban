@@ -2,7 +2,7 @@ FROM nginx
 
 ADD default.conf /etc/nginx/conf.d/default.conf
 
-COPY src/ /usr/share/nginx/html
+COPY dist/ /usr/share/nginx/html
 
 
 EXPOSE 8080

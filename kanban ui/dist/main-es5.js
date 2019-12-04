@@ -116,7 +116,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"btn-group btn-centered\">\r\n                <div class=\"btn-group\">\r\n                                <button type=\"button\" class=\"btn btn-danger\" (click)=\"logout()\"[disabled] = allowPointsDistribution>Выход</button>\r\n                                <button type=\"button\" class=\"btn btn-info\" (click)=\"toMain()\" [disabled] =allowPointsDistribution>В главное меню</button>\r\n                                <div class=\"btn-group\" role=\"group\">\r\n                                                <button type=\"button\" class=\"btn btn-info\" disabled id=\"day\">День: {{day}}</button>\r\n                                        \r\n                                                        \r\n                                </div>\r\n                        \r\n                                        <button class=\"btn btn-success\" id=\"confirm\" (click)=\"confirmChanges()\" [disabled]='!allowPointsDistribution' >Подтвердить изменения</button>  \r\n                                        <div class=\"btn-group\">\r\n                                        <button id=\"btnGroupDrop1\" type=\"button\" class=\"btn btn-info dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n                                                        События\r\n                                      </button>\r\n                                      <div class=\"dropdown-menu scrollable\" aria-labelledby=\"btnGroupDrop1\">\r\n                                                <a class=\"dropdown-item disabled word-breakable\" >{{EventText}}<div class=\"dropdown-divider\"></div></a>\r\n                                        </div>\r\n                                        </div>\r\n                        \r\n                </div>\r\n                \r\n                        \r\n        <div class=\"btn-group\" role=\"group\">\r\n                        <graph (balance)=\"getMoney($event)\" ></graph>\r\n        </div>\r\n</div>\r\n<div class=\"btn-group btn-centered\">\r\n                <specsDistribution [(specs)]=\"staff\" [totalSpecs]=\"totalStaff\" [(points)]=\"points\" [apiService]=\"apiService\" [day]=\"day\" [(specsDistributed)] = \"allowPointsDistribution\" (specsDistributedEmitter) = \"recieveBoolean($event)\" [blockedDepartment]='blockedDepartment' [defaultSpecs]='defaultStaff' ></specsDistribution>\r\n</div>\r\n<table>\r\n    <tr>\r\n    <td colspan ='1' class=\"cell\">\r\n        <p class=\"tittle\">Все истории</p>\r\n        <p class=\"wip\">Нет ограничений</p>\r\n    </td>\r\n    <td colspan=\"2\" class=\"cell\">\r\n            <p class=\"tittle\">Отдел аналитики</p>\r\n            <p class=\"wip\">Ограничение: {{limit[0]}}</p>\r\n            <p *ngIf=\"staff['anal']['anal']!=0\">Аналитиков: {{staff['anal']['anal']}}</p>\r\n            <p *ngIf=\"staff['anal']['dev']!=0\">Разработчиков: {{staff['anal']['dev']}}</p>\r\n            <p *ngIf=\"staff['anal']['test']!=0\">Тестеров: {{staff['anal']['test']}}</p>\r\n            <p class=\"points\" *ngIf=\"allowPointsDistribution\">Очков:{{points['anal']}}</p>\r\n    </td>\r\n    <td colspan=\"2\" class=\"cell\">\r\n            <p class=\"tittle\">Отдел разработки</p>\r\n            <p class=\"wip\">Ограничение: {{limit[1]}}</p>\r\n            <p *ngIf=\"staff['dev']['anal']!=0\">Аналитиков: {{staff['dev']['anal']}}</p>\r\n            <p *ngIf=\"staff['dev']['dev']!=0\">Разработчиков: {{staff['dev']['dev']}}</p>\r\n            <p *ngIf=\"staff['dev']['test']!=0\">Тестеров: {{staff['dev']['test']}}</p>\r\n            <p class=\"points\" *ngIf=\"allowPointsDistribution\">Очков:{{points['dev']}}</p>\r\n    </td>\r\n    <td class=\"cell\">\r\n            <p class=\"tittle\">Отдел тестирования</p>\r\n            <p class=\"wip\">Ограничение: {{limit[2]}}</p>\r\n            <p *ngIf=\"staff['test']['anal']!=0\">Аналитиков: {{staff['test']['anal']}}</p>\r\n            <p *ngIf=\"staff['test']['dev']!=0\">Разработчиков: {{staff['test']['dev']}}</p>\r\n            <p *ngIf=\"staff['test']['test']!=0\">Тестеров: {{staff['test']['test']}}</p>\r\n            <p class=\"points\" *ngIf=\"allowPointsDistribution\">Очков:{{points['test']}}</p>\r\n    </td>\r\n    <td class=\"cell\">\r\n            <p class=\"tittle\">Готовы к выходу</p>\r\n            <p class=\"wip\" *ngIf=\"limit.length==3\">Нет ограничений</p>\r\n            <p class=\"wip\" *ngIf=\"limit.length==4\">Ограничение: {{limit[3]}}</p>\r\n    </td>\r\n    </tr>\r\n    <tr>\r\n        <td  *ngFor='let ec of expedice;let i = index' class=\"expedise column{{i}}\">\r\n                <div *ngIf='ec != null'>\r\n                        <cardComponent [CardObject]='ec' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'true' (moveEvent)=\"moveCard($event)\" (pullEvent)=\"pullInCard($event)\"></cardComponent>\r\n                </div>\r\n        </td>\r\n    </tr>\r\n    <tr class=\"cardColumns\">\r\n    <td *ngFor='let card of CardList; let i = index' class=\"column{{i}}\">\r\n        <cardComponent *ngFor ='let c of card; let j = index' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'canPull(i)'  (moveEvent)=\"moveCard($event)\" (pullEvent)=\"pullInCard($event)\" [priority]=\"pullPriority(i,j)\"></cardComponent>\r\n    </td>\r\n    </tr>\r\n</table>\r\n\r\n<div  class=\"modal fade\" role=\"dialog\" [ngStyle]=\"{'display': modalOpen ? 'block' : 'none', 'opacity': 1}\">\r\n<div class=\"modal-dialog modal-lg\">\r\n<div class=\"modal-content\">\r\n<div class=\"modal-header\">\r\n<h4 class=\"modal-title\">Отчет</h4>\r\n</div>\r\n<div class=\"modal-body\">Ваш заработок:{{money}}</div>\r\n<div class=\"modal-footer\">\r\n    <button type=\"button\" id=\"btnOK\" class=\"btn btn-success\" (click)=\"openModal(false)\"> Ok</button>\r\n</div>\r\n</div>\r\n</div>");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"btn-group btn-centered\">\r\n                <div class=\"btn-group\">\r\n                                <button type=\"button\" class=\"btn btn-danger\" (click)=\"logout()\"[disabled] = allowPointsDistribution>Выход</button>\r\n                                <button type=\"button\" class=\"btn btn-info\" (click)=\"toMain()\" [disabled] =allowPointsDistribution>В главное меню</button>\r\n                                <div class=\"btn-group\" role=\"group\">\r\n                                                <button type=\"button\" class=\"btn btn-info\" disabled id=\"day\">День: {{day}}</button>\r\n                                        \r\n                                                        \r\n                                </div>\r\n                        \r\n                                        <button class=\"btn btn-success\" id=\"confirm\" (click)=\"confirmChanges()\" [disabled]='!allowPointsDistribution' >Подтвердить изменения</button>  \r\n                                        <div class=\"btn-group\">\r\n                                        <button id=\"btnGroupDrop1\" type=\"button\" class=\"btn btn-info dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n                                                        События\r\n                                      </button>\r\n                                      <div class=\"dropdown-menu scrollable\" aria-labelledby=\"btnGroupDrop1\">\r\n                                                <a class=\"dropdown-item disabled word-breakable\" >{{EventText}}<div class=\"dropdown-divider\"></div></a>\r\n                                        </div>\r\n                                        </div>\r\n                        \r\n                </div>\r\n                \r\n                        \r\n        <div class=\"btn-group\" role=\"group\">\r\n                        <graph (balance)=\"getMoney($event)\" ></graph>\r\n        </div>\r\n</div>\r\n<div class=\"btn-group btn-centered\">\r\n                <specsDistribution [(specs)]=\"staff\" [totalSpecs]=\"totalStaff\" [(points)]=\"points\" [apiService]=\"apiService\" [day]=\"day\" [(specsDistributed)] = \"allowPointsDistribution\" (specsDistributedEmitter) = \"recieveBoolean($event)\" [blockedDepartment]='blockedDepartment' ></specsDistribution>\r\n</div>\r\n<table>\r\n    <tr>\r\n    <td colspan ='1' class=\"cell\">\r\n        <p class=\"tittle\">Все истории</p>\r\n        <p class=\"wip\">Нет ограничений</p>\r\n    </td>\r\n    <td colspan=\"2\" class=\"cell\">\r\n            <p class=\"tittle\">Отдел аналитики</p>\r\n            <p class=\"wip\">Ограничение: {{limit[0]}}</p>\r\n            <p *ngIf=\"staff['anal']['anal']!=0\">Аналитиков: {{staff['anal']['anal']}}</p>\r\n            <p *ngIf=\"staff['anal']['dev']!=0\">Разработчиков: {{staff['anal']['dev']}}</p>\r\n            <p *ngIf=\"staff['anal']['test']!=0\">Тестеров: {{staff['anal']['test']}}</p>\r\n            <p class=\"points\" *ngIf=\"allowPointsDistribution\">Очков:{{points['anal']}}</p>\r\n    </td>\r\n    <td colspan=\"2\" class=\"cell\">\r\n            <p class=\"tittle\">Отдел разработки</p>\r\n            <p class=\"wip\">Ограничение: {{limit[1]}}</p>\r\n            <p *ngIf=\"staff['dev']['anal']!=0\">Аналитиков: {{staff['dev']['anal']}}</p>\r\n            <p *ngIf=\"staff['dev']['dev']!=0\">Разработчиков: {{staff['dev']['dev']}}</p>\r\n            <p *ngIf=\"staff['dev']['test']!=0\">Тестеров: {{staff['dev']['test']}}</p>\r\n            <p class=\"points\" *ngIf=\"allowPointsDistribution\">Очков:{{points['dev']}}</p>\r\n    </td>\r\n    <td class=\"cell\">\r\n            <p class=\"tittle\">Отдел тестирования</p>\r\n            <p class=\"wip\">Ограничение: {{limit[2]}}</p>\r\n            <p *ngIf=\"staff['test']['anal']!=0\">Аналитиков: {{staff['test']['anal']}}</p>\r\n            <p *ngIf=\"staff['test']['dev']!=0\">Разработчиков: {{staff['test']['dev']}}</p>\r\n            <p *ngIf=\"staff['test']['test']!=0\">Тестеров: {{staff['test']['test']}}</p>\r\n            <p class=\"points\" *ngIf=\"allowPointsDistribution\">Очков:{{points['test']}}</p>\r\n    </td>\r\n    <td class=\"cell\">\r\n            <p class=\"tittle\">Готовы к выходу</p>\r\n            <p class=\"wip\" *ngIf=\"limit.length==3\">Нет ограничений</p>\r\n            <p class=\"wip\" *ngIf=\"limit.length==4\">Ограничение: {{limit[3]}}</p>\r\n    </td>\r\n    </tr>\r\n    <tr>\r\n        <td  *ngFor='let ec of expedice;let i = index' class=\"expedise column{{i}}\">\r\n                <div *ngIf='ec[0] != null'>\r\n                        <cardComponent [CardObject]='ec[0]' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'true' (moveEvent)=\"moveCard($event)\" (pullEvent)=\"pullInCard($event)\"></cardComponent>\r\n                </div>\r\n        </td>\r\n    </tr>\r\n    <tr class=\"cardColumns\">\r\n    <td *ngFor='let card of CardList; let i = index' class=\"column{{i}}\">\r\n        <cardComponent *ngFor ='let c of card; let j = index' [CardObject]='c' [(points)]='points' [(canUpgrade)]='allowPointsDistribution' [canPull]= 'canPull(i)'  (moveEvent)=\"moveCard($event)\" (pullEvent)=\"pullInCard($event)\" [priority]=\"pullPriority(i,j)\"></cardComponent>\r\n    </td>\r\n    </tr>\r\n</table>\r\n\r\n<div  class=\"modal fade\" role=\"dialog\" [ngStyle]=\"{'display': modalOpen ? 'block' : 'none', 'opacity': 1}\">\r\n<div class=\"modal-dialog modal-lg\">\r\n<div class=\"modal-content\">\r\n<div class=\"modal-header\">\r\n<h4 class=\"modal-title\">Отчет</h4>\r\n</div>\r\n<div class=\"modal-body\">Ваш заработок:${{money}}</div>\r\n<div class=\"modal-footer\">\r\n    <button type=\"button\" id=\"btnOK\" class=\"btn btn-success\" (click)=\"openModal(false)\"> Ok</button>\r\n</div>\r\n</div>\r\n</div>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/models/card.html": 
@@ -684,7 +684,7 @@
                             _this.money.push({ x: graphData[i]['day'], y: graphData[i]['cost'] });
                         }
                         if ((graphData.length) % 3 == 0 && graphData.length != 0)
-                            _this.balance.emit(_this.money[graphData.length - 1]);
+                            _this.balance.emit(_this.money[graphData.length - 1]['y']);
                     }, function (error) {
                         console.error(error);
                     });
@@ -700,6 +700,8 @@
                         _this.passedAnalysis.push({ x: graphData[i]['day'], y: graphData[i]['development'] });
                         _this.passedSelected.push({ x: graphData[i]['day'], y: graphData[i]['analysis'] });
                         _this.money.push({ x: graphData[i]['day'], y: graphData[i]['cost'] });
+                        if ((graphData.length) % 3 == 0 && graphData.length != 0)
+                            _this.balance.emit(_this.money[graphData.length - 1]['y']);
                     }, function (error) {
                         console.error(error);
                     });
@@ -1021,7 +1023,7 @@
                     this.loginService = loginService;
                     this.registerService = registerService;
                     if (this.loginService.currentUserValue)
-                        this.router.navigate(['/game']);
+                        this.router.navigate(['/mainmenu']);
                 }
                 register.prototype.ngOnInit = function () {
                     this.registerForm = this.formBuiler.group({
@@ -1032,12 +1034,16 @@
                 };
                 register.prototype.onSubmit = function () {
                     var _this = this;
+                    if (this.registerForm.invalid) {
+                        return;
+                    }
                     this.registerService.register(this.registerForm.value)
                         .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["first"])())
                         .subscribe(function (data) {
+                        localStorage.setItem('currentUser', _this.registerForm.controls.email.value);
                         _this.loginService.login(_this.registerForm.controls.email.value, _this.registerForm.controls.password.value)
                             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["first"])())
-                            .subscribe(function (data1) {
+                            .subscribe(function (data) {
                             _this.router.navigate(['/mainmenu']);
                         }, function (error) {
                             console.error(error);
@@ -1217,6 +1223,12 @@
                     Revenue.render();
                 };
                 report.prototype.toMain = function () {
+                    this.apiService.deleteTable()
+                        .subscribe(function (data) {
+                        localStorage.removeItem('tableId');
+                    }, function (error) {
+                        console.error(error);
+                    });
                     this.router.navigate(['/mainmenu']);
                 };
                 return report;
@@ -1290,9 +1302,6 @@
                         console.error(error);
                     });
                 };
-                specsDistribution.prototype.setDefaultValues = function () {
-                    this.specs = this.defaultSpecs;
-                };
                 Object.defineProperty(specsDistribution.prototype, "haveFree", {
                     get: function () {
                         return this.countFree('anal') + this.countFree('dev') + this.countFree('test') > 0;
@@ -1311,9 +1320,6 @@
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
             ], specsDistribution.prototype, "points", void 0);
-            tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
-            ], specsDistribution.prototype, "defaultSpecs", void 0);
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
             ], specsDistribution.prototype, "apiService", void 0);
@@ -1372,7 +1378,7 @@
                     this.loginService = loginService;
                     this.router = router;
                     this.Deployed = [];
-                    this.expedice = [null, null, null, null, null, null, null];
+                    this.expedice = [[null], [null], [null], [null], [null], [null], [null]];
                     this.staff = { 'anal': { 'anal': 2, 'dev': 0, 'test': 0 }, 'dev': { 'anal': 0, 'dev': 3, 'test': 0 }, 'test': { 'anal': 0, 'dev': 0, 'test': 2 } };
                     this.defaultStaff = { 'anal': { 'anal': 2, 'dev': 0, 'test': 0 }, 'dev': { 'anal': 0, 'dev': 3, 'test': 0 }, 'test': { 'anal': 0, 'dev': 0, 'test': 2 } };
                     this.totalStaff = { 'anal': 0, 'dev': 0, 'test': 0 };
@@ -1382,7 +1388,6 @@
                     this.allowPointsDistribution = false;
                     this.blockedDepartment = [false, false, false];
                     this.ColNames = ['Selected', 'AnalProg', 'AnalDone', 'DevProg', 'DevDone', 'Test', 'ReadyDeploy', 'Deploy'];
-                    //Редирект в случае, если пользователь не залогинен
                     if (this.loginService.currentUserValue == null)
                         this.router.navigate(['/login']);
                     if (localStorage.getItem('tableId') == null)
@@ -1406,10 +1411,13 @@
                     this.apiService.getCards(email)
                         .subscribe(function (data) {
                         _this.day = data['day'];
+                        if (_this.day == 22) {
+                            _this.router.navigate(['/report']);
+                        }
                         _this.CardList = [];
                         for (var i = 0; i < 7; i++) {
                             _this.CardList[i] = [];
-                            _this.expedice[i] = null;
+                            _this.expedice[i][0] = null;
                             var len_1 = data['cards'];
                             if (len_1.hasOwnProperty(_this.ColNames[i])) {
                                 for (var j = 0; j < len_1[_this.ColNames[i]]['length']; j++) {
@@ -1418,7 +1426,11 @@
                                     if (Card.color == 'White') {
                                         if (i == 0)
                                             Card.hidden = true;
-                                        _this.expedice[i] = Card;
+                                        _this.expedice[i].shift();
+                                        _this.expedice[i].push(Card);
+                                    }
+                                    else {
+                                        _this.CardList[i].push(Card);
                                     }
                                 }
                             }
@@ -1431,6 +1443,7 @@
                                 _this.Deployed.push(Card);
                             }
                         }
+                        _this.allowPointsDistribution = false;
                     }, function (error) {
                         console.error('error');
                     });
@@ -1489,10 +1502,11 @@
                     if (this.CardList[5][0] != undefined) {
                         Firstid = this.CardList[5][0].idCard;
                     }
-                    this.apiService.getEvent(10, Firstid)
+                    this.apiService.getEvent(this.day, Firstid)
                         .subscribe(function (data) {
+                        console.log(data);
+                        alert(data['text']);
                         _this.processEvent(data);
-                        alert('У вас новое событие, откройте раздел "События"');
                     }, function (error) {
                         console.error('event error');
                     });
@@ -1582,8 +1596,15 @@
                     this.countTotalStaff();
                 };
                 kanbantable.prototype.pullEventCard = function () {
-                    this.expedice[0].hidden = false;
-                    this.pullInCard(this.expedice[0].idCard);
+                    var _this = this;
+                    var Card = this.expedice[0][0];
+                    this.apiService.updateStatus(Card.idCard)
+                        .subscribe(function (data) {
+                        _this.getAllCards();
+                    }, function (error) {
+                        console.error(error);
+                    });
+                    return;
                 };
                 kanbantable.prototype.set = function (words) {
                     switch (words[0]) {
@@ -1660,42 +1681,47 @@
                         _loop_1(i);
                     }
                     var _loop_2 = function (i) {
-                        if (this_2.expedice[i] != null) {
-                            if (this_2.expedice[i].idCard == $event) {
+                        if (this_2.expedice[i][0] != null) {
+                            if (this_2.expedice[i][0].idCard == $event) {
                                 var department = void 0;
                                 var progress = void 0;
                                 switch (i) {
                                     case 1: {
                                         department = 'anal';
-                                        progress = this_2.expedice[i].CurrentAnalysis;
+                                        progress = this_2.expedice[i][0].CurrentAnalysis;
                                         break;
                                     }
                                     case 3: {
                                         department = 'dev';
-                                        progress = this_2.expedice[i].CurrentDevelopment;
+                                        progress = this_2.expedice[i][0].CurrentDevelopment;
                                         break;
                                     }
                                     case 5: {
                                         department = 'test';
-                                        progress = this_2.expedice[i].CurrentTesting;
+                                        progress = this_2.expedice[i][0].CurrentTesting;
                                         break;
                                     }
                                 }
                                 this_2.apiService.updateCard($event, department, progress)
                                     .subscribe(function (data) {
-                                    var Card = _this.expedice[i];
+                                    var Card = _this.expedice[i][0];
                                     Card.updateStatus();
                                     if (i == 6) {
                                         _this.Deployed.unshift(Card);
                                     }
                                     else {
-                                        _this.expedice[i + 1] = Card;
+                                        _this.expedice[i + 1].shift();
+                                        _this.expedice[i + 1].unshift(Card);
                                     }
-                                    _this.expedice[i] = null;
+                                    _this.expedice[i].shift();
+                                    _this.expedice[i].push(null);
                                     _this.cc.forEach(function (element) {
                                         if (element.Card.idCard == Card.idCard)
                                             element.updateOlds();
                                     });
+                                    if (i + 1 == 6) {
+                                        _this.pullInCard($event);
+                                    }
                                     return;
                                 }, function (error) {
                                     console.error(error);
@@ -1756,17 +1782,19 @@
                             }
                         }
                         for (var i = 0; i < 7; i++) {
-                            if (_this.expedice[i] != null) {
-                                if (_this.expedice[i].idCard == $event) {
-                                    var Card = _this.expedice[i];
+                            if (_this.expedice[i][0] != null) {
+                                if (_this.expedice[i][0].idCard == $event) {
+                                    var Card = _this.expedice[i][0];
                                     Card.updateStatus();
                                     if (i == 6) {
                                         _this.Deployed.unshift(Card);
                                     }
                                     else {
-                                        _this.expedice[i + 1] = Card;
+                                        _this.expedice[i + 1].shift();
+                                        _this.expedice[i + 1].unshift(Card);
                                     }
-                                    _this.expedice[i] = null;
+                                    _this.expedice[i].shift();
+                                    _this.expedice[i].push(null);
                                     return;
                                 }
                             }
@@ -1897,7 +1925,7 @@
                 });
                 Object.defineProperty(cardComponent.prototype, "isPullable", {
                     get: function () {
-                        return ((this.canPull && (this.Card.status == 'Selected' || this.Card.status == "ReadyDeploy" || this.isMaxed)) || (this.Card.color == "White" && this.isMaxed)) && this.priority;
+                        return (((this.canPull && (this.Card.status == 'Selected' || this.Card.status == "ReadyDeploy" || this.isMaxed)) && this.priority) || (this.Card.color == "White" && this.isMaxed));
                     },
                     enumerable: true,
                     configurable: true

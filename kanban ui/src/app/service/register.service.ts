@@ -9,6 +9,6 @@ export class RegisterService {
     constructor(private http: HttpClient) { }
 
     register(user: User) {
-        return this.http.post(`controller/controller/api/sign_up`, user);
+        return this.http.post(`http://controller:8080/controller/api/sign_up`, user);
     }
 }

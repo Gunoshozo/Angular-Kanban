@@ -2097,10 +2097,7 @@ class card {
                 return '';
             }
             case 'Violet': {
-                if (this.money != 0)
-                    return 'Штраф: $' + this.money;
-                else
-                    return 'Подписчики: ' + this.subs;
+                return 'Подписчики: ' + this.subs;
             }
             case 'Orange': {
                 return 'Подписчики: ' + this.subs;

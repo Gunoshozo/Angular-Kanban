@@ -1504,7 +1504,6 @@
                     }
                     this.apiService.getEvent(this.day, Firstid)
                         .subscribe(function (data) {
-                        console.log(data);
                         alert(data['text']);
                         _this.processEvent(data);
                     }, function (error) {

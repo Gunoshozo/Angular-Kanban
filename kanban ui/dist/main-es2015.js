@@ -1580,7 +1580,6 @@ let kanbantable = class kanbantable {
         }
         this.apiService.getEvent(this.day, Firstid)
             .subscribe(data => {
-            console.log(data);
             alert(data['text']);
             this.processEvent(data);
         }, error => {

@@ -21,7 +21,7 @@ export class LoginService {
   }
 
   public login(email:string,password:string){
-      return this.http.post<any>('http://25.65.79.64:8000/controller/api/sign_in',{email,password})
+      return this.http.post<any>('controller/controller/api/sign_in',{email,password})
              .pipe(map(data =>{
               if(data['status'] == 'ok'){
                 localStorage.setItem('currentUser',email)

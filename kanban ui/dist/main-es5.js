@@ -2110,54 +2110,54 @@
                 }
                 ApiService.prototype.getCards = function (email) {
                     var idGameTable = localStorage.getItem('tableId');
-                    return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_cards?email=' + email + '&idGameTable=' + idGameTable);
+                    return this.httpClient.get('controller/controller/api/get_cards?email=' + email + '&idGameTable=' + idGameTable);
                 };
                 ApiService.prototype.getPoints = function (day, specs) {
                     var anal = specs['anal']['anal'] + specs['anal']['test'] + specs['anal']['dev'];
                     var dev = specs['dev']['anal'] + specs['dev']['test'] + specs['dev']['dev'];
                     var test = specs['test']['anal'] + specs['test']['test'] + specs['test']['dev'];
                     var tableId = localStorage.getItem('tableId');
-                    return this.httpClient.get("http://25.65.79.64:8000/controller/api/get_points?id_table=" + tableId + "&day=" + day.toString() + "&anal=" + anal.toString() + "&dev=" + dev.toString() + "&test=" + test.toString());
+                    return this.httpClient.get("controller/controller/api/get_points?id_table=" + tableId + "&day=" + day.toString() + "&anal=" + anal.toString() + "&dev=" + dev.toString() + "&test=" + test.toString());
                 };
                 ApiService.prototype.postUpdatedCards = function (cards) {
                     var tableId = localStorage.getItem('tableId');
                     var email = localStorage.getItem('currentUser');
-                    return this.httpClient.post("http://25.65.79.64:8000/controller/api/change_progress", { 'email': email, 'cards': cards, 'idGameTable': tableId });
+                    return this.httpClient.post("controller/controller/api/change_progress", { 'email': email, 'cards': cards, 'idGameTable': tableId });
                 };
                 ApiService.prototype.join = function (table_id) {
                     var email = localStorage.getItem('currentUser');
-                    return this.httpClient.post('http://25.65.79.64:8000/controller/api/add_user_to_table', { 'IdGameTable': table_id, 'email': email });
+                    return this.httpClient.post('controller/controller/api/add_user_to_table', { 'IdGameTable': table_id, 'email': email });
                 };
                 ApiService.prototype.getEvent = function (day, firtsTest) {
                     var email = localStorage.getItem('currentUser');
-                    return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_event?day=' + day.toString() + '&firstTest=' + firtsTest + '&email=' + email);
+                    return this.httpClient.get('controller/controller/api/get_event?day=' + day.toString() + '&firstTest=' + firtsTest + '&email=' + email);
                 };
                 ApiService.prototype.createTable = function () {
                     var email = localStorage.getItem('currentUser');
                     var request = { 'nameGameTable': 'table ' + email, 'numberOfPlayers': 1, 'email': email };
-                    return this.httpClient.post('http://25.65.79.64:8000/controller/api/create_table', request);
+                    return this.httpClient.post('controller/controller/api/create_table', request);
                 };
                 ApiService.prototype.newDay = function () {
                     var tableid = localStorage.getItem('tableId');
-                    return this.httpClient.get('http://25.65.79.64:8000/controller/api/new_day?idGameTable=' + tableid.toString());
+                    return this.httpClient.get('controller/controller/api/new_day?idGameTable=' + tableid.toString());
                 };
                 ApiService.prototype.updateCard = function (idCard, department, progress) {
-                    return this.httpClient.post('http://25.65.79.64:8000/controller/api/update_card', { 'idCard': idCard, 'department': department, 'progress': progress });
+                    return this.httpClient.post('controller/controller/api/update_card', { 'idCard': idCard, 'department': department, 'progress': progress });
                 };
                 ApiService.prototype.updateStatus = function (idCard) {
-                    return this.httpClient.post('http://25.65.79.64:8000/controller/api/update_status', { 'idCard': idCard });
+                    return this.httpClient.post('controller/controller/api/update_status', { 'idCard': idCard });
                 };
                 ApiService.prototype.getGraphData = function () {
                     var email = localStorage.getItem('currentUser');
-                    return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_graph?email=' + email);
+                    return this.httpClient.get('controller/controller/api/get_graph?email=' + email);
                 };
                 ApiService.prototype.getTableId = function () {
                     var email = localStorage.getItem('currentUser');
-                    return this.httpClient.get('http://25.65.79.64:8000/controller/api/get_table?email=' + email);
+                    return this.httpClient.get('controller/controller/api/get_table?email=' + email);
                 };
                 ApiService.prototype.deleteTable = function () {
                     var email = localStorage.getItem('currentUser');
-                    return this.httpClient.get('http://25.65.79.64:8000/controller/api/delete_table?email=' + email);
+                    return this.httpClient.get('controller/controller/api/delete_table?email=' + email);
                 };
                 return ApiService;
             }());
@@ -2215,7 +2215,7 @@
                 });
                 LoginService.prototype.login = function (email, password) {
                     var _this = this;
-                    return this.http.post('http://25.65.79.64:8000/controller/api/sign_in', { email: email, password: password })
+                    return this.http.post('controller/controller/api/sign_in', { email: email, password: password })
                         .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (data) {
                         if (data['status'] == 'ok') {
                             localStorage.setItem('currentUser', email);
@@ -2257,7 +2257,7 @@
                     this.http = http;
                 }
                 RegisterService.prototype.register = function (user) {
-                    return this.http.post("http://25.65.79.64:8000/controller/api/sign_up", user);
+                    return this.http.post("controller/controller/api/sign_up", user);
                 };
                 return RegisterService;
             }());

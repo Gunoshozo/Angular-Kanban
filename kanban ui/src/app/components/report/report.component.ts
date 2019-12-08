@@ -33,7 +33,6 @@ export class report implements OnInit{
 
     ngOnInit(): void {
         this.getData()
-        this.DrawGraphs()
         this.apiService.deleteTable()
         .subscribe(data=>{
             localStorage.removeItem('tableId')
@@ -54,6 +53,7 @@ export class report implements OnInit{
                 this.money.push({x:graphData[i]['day'],y:graphData[i]['cost']})
                 
             }
+            this.DrawGraphs()
         },error =>{
             console.error(error)
         }

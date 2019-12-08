@@ -1398,8 +1398,6 @@
                 kanbantable.prototype.ngOnInit = function () {
                     this.countTotalStaff();
                     this.getAllCards();
-                    console.log(localStorage.getItem('currentUser'));
-                    console.log(localStorage.getItem('tableId'));
                 };
                 kanbantable.prototype.getAllCards = function () {
                     var _this = this;

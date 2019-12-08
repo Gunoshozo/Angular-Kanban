@@ -1477,8 +1477,6 @@ let kanbantable = class kanbantable {
     ngOnInit() {
         this.countTotalStaff();
         this.getAllCards();
-        console.log(localStorage.getItem('currentUser'));
-        console.log(localStorage.getItem('tableId'));
     }
     getAllCards() {
         let email = localStorage.getItem('currentUser');

@@ -2029,7 +2029,10 @@
                             return '';
                         }
                         case 'Violet': {
-                            return 'Подписчики: ' + this.subs;
+                            if (this.subs > 0)
+                                return 'Подписчики: ' + this.subs;
+                            else
+                                return '';
                         }
                         case 'Orange': {
                             return 'Подписчики: ' + this.subs;

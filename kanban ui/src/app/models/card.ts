@@ -63,8 +63,10 @@ export class card{
             case 'Green':{
                 return ''
             }
-            case 'Violet':{
+            case 'Violet':{if(this.subs >0)
                 return 'Подписчики: ' + this.subs
+                else return ''
+
             }
             case 'Orange':{
                 return 'Подписчики: ' + this.subs

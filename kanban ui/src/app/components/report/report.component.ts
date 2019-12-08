@@ -133,12 +133,6 @@ export class report implements OnInit{
     }
 
     toMain(){
-        this.apiService.deleteTable()
-        .subscribe(data=>{
-            localStorage.removeItem('tableId')
-        },error=>{
-            console.error(error)
-        })
         this.router.navigate(['/mainmenu'])
     }
 

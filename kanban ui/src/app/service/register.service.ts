@@ -9,6 +9,6 @@ export class RegisterService {
     constructor(private http: HttpClient) { }
 
     register(user: User) {
-        return this.http.post(`http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/sign_up`, user);
+        return this.http.post(`http://10.130.13.114:8080/controller/api/sign_up`, user);
     }
 }

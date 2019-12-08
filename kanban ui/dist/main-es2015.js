@@ -2174,54 +2174,54 @@ let ApiService = class ApiService {
     }
     getCards(email) {
         let idGameTable = localStorage.getItem('tableId');
-        return this.httpClient.get('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/get_cards?email=' + email + '&idGameTable=' + idGameTable);
+        return this.httpClient.get('http://10.130.13.114:8080/controller/api/get_cards?email=' + email + '&idGameTable=' + idGameTable);
     }
     getPoints(day, specs) {
         let anal = specs['anal']['anal'] + specs['anal']['test'] + specs['anal']['dev'];
         let dev = specs['dev']['anal'] + specs['dev']['test'] + specs['dev']['dev'];
         let test = specs['test']['anal'] + specs['test']['test'] + specs['test']['dev'];
         let tableId = localStorage.getItem('tableId');
-        return this.httpClient.get("http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/get_points?id_table=" + tableId + "&day=" + day.toString() + "&anal=" + anal.toString() + "&dev=" + dev.toString() + "&test=" + test.toString());
+        return this.httpClient.get("http://10.130.13.114:8080/controller/api/get_points?id_table=" + tableId + "&day=" + day.toString() + "&anal=" + anal.toString() + "&dev=" + dev.toString() + "&test=" + test.toString());
     }
     postUpdatedCards(cards) {
         let tableId = localStorage.getItem('tableId');
         let email = localStorage.getItem('currentUser');
-        return this.httpClient.post("http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/change_progress", { 'email': email, 'cards': cards, 'idGameTable': tableId });
+        return this.httpClient.post("http://10.130.13.114:8080/controller/api/change_progress", { 'email': email, 'cards': cards, 'idGameTable': tableId });
     }
     join(table_id) {
         let email = localStorage.getItem('currentUser');
-        return this.httpClient.post('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/add_user_to_table', { 'IdGameTable': table_id, 'email': email });
+        return this.httpClient.post('http://10.130.13.114:8080/controller/api/add_user_to_table', { 'IdGameTable': table_id, 'email': email });
     }
     getEvent(day, firtsTest) {
         let email = localStorage.getItem('currentUser');
-        return this.httpClient.get('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/get_event?day=' + day.toString() + '&firstTest=' + firtsTest + '&email=' + email);
+        return this.httpClient.get('http://10.130.13.114:8080/controller/api/get_event?day=' + day.toString() + '&firstTest=' + firtsTest + '&email=' + email);
     }
     createTable() {
         let email = localStorage.getItem('currentUser');
         let request = { 'nameGameTable': 'table ' + email, 'numberOfPlayers': 1, 'email': email };
-        return this.httpClient.post('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/create_table', request);
+        return this.httpClient.post('http://10.130.13.114:8080/controller/api/create_table', request);
     }
     newDay() {
         let tableid = localStorage.getItem('tableId');
-        return this.httpClient.get('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/new_day?idGameTable=' + tableid.toString());
+        return this.httpClient.get('http://10.130.13.114:8080/controller/api/new_day?idGameTable=' + tableid.toString());
     }
     updateCard(idCard, department, progress) {
-        return this.httpClient.post('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/update_card', { 'idCard': idCard, 'department': department, 'progress': progress });
+        return this.httpClient.post('http://10.130.13.114:8080/controller/api/update_card', { 'idCard': idCard, 'department': department, 'progress': progress });
     }
     updateStatus(idCard) {
-        return this.httpClient.post('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/update_status', { 'idCard': idCard });
+        return this.httpClient.post('http://10.130.13.114:8080/controller/api/update_status', { 'idCard': idCard });
     }
     getGraphData() {
         let email = localStorage.getItem('currentUser');
-        return this.httpClient.get('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/get_graph?email=' + email);
+        return this.httpClient.get('http://10.130.13.114:8080/controller/api/get_graph?email=' + email);
     }
     getTableId() {
         let email = localStorage.getItem('currentUser');
-        return this.httpClient.get('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/get_table?email=' + email);
+        return this.httpClient.get('http://10.130.13.114:8080/controller/api/get_table?email=' + email);
     }
     deleteTable() {
         let table_id = localStorage.getItem('tableId');
-        return this.httpClient.get('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/delete_table?email=' + table_id);
+        return this.httpClient.get('http://10.130.13.114:8080/controller/api/delete_table?email=' + table_id);
     }
 };
 ApiService.ctorParameters = () => [
@@ -2290,7 +2290,7 @@ let LoginService = class LoginService {
         return this.currentUserSubject.value;
     }
     login(email, password) {
-        return this.http.post('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/sign_in', { email, password })
+        return this.http.post('http://10.130.13.114:8080/controller/api/sign_in', { email, password })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(data => {
             if (data['status'] == 'ok') {
                 localStorage.setItem('currentUser', email);
@@ -2338,7 +2338,7 @@ let RegisterService = class RegisterService {
         this.http = http;
     }
     register(user) {
-        return this.http.post(`http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/sign_up`, user);
+        return this.http.post(`http://10.130.13.114:8080/controller/api/sign_up`, user);
     }
 };
 RegisterService.ctorParameters = () => [

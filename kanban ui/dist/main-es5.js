@@ -1127,7 +1127,6 @@
                 }
                 report.prototype.ngOnInit = function () {
                     this.getData();
-                    this.DrawGraphs();
                     this.apiService.deleteTable()
                         .subscribe(function (data) {
                         localStorage.removeItem('tableId');
@@ -1147,6 +1146,7 @@
                             _this.passedSelected.push({ x: graphData[i]['day'], y: graphData[i]['analysis'] });
                             _this.money.push({ x: graphData[i]['day'], y: graphData[i]['cost'] });
                         }
+                        _this.DrawGraphs();
                     }, function (error) {
                         console.error(error);
                     });
@@ -2153,8 +2153,8 @@
                     return this.httpClient.get('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/get_table?email=' + email);
                 };
                 ApiService.prototype.deleteTable = function () {
-                    var email = localStorage.getItem('currentUser');
-                    return this.httpClient.get('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/delete_table?email=' + email);
+                    var table_id = localStorage.getItem('tableId');
+                    return this.httpClient.get('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/delete_table?email=' + table_id);
                 };
                 return ApiService;
             }());

@@ -1192,7 +1192,6 @@ let report = class report {
     }
     ngOnInit() {
         this.getData();
-        this.DrawGraphs();
         this.apiService.deleteTable()
             .subscribe(data => {
             localStorage.removeItem('tableId');
@@ -1211,6 +1210,7 @@ let report = class report {
                 this.passedSelected.push({ x: graphData[i]['day'], y: graphData[i]['analysis'] });
                 this.money.push({ x: graphData[i]['day'], y: graphData[i]['cost'] });
             }
+            this.DrawGraphs();
         }, error => {
             console.error(error);
         });
@@ -2219,8 +2219,8 @@ let ApiService = class ApiService {
         return this.httpClient.get('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/get_table?email=' + email);
     }
     deleteTable() {
-        let email = localStorage.getItem('currentUser');
-        return this.httpClient.get('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/delete_table?email=' + email);
+        let table_id = localStorage.getItem('tableId');
+        return this.httpClient.get('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/delete_table?email=' + table_id);
     }
 };
 ApiService.ctorParameters = () => [

@@ -174,7 +174,7 @@ export class kanbantable implements OnInit{
         error =>{
             console.error('event error')
         })
-        this.staff = this.defaultStaff
+        this.staff = {'anal':{'anal':2,'dev':0,'test':0},'dev':{'anal':0,'dev':3,'test':0},'test':{'anal':0,'dev':0,'test':2}}
         this.Graph.addData()
         this.Graph.DrawGraphs()
     }
@@ -194,6 +194,7 @@ export class kanbantable implements OnInit{
     }
 
     block(words){
+        this.staff = {'anal':{'anal':2,'dev':0,'test':0},'dev':{'anal':0,'dev':3,'test':0},'test':{'anal':0,'dev':0,'test':2}};
         switch(words[0]){
             case 'anal':{ this.blockedDepartment[0] = true;break;}
             case 'dev':  {this.blockedDepartment[1] = true;break;}

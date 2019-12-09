@@ -1,9 +1,9 @@
 <div class="centered">
 <div class="btn-group">
 <div class="middle">
-        <button class="btn btn-danger" type="button" (click)=logout()>выйти</button>
+        <button class="btn btn-danger" type="button" (click)=logout()>Выйти</button>
         <button *ngIf='!haveTable' class="btn btn-primary" type="button" (click)=Create() [disabled]=disabled>Создать игру</button>
-        <button *ngIf='haveTable' class="btn btn-primary" type="button"  (click)=toGame() [disabled]=disabled>Вернутся в игру</button>
+        <button *ngIf='haveTable' class="btn btn-primary" type="button"  (click)=toGame() [disabled]=disabled>Вернуться в игру</button>
     </div>
 </div>
 </div>

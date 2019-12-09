@@ -72,7 +72,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"centered\">\n<div class=\"btn-group\">\n<div class=\"middle\">\n        <button class=\"btn btn-danger\" type=\"button\" (click)=logout()>выйти</button>\n        <button *ngIf='!haveTable' class=\"btn btn-primary\" type=\"button\" (click)=Create() [disabled]=disabled>Создать игру</button>\n        <button *ngIf='haveTable' class=\"btn btn-primary\" type=\"button\"  (click)=toGame() [disabled]=disabled>Вернутся в игру</button>\n    </div>\n</div>\n</div>");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"centered\">\n<div class=\"btn-group\">\n<div class=\"middle\">\n        <button class=\"btn btn-danger\" type=\"button\" (click)=logout()>Выйти</button>\n        <button *ngIf='!haveTable' class=\"btn btn-primary\" type=\"button\" (click)=Create() [disabled]=disabled>Создать игру</button>\n        <button *ngIf='haveTable' class=\"btn btn-primary\" type=\"button\"  (click)=toGame() [disabled]=disabled>Вернуться в игру</button>\n    </div>\n</div>\n</div>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/register/register.component.html": 
@@ -749,7 +749,7 @@
                             {
                                 type: "line",
                                 showInLegend: true,
-                                legendText: 'Начатых',
+                                legendText: 'Начатые',
                                 color: 'brown',
                                 dataPoints: this.passedSelected
                             }
@@ -1192,7 +1192,7 @@
                             {
                                 type: "line",
                                 showInLegend: true,
-                                legendText: 'Начатых',
+                                legendText: 'Начатые',
                                 color: 'brown',
                                 dataPoints: this.passedSelected
                             }
@@ -2213,7 +2213,7 @@
                 });
                 LoginService.prototype.login = function (email, password) {
                     var _this = this;
-                    return this.http.post('http://10.130.13.114:8080/controller/api/sign_in', { email: email, password: password })
+                    return this.http.post('http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/sign_in', { email: email, password: password })
                         .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (data) {
                         if (data['status'] == 'ok') {
                             localStorage.setItem('currentUser', email);
@@ -2255,7 +2255,7 @@
                     this.http = http;
                 }
                 RegisterService.prototype.register = function (user) {
-                    return this.http.post("http://10.130.13.114:8080/controller/api/sign_up", user);
+                    return this.http.post("http://controller-route-kanban-db.apps.us-west-1.starter.openshift-online.com/controller/api/sign_up", user);
                 };
                 return RegisterService;
             }());

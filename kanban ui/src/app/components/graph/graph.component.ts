@@ -121,7 +121,7 @@ export class graph implements AfterViewInit,OnInit {
                 {        
                     type: "line",     
                     showInLegend:true,
-                    legendText:'Начатых',
+                    legendText:'Начатые',
                     color:'brown',
                     dataPoints: this.passedSelected
                 }
